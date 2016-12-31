@@ -14,12 +14,13 @@ then
     exit 1
 fi
 
-org=$1
-path=$2
+org="$1"
+path="$2"
 
-data=$path/data.json
-gradebook=$path/gradbook.json
+data="$path/data.json"
+gradebook="$path/gradbook.json"
 
+echo "$data"
 if [ -f "$data" ]; then
     echo "Unable to find $data"
     exit 2
