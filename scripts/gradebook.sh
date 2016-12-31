@@ -26,5 +26,6 @@ if [ ! -f "$data" ]; then
 fi
 
 students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
-
-echo $students
+for student in $(students); do
+    echo $student
+done
