@@ -42,7 +42,6 @@ nc='\033[0m'
 # GitHub symbols
 status_passed=":white_check_mark:"
 status_failed=":x:"
-status_wait=":clock7:"
 
 students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
 tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
@@ -51,5 +50,44 @@ repositories=$(curl -s https://api.github.com/orgs/$org/repos?type=public | jq '
 
 echo ""
 echo -e "Working out the students:\n${green}${students}${nc}\n"
-echo -e "Against repositories in $org:\n${blue}${repositories}${nc}\n"
+echo -e "Against repositories in ${cyan}$org:\n${blue}${repositories}${nc}\n"
+
+for stud in $students; do
+    echo -e "${cyan}Grading ${stud}${nc}"
+    cur_stud_assignments="[null]"
+    if [ -f $cur_gradebook ]; then
+        cur_stud_assignments=$(cat $cur_gradebook | jq '. | map(select(.username == "$stud")) | .[0] | .assignments')
+    fi 
+    
+    for repo in $repositories; do
+        proceed=false
+        
+        for tuto in $tutorials; do
+            if [ "${repo}" == "${tuto}-${stud}" ]; then
+                echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)"
+                score=$(cat $data | jq '.tutorials | .[] | .score' | sed 's/\"//g')
+                echo -e "${blue}score = ${score}${nc}"
+                proceed=true
+                break
+            fi
+        done
+        
+        if [ "${proceed}" == true ]; then
+            continue
+        fi
+                
+        for assi in $assignments; do
+            if [ "${repo}" == "${assi}-${stud}" ]; then
+                echo -e "${cyan}${repo} is an assignment${nc}"
+                cur_stud_assi=$(echo "$cur_stud_assigments" | jq '. | map(select(.name == "$repo")) | .[0]')
+                last_commit_date=$(echo "$cur_stud_assi" | jq '.last_commit_date')
+                repo_commit_date=$(curl -s https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0] | .commit | .committer | .date')
+                if [ "${last_commit_date}" == "${repo_commit_date}" ]; then
+                    echo "detected new activity on the repository => proceeding with testing"
+                fi
+                break
+            fi
+        done
+    done
+done
 
