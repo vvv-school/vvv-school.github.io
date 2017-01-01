@@ -8,32 +8,48 @@
 # - curl
 # - jq
 
-if [ $# -lt 2 ]
-then
-    echo "Usage: $0 <organization> <path-to-gradebook>"
+if [ $# -lt 2 ]; then
+    echo "Usage: $0 <organization> <path-to-gradebook> [build-dir]"
     exit 1
 fi
 
 org=$1
 path=$2
 
-data=$path/data.json
-gradebook=$path/gradbook.json
+if [ $# -gt 2 ]; then
+    if [ ! -d "$3" ]; then
+        mkdir $3
+    fi
+    cd "$3"
+fi
 
-red='\033[1;31m'
-green='\033[1;32m'
-blue='\033[1;34m'
-cyan='\033[1;36m'
-nc='\033[0m'
+data=$path/data.json
+cur_gradebook=$path/gradbook.json
+new_gradebook=new-gradbook.json
 
 if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
     exit 2
 fi
 
+# color codes
+red='\033[1;31m'
+green='\033[1;32m'
+blue='\033[1;34m'
+cyan='\033[1;36m'
+nc='\033[0m'
+
+# GitHub symbols
+status_passed=":white_check_mark:"
+status_failed=":x:"
+status_wait=":clock7:"
+
 students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
+tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
+assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
 repositories=$(curl -s https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\"//g')
 
-echo -e "\nWorking out the students:\n${green}${students}${nc}\n"
-echo -e "Against the repositories:\n${blue}${repositories}${nc}\n"
+echo ""
+echo -e "Working out the students:\n${green}${students}${nc}\n"
+echo -e "Against repositories in $org:\n${blue}${repositories}${nc}\n"
 
