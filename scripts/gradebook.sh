@@ -67,23 +67,46 @@ students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
 tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
 assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
 
+# compute the score of the student
+# counting tutorials and assignments
+function update_score {
+    stud=$1
+}
+
+function publish_gradebook {
+    # git diff --exit-code
+    # if [ $? -ne 0 ]; then
+    #   generate README.md
+    # fi
+}
+
 # update tutorial in the new gradebook
 function update_tutorial {
     stud=$1
     repo=$2
     
-    score=$(cat $data | jq '.tutorials | .[] | .score' | sed 's/\"//g')
     echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)" > /dev/stderr
-    echo -e "${blue}score = ${score}${nc}" > /dev/stderr
     
     if [ -f $new_gradebook ]; then
         rm $new_gradebook
     fi
+
+    jq_path=$(cat gradebook.json | jq 'paths(.name?=="$repo")')
+    if [ ! -z "$jq_path" ]; then
+        cat $cur_gradebook | jq 'setpath([$jq_path,"status"];$status_passed)' > $new_gradebook
+    else        
+        jq_path_student=$(cat gradebook.json | jq 'paths(.username?=="$stud")')        
+        if [ ! -z "$jq_path_student" ]; then
+            jq_path_tutorial=$(cat $cur_gradebook | jq '.[] | select(.username=="$stud") | .tutorials | length+1')
+        else
+            jq_path_student=$(cat $cur_gradebook | jq 'length+1')
+            jq_path_tutorial=0
+        fi
+        cat $cur_gradebook | jq 'setpath([$jq_path_student,"tutorials",$jq_path_tutorial,"name"];$repo) |\
+                                 setpath([$jq_path_student,"tutorials",$jq_path_tutorial,"status"];$status_pased)' > $new_gradebook
+    fi
     
-    cat $cur_gradebook | jq '. | map(select(.username == "$stud")) |\
-                             .[0] | .tutorials |\
-                              { .name = "$repo", .status = "$status_passed" }'\
-                       > $new_gradebook
+    update_score ${stud}
 }
 
 function ctrl_c() {
@@ -98,7 +121,7 @@ while true; do
     repositories=$(curl -s https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\"//g')
     
     echo -e "Working out the students:\n${green}${students}${nc}\n"
-    echo -e "Against repositories in ${cyan}$org:\n${blue}${repositories}${nc}\n"
+    echo -e "Against repositories in ${cyan}${org}:\n${blue}${repositories}${nc}\n"
 
     # for each student in the list
     for stud in $students; do
@@ -107,7 +130,7 @@ while true; do
         if [ -f $cur_gradebook ]; then
             cur_stud_assignments=$(cat $cur_gradebook | jq '. | map(select(.username == "$stud")) | .[0] | .assignments')
         fi 
-        
+            
         # for each repository found within the organization
         for repo in $repositories; do
             proceed=false;
@@ -133,8 +156,8 @@ while true; do
                     last_commit_date=$(echo "$cur_stud_assi" | jq '.last_commit_date')
                     repo_commit_date=$(curl -s https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0] | .commit | .committer | .date')
                     if [ "${last_commit_date}" == "${repo_commit_date}" ]; then
-                        echo -e "detected new activity on ${cyan}$repo${nc} => proceeding with testing"
-                        result=$(smoke_test $repo https://github.com/$org/$repo.git)
+                        echo -e "detected new activity on ${cyan}${repo}${nc} => start off testing"
+                        result=$(smoke_test $repo https://github.com/${org}/${repo}.git)
                     fi
                     break
                 fi
