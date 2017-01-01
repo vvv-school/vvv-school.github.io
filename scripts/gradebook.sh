@@ -9,16 +9,9 @@
 # - jq
 
 if [ $# -lt 3 ]; then
-    echo "Usage: $0 <organization> <path-to-gradebook> <build-dir> [--loop]"
+    echo "Usage: $0 <organization> <path-to-gradebook> <build-dir>"
     exit 1
 fi
-
-# trap ctrl-c and call ctrl_c()
-trap ctrl_c SIGINT SIGTERM
-
-function ctrl_c() {
-    echo -e "${red}Trapped CTRL-C${nc}"
-}
 
 org=$1
 path=$2
@@ -27,13 +20,6 @@ if [ ! -d "$3" ]; then
     mkdir $3
 fi
 cd "$3"
-
-loop=false
-if [ $# -gt 3 ]; then
-    if [ "$4" == "--loop"]; then
-        loop=true
-    fi
-fi
 
 data=$path/data.json
 cur_gradebook=$path/gradbook.json
@@ -55,9 +41,58 @@ nc='\033[0m'
 status_passed=":white_check_mark:"
 status_failed=":x:"
 
+function smoke_test()
+{
+    if [ -d "$1" ]; then
+        rm $1 -rf
+    fi
+ 
+    local ret="error"
+    git clone $2
+    if [ $? -eq 0 ]; then        
+        if [ -d "$1/smoke-test" ]; then
+            cd $1/smoke-test
+            ret=$(./test.sh)
+        else
+            echo -e "${red}$1 does not contain smoke-test${nc}" > /dev/stderr
+        fi
+    else
+        echo -e "${red}GitHub seems unreachable${nc}" > /dev/stderr
+    fi
+
+    echo $ret
+}
+
 students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
 tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
 assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
+
+# update tutorial in the new gradebook
+function update_tutorial {
+    stud=$1
+    repo=$2
+    
+    score=$(cat $data | jq '.tutorials | .[] | .score' | sed 's/\"//g')
+    echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)" > /dev/stderr
+    echo -e "${blue}score = ${score}${nc}" > /dev/stderr
+    
+    if [ -f $new_gradebook ]; then
+        rm $new_gradebook
+    fi
+    
+    cat $cur_gradebook | jq '. | map(select(.username == "$stud")) |\
+                             .[0] | .tutorials |\
+                              { .name = "$repo", .status = "$status_passed" }'\
+                       > $new_gradebook
+}
+
+function ctrl_c() {
+    echo -e "${red}Trapped CTRL-C${nc}"
+    exit 0
+}
+
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c SIGINT
 
 while true; do
     repositories=$(curl -s https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\"//g')
@@ -65,6 +100,7 @@ while true; do
     echo -e "Working out the students:\n${green}${students}${nc}\n"
     echo -e "Against repositories in ${cyan}$org:\n${blue}${repositories}${nc}\n"
 
+    # for each student in the list
     for stud in $students; do
         echo -e "${cyan}Grading ${stud}${nc}"
         cur_stud_assignments="[null]"
@@ -72,14 +108,14 @@ while true; do
             cur_stud_assignments=$(cat $cur_gradebook | jq '. | map(select(.username == "$stud")) | .[0] | .assignments')
         fi 
         
+        # for each repository found within the organization
         for repo in $repositories; do
             proceed=false;
             
+            # for tutorials, simply give them for granted
             for tuto in $tutorials; do
-                if [ "${repo}" == "${tuto}-${stud}" ]; then
-                    echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)"
-                    score=$(cat $data | jq '.tutorials | .[] | .score' | sed 's/\"//g')
-                    echo -e "${blue}score = ${score}${nc}"
+                if [ "${repo}" == "${tuto}-${stud}" ]; then                    
+                    update_tutorial ${stud} ${repo}
                     proceed=true
                     break
                 fi
@@ -88,7 +124,8 @@ while true; do
             if [ "$proceed" == true ]; then
                 continue
             fi
-                    
+            
+            # for assignments, run the smoke test
             for assi in $assignments; do
                 if [ "${repo}" == "${assi}-${stud}" ]; then
                     echo -e "${cyan}${repo} is an assignment${nc}"
@@ -96,16 +133,13 @@ while true; do
                     last_commit_date=$(echo "$cur_stud_assi" | jq '.last_commit_date')
                     repo_commit_date=$(curl -s https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0] | .commit | .committer | .date')
                     if [ "${last_commit_date}" == "${repo_commit_date}" ]; then
-                        echo "detected new activity on the repository => proceeding with testing"
+                        echo -e "detected new activity on ${cyan}$repo${nc} => proceeding with testing"
+                        result=$(smoke_test $repo https://github.com/$org/$repo.git)
                     fi
                     break
                 fi
             done
         done
     done
-    
-    if [ "$loop" == false ]; then
-        break
-    fi
 done
 
