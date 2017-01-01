@@ -67,10 +67,35 @@ students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
 tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
 assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
 
-# compute the score of the student
-# counting tutorials and assignments
+# compute the student's score counting tutorials and assignments
 function update_score {
     stud=$1
+    
+    stud_tutorials=$(cat $new_gradebook | jq 'map(select(.username=="$stud")) | .[0] | .tutorials | .[] | .name' | sed 's/\"//g')
+    stud_assignments=$(cat $new_gradebook | jq 'map(select(.username=="$stud")) | .[0] | .assignments | .[] | .name' | sed 's/\"//g')
+    
+    score=0
+    for tuto1 in $stud_tutorials; do
+        for tuto2 in $tutorials; do
+           if [ "${tuto1}" == "${tuto2}-${stud}" ]; then              
+              let "score = $score + $(cat $data | jq '.tutorials | map(select(.name=="$tuto2")) | .[0] | .score')"
+              break
+           fi 
+        done
+    done
+    
+    for assi1 in $stud_assignments; do
+        for assi2 in $assignments; do
+           if [ "${assi1}" == "${assi2}-${stud}" ]; then              
+              let "score = $score + $(cat $data | jq '.assignments | map(select(.name=="$assi2")) | .[0] | .score')"
+              break
+           fi 
+        done
+    done
+    
+    echo -e "New score of ${green}${stud}${nc} is ${cyan}${score}${nc}" > /dev/stderr
+    jq_path_student=$(cat $new_gradebook | jq 'paths(.username?=="$stud")')    
+    cat $new_gradebook | jq 'setpath([$jq_path_student,"score"];$score)' > $new_gradebook
 }
 
 function publish_gradebook {
@@ -91,11 +116,11 @@ function update_tutorial {
         rm $new_gradebook
     fi
 
-    jq_path=$(cat gradebook.json | jq 'paths(.name?=="$repo")')
+    jq_path=$(cat $cur_gradebook | jq 'paths(.name?=="$repo")')
     if [ ! -z "$jq_path" ]; then
         cat $cur_gradebook | jq 'setpath([$jq_path,"status"];$status_passed)' > $new_gradebook
     else        
-        jq_path_student=$(cat gradebook.json | jq 'paths(.username?=="$stud")')        
+        jq_path_student=$(cat $cur_gradebook | jq 'paths(.username?=="$stud")')
         if [ ! -z "$jq_path_student" ]; then
             jq_path_tutorial=$(cat $cur_gradebook | jq '.[] | select(.username=="$stud") | .tutorials | length+1')
         else
@@ -125,7 +150,7 @@ while true; do
 
     # for each student in the list
     for stud in $students; do
-        echo -e "${cyan}Grading ${stud}${nc}"
+        echo -e "${cyan}Grading ${green}${stud}${nc}"
         cur_stud_assignments="[null]"
         if [ -f $cur_gradebook ]; then
             cur_stud_assignments=$(cat $cur_gradebook | jq '. | map(select(.username == "$stud")) | .[0] | .assignments')
