@@ -41,7 +41,7 @@ In view of attending the school, there might be still some time you want to expl
 - [Ubuntu: A beginner's Guide](http://www.makeuseof.com/tag/ubuntu-an-absolute-beginners-guide).
 - [Ubuntu: Master the command line](http://ryanstutorials.net/linuxtutorial/commandline.php).
 - [Tutorial on C++](http://www.cplusplus.com/doc/tutorial).
-- [Guidelines to maintain code](https://bettercodehub.com).
+- [Guidelines to maintain better code](https://bettercodehub.com).
 - [Learning Git](http://learngitbranching.js.org).
 - [Try Git](https://try.github.io/levels/1/challenges/1).
 - [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf).
