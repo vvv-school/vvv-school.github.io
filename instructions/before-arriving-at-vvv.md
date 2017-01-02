@@ -47,6 +47,7 @@ In view of attending the school, there might be still some time you want to expl
 - [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf).
 - [Interactive Git Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html).
 - [The complete guide to Git](https://git-scm.com/doc).
+- [Hello World in GitHub](https://guides.github.com/activities/hello-world).
 - [CMake](https://cgold.readthedocs.io/en/latest/overview.html).
 - [Yarp](http://www.yarp.it/tutorials.html).
 - [iCub](http://wiki.icub.org/iCub/main/dox/html/icub_tutorials.html).
