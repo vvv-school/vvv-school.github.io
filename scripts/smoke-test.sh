@@ -17,7 +17,7 @@ if [ -d build-code ]; then
     rm build-code -rf
 fi
 mkdir build-code && cd build-code
-cmake -DCMAKE_BUILD_TYPE=Release $1
+cmake -DCMAKE_BUILD_TYPE=Release $code
 if [ $? -ne 0 ]; then
    exit 1
 fi
@@ -32,7 +32,7 @@ if [ -d build-test ]; then
 fi
 rm build-test -rf
 mkdir build-test && cd build-test
-cmake -DCMAKE_BUILD_TYPE=Release $2
+cmake -DCMAKE_BUILD_TYPE=Release $test
 make
 if [ $? -ne 0 ]; then
    exit 2
