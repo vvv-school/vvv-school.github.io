@@ -8,7 +8,11 @@ Two methods are given to accomplish the assignment:
 
 ## Instructions for **Students**
 
-To start, click on the **invitation link** 🔘 the teachers gave you. A **new repository** will be spawned from the repository containing the _starter code_. If you're dealing with a **tutorial** (i.e. the repository name starts with the prefix _tutorial_), then the starter code is already in its final version and you can use it to train yourself. Instead, if you're dealing with an **assignment** (i.e. the repository name starts with the prefix _assignment_), then you are required to provide your solution within the new repository.
+To start, click on the **invitation link** 🔘 the teachers gave you. A **new repository** will be spawned from the repository containing the _starter code_.
+
+If you're dealing with a **tutorial** (i.e. the repository name starts with the prefix _tutorial_), then the starter code is already in its final version and you can use it to train yourself.
+
+Instead, if you're dealing with an **assignment** (i.e. the repository name starts with the prefix _assignment_), then you are required to provide your solution within the new repository.
 
 #### Smoke Testing
 
