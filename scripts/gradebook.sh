@@ -28,8 +28,9 @@ fi
 cd "$4"
 
 data=$path/data.json
-cur_gradebook=$path/gradebook.json
-new_gradebook=new-gradebook.json
+gradebook_cur=$path/gradebook.json
+gradebook_new=gradebook-new.json
+gradebook_tmp=gradebook-tmp.json
 
 if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
@@ -47,9 +48,10 @@ nc='\033[0m'
 status_passed=":white_check_mark:"
 status_failed=":x:"
 
-# get students from $team
+# GitHub token for authorized access (required for rate limit)
 token_header="-H \"Authorization: token $GIT_TOKEN_ORG_READ\""
 
+# get students from $team
 team_id=$(eval "curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name==\"$team\")) | .[0] | .id'")
 students=$(eval "curl -s $token_header -G https://api.github.com/teams/$team_id/members | jq '.[] | .login' | sed 's/\"//g'")
 
@@ -60,8 +62,8 @@ assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g
 function update_score {
     local stud=$1
     
-    local stud_tutorials=$(eval "cat $new_gradebook | jq 'map(select(.username==\"$stud\")) | .[0] | .tutorials | .[] | .name' | sed 's/\\\"//g'")
-    local stud_assignments=$(eval "cat $new_gradebook | jq 'map(select(.username==\"$stud\")) | .[0] | .assignments | .[] | .name' | sed 's/\\\"//g'")
+    local stud_tutorials=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .tutorials | .[] | .name' | sed 's/\\\"//g'")
+    local stud_assignments=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .assignments | .[] | .name' | sed 's/\\\"//g'")
 
     local score=0
     for tuto1 in $stud_tutorials; do
@@ -77,22 +79,28 @@ function update_score {
     for assi1 in $stud_assignments; do
         for assi2 in $assignments; do
            if [ "${assi1}" == "${assi2}-${stud}" ]; then
-              local tmp=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0] | .score'")
-              let "score = $score + $tmp"
+              local item=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0]'")
+              local tmp=$(echo "$item" | jq '.status')
+              if [ "${tmp}" == "${status_passed}" ]; then
+                 tmp=$(echo "$item" | jq '.score')
+                 let "score = $score + $tmp"
+              fi
               break
            fi 
         done
     done
     
     echo -e "New score of ${green}${stud}${nc} is ${cyan}${score}${nc}" > /dev/stderr
-    local jq_path=$(eval "cat $new_gradebook | jq -c 'paths(.username?==\"$stud\")'") 
+    local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'") 
     jq_path=$(echo "$jq_path" | jq -c '.+["score"]')
-    eval "cat $new_gradebook | jq 'setpath($jq_path;$score)' > $new_gradebook"
+    cp $gradebook_new $gradebook_tmp
+    eval "cat $gradebook_tmp | jq 'setpath(${jq_path};${score})' > $gradebook_new"
+    rm $gradebook_tmp
 }
 
 # push the new gradebook to GitHub
 function publish_gradebook {
-    cp $new_gradebook $cur_gradebook
+    cp $gradebook_new $gradebook_cur
     local cur_dir=$(pwd)
     
     cd $path
@@ -148,26 +156,26 @@ function update_tutorial {
     
     echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)" > /dev/stderr
 
-    local jq_path=$(eval "cat $cur_gradebook | jq -c 'paths(.name?==\"$repo\")'")
+    local jq_path=$(eval "cat $gradebook_cur | jq -c 'paths(.name?==\"$repo\")'")
     if [ ! -z "$jq_path" ]; then
         jq_path=$(echo "$jq_path" | jq -c '.+["status"]')
-        eval "cat $cur_gradebook | jq 'setpath(${jq_path};\"${status_passed}\")' > $new_gradebook"
+        eval "cat $gradebook_cur | jq 'setpath(${jq_path};\"${status_passed}\")' > $gradebook_new"
     else
-        local jq_path_student=$(eval "cat $cur_gradebook | jq -c 'paths(.username?==\"$stud\")'")
+        local jq_path_student=$(eval "cat $gradebook_cur | jq -c 'paths(.username?==\"$stud\")'")
         local jq_path_tutorial=0
         if [ ! -z "$jq_path_student" ]; then
-            jq_path_tutorial=$(eval "cat $cur_gradebook | jq '.[] | select(.username==\"$stud\") | .tutorials | length+1'")
+            jq_path_tutorial=$(eval "cat $gradebook_cur | jq '.[] | select(.username==\"$stud\") | .tutorials | length+1'")
         else
-            jq_path_student=$(eval "cat $cur_gradebook | jq 'length+1'")
+            jq_path_student=$(eval "cat $gradebook_cur | jq 'length+1'")
         fi
         
         local tutorial_score=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto\")) | .[0] | .score'")
         local jq_path_name=$(echo "$jq_path_student" | jq -c '.+["tutorials",$jq_path_tutorial,"name"]')
         local jq_path_status=$(echo "$jq_path_student" | jq -c '.+["tutorials",$jq_path_tutorial,"status"]')
         local jq_path_score=$(echo "$jq_path_student" | jq -c '.+["tutorials",$jq_path_tutorial,"score"]')
-        eval "cat $cur_gradebook | jq 'setpath($jq_path_name;$repo)' > $new_gradebook"
-        eval "cat $cur_gradebook | jq 'setpath($jq_path_status;$status_pased)' > $new_gradebook"
-        eval "cat $cur_gradebook | jq 'setpath($jq_path_score;$tutorial_score)' > $new_gradebook"
+        eval "cat $gradebook_cur | jq 'setpath(${jq_path_name};${repo})' > $gradebook_new"
+        eval "cat $gradebook_cur | jq 'setpath(${jq_path_status};${status_pased})' > $gradebook_new"
+        eval "cat $gradebook_cur | jq 'setpath(${jq_path_score};${tutorial_score})' > $gradebook_new"
     fi
 
     update_score ${stud}
@@ -210,7 +218,7 @@ function ctrl_c() {
 trap ctrl_c SIGINT
 
 while true; do
-    repositories=$(eval "curl -s https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
+    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
     
     echo ""
     echo -e "Working out the students:\n${green}${students}${nc}\n"
@@ -220,8 +228,8 @@ while true; do
     for stud in $students; do
         echo -e "${cyan}Grading ${green}${stud}${nc}"
         cur_stud_assignments="[null]"
-        if [ -f $cur_gradebook ]; then
-            cur_stud_assignments=$(eval "cat $cur_gradebook | jq '. | map(select(.username == \"$stud\")) | .[0] | .assignments'")
+        if [ -f $gradebook_cur ]; then
+            cur_stud_assignments=$(eval "cat $gradebook_cur | jq '. | map(select(.username == \"$stud\")) | .[0] | .assignments'")
         fi 
             
         # for each repository found within the organization
@@ -247,7 +255,7 @@ while true; do
                     echo -e "${cyan}${repo} is an assignment${nc}"
                     cur_stud_assi=$(echo "$cur_stud_assigments" | jq '. | map(select(.name=="$repo")) | .[0]')
                     last_commit_date=$(echo "$cur_stud_assi" | jq '.last_commit_date')
-                    repo_commit_date=$(eval "curl -s https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0] | .commit | .committer | .date'")
+                    repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0] | .commit | .committer | .date'")
                     if [ "${last_commit_date}" == "${repo_commit_date}" ]; then
                         echo -e "detected new activity on ${cyan}${repo}${nc} => start off testing"
                         result=$(smoke_test $repo https://github.com/${org}/${repo}.git)
