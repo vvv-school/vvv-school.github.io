@@ -4,13 +4,14 @@
 # Authors: Ugo Pattacini <ugo.pattacini@iit.it>
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
 
-if [ $# -lt 2 ]; then
-    echo "Usage: $0 <path-to-code> <path-to-test>"
+if [ $# -lt 3 ]; then
+    echo "Usage: $0 <path-to-build> <path-to-code> <path-to-test>"
     exit 4
 fi
 
-code=$1
-test=$2
+build=$1
+code=$2
+test=$3
 
 if [ -d build-code ]; then 
     rm build-code -rf
@@ -39,10 +40,10 @@ fi
 cd ../
 
 # to let yarpmanager access the fixture
-export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$(pwd)
+export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test
 
 # to make the test library retrievable
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)/build-test/plugins
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build/build-test/plugins
 
 yarp where > /dev/null 2>&1
 if [ $? -eq 0 ]; then
