@@ -66,13 +66,14 @@ fi
 
 testrunner --verbose --suit $test_dir/test.xml > output.txt
 
-if [ "$kill_yarp" == "yes" ]; then
-   killall yarpserver
+if [ "$kill_testnode" == "yes" ]; then
+   killall -9 yarprun
 fi
 
-if [ "$kill_testnode" == "yes" ]; then
-   killall yarprun
+if [ "$kill_yarp" == "yes" ]; then
+   killall -9 yarpserver
 fi
+
 
 cd build-code
 make uninstall && cd ../
