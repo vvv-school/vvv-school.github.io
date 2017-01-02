@@ -8,18 +8,24 @@
 # - curl
 # - jq
 
-if [ $# -lt 3 ]; then
-    echo "Usage: $0 <organization> <path-to-gradebook> <build-dir>"
+if [ $# -lt 4 ]; then
+    echo "Usage: $0 <organization> <team> <path-to-gradebook> <build-dir>"
     exit 1
 fi
 
-org=$1
-path=$2
-
-if [ ! -d "$3" ]; then
-    mkdir $3
+if [ -z "$GIT_TOKEN_ORG_READ" ]; then
+    echo -e "${red}env variable GIT_TOKEN_ORG_READ is not set${data}${nc}\n"
+    exit 2
 fi
-cd "$3"
+
+org=$1
+team=$2
+path=$3
+
+if [ ! -d "$4" ]; then
+    mkdir $4
+fi
+cd "$4"
 
 data=$path/data.json
 cur_gradebook=$path/gradbook.json
@@ -27,7 +33,7 @@ new_gradebook=new-gradbook.json
 
 if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
-    exit 2
+    exit 3
 fi
 
 # color codes
@@ -41,6 +47,14 @@ nc='\033[0m'
 status_passed=":white_check_mark:"
 status_failed=":x:"
 
+# get students from $team
+token_header="-H \"Authorization: token $GIT_TOKEN_ORG_READ\""
+team_id=$(curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name=="$team")) | .[0] | .id')
+students=$(curl -s $token_header -G https://api.github.com/teams/$team_id/members | jq '.[] | .login' | sed 's/\"//g')
+
+tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
+assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
+
 function smoke_test()
 {
     if [ -d "$1" ]; then
@@ -52,7 +66,8 @@ function smoke_test()
     if [ $? -eq 0 ]; then        
         if [ -d "$1/smoke-test" ]; then
             cd $1/smoke-test
-            ret=$(./test.sh)
+            ./test.sh
+            ret=$?
         else
             echo -e "${red}$1 does not contain smoke-test${nc}" > /dev/stderr
         fi
@@ -62,10 +77,6 @@ function smoke_test()
 
     echo $ret
 }
-
-students=$(cat $data | jq '.students | .[]' | sed 's/\"//g')
-tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
-assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
 
 # compute the student's score counting tutorials and assignments
 function update_score {
