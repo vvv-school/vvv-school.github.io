@@ -28,8 +28,8 @@ fi
 cd "$4"
 
 data=$path/data.json
-cur_gradebook=$path/gradbook.json
-new_gradebook=new-gradbook.json
+cur_gradebook=$path/gradebook.json
+new_gradebook=new-gradebook.json
 
 if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
@@ -55,37 +55,14 @@ students=$(curl -s $token_header -G https://api.github.com/teams/$team_id/member
 tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
 assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
 
-function smoke_test()
-{
-    if [ -d "$1" ]; then
-        rm $1 -rf
-    fi
- 
-    local ret="error"
-    git clone $2
-    if [ $? -eq 0 ]; then        
-        if [ -d "$1/smoke-test" ]; then
-            cd $1/smoke-test
-            ./test.sh
-            ret=$?
-        else
-            echo -e "${red}$1 does not contain smoke-test${nc}" > /dev/stderr
-        fi
-    else
-        echo -e "${red}GitHub seems unreachable${nc}" > /dev/stderr
-    fi
-
-    echo $ret
-}
-
 # compute the student's score counting tutorials and assignments
 function update_score {
-    stud=$1
+    local stud=$1
     
-    stud_tutorials=$(cat $new_gradebook | jq 'map(select(.username=="$stud")) | .[0] | .tutorials | .[] | .name' | sed 's/\"//g')
-    stud_assignments=$(cat $new_gradebook | jq 'map(select(.username=="$stud")) | .[0] | .assignments | .[] | .name' | sed 's/\"//g')
+    local stud_tutorials=$(cat $new_gradebook | jq 'map(select(.username=="$stud")) | .[0] | .tutorials | .[] | .name' | sed 's/\"//g')
+    local stud_assignments=$(cat $new_gradebook | jq 'map(select(.username=="$stud")) | .[0] | .assignments | .[] | .name' | sed 's/\"//g')
     
-    score=0
+    local score=0
     for tuto1 in $stud_tutorials; do
         for tuto2 in $tutorials; do
            if [ "${tuto1}" == "${tuto2}-${stud}" ]; then              
@@ -105,21 +82,65 @@ function update_score {
     done
     
     echo -e "New score of ${green}${stud}${nc} is ${cyan}${score}${nc}" > /dev/stderr
-    jq_path_student=$(cat $new_gradebook | jq 'paths(.username?=="$stud")')    
+    local jq_path_student=$(cat $new_gradebook | jq 'paths(.username?=="$stud")')    
     cat $new_gradebook | jq 'setpath([$jq_path_student,"score"];$score)' > $new_gradebook
 }
 
+# push the new gradebook to GitHub
 function publish_gradebook {
-    # git diff --exit-code
-    # if [ $? -ne 0 ]; then
-    #   generate README.md
-    # fi
+    cp $new_gradebook $cur_gradebook
+    local cur_dir=$(pwd)
+    
+    cd $path
+    git diff --exit-code
+    if [ $? -ne 0 ]; then
+        local keep_leading_lines=1
+        head "-${keep_leading_lines}" README.md > README.md
+        
+        local num_students_1=$(cat gradebook.json | jq 'length-1')
+        for i in `seq 0 $num_students_1`; do
+            local student_data=$(cat gradebook.json | jq '.[$i]')
+            local username=$(cat ${student_data} | jq '.username')
+            local totscore=$(cat ${student_data} | jq '.score')
+            print "[**$username**](https://github.com/$username) total score = **$totscore**\n\n" >> README.md
+            print "| repository | status | score |" >> README.md
+            print "|    :--:    |  :--:  | :--:  |" >> README.md
+            
+            local tutorials_data=$(cat ${student_data} | jq '.tutorials')
+            local num_tutorials_1=$(cat ${tutorials_data} | jq 'length-1')
+            for t in `seq 0 $num_tutorials_1`; do
+                local name=$(cat ${tutorials_data} jq '.[$t] | .name')
+                local status=$(cat ${tutorials_data} | jq '.[$t] | .status')
+                local score=$(cat ${tutorials_data} | jq '.[$t] | .score')
+                print "| $name | $status | $score |\n" >> README.md
+            done
+        
+            local assignments_data=$(cat ${student_data} | jq '.assignments')
+            local num_assignments_1=$(cat ${assignments_data} | jq 'length-1')
+            for a in `seq 0 $num_assignments_1`; do
+                local name=$(cat ${assignments_data} jq '.[$a] | .name')
+                local status=$(cat ${assignments_data} | jq '.[$a] | .status')
+                local score=$(cat ${assignments_data} | jq '.[$a] | .score')
+                print "| $name | $status | $score |\n" >> README.md
+            done
+        done
+                    
+        git add gradebook.json README.md
+        git commit -m "updated by automatic grading script"
+        git push origin master
+        if [ $? -ne 0 ]; then
+            echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
+        fi        
+    fi
+    
+    cd $cur_dir
 }
 
 # update tutorial in the new gradebook
 function update_tutorial {
-    stud=$1
-    repo=$2
+    local stud=$1
+    local tuto=$2
+    local repo="${tuto}-${stud}"
     
     echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)" > /dev/stderr
     
@@ -127,22 +148,51 @@ function update_tutorial {
         rm $new_gradebook
     fi
 
-    jq_path=$(cat $cur_gradebook | jq 'paths(.name?=="$repo")')
+    local jq_path=$(cat $cur_gradebook | jq 'paths(.name?=="$repo")')
     if [ ! -z "$jq_path" ]; then
         cat $cur_gradebook | jq 'setpath([$jq_path,"status"];$status_passed)' > $new_gradebook
     else        
-        jq_path_student=$(cat $cur_gradebook | jq 'paths(.username?=="$stud")')
+        local jq_path_student=$(cat $cur_gradebook | jq 'paths(.username?=="$stud")')
+        local jq_path_tutorial=0
         if [ ! -z "$jq_path_student" ]; then
             jq_path_tutorial=$(cat $cur_gradebook | jq '.[] | select(.username=="$stud") | .tutorials | length+1')
         else
-            jq_path_student=$(cat $cur_gradebook | jq 'length+1')
-            jq_path_tutorial=0
+            jq_path_student=$(cat $cur_gradebook | jq 'length+1')            
         fi
+        
+        local tutorial_score=$(cat $data | jq '.tutorials | map(select(.name=="$tuto")) | .[0] | .score')
         cat $cur_gradebook | jq 'setpath([$jq_path_student,"tutorials",$jq_path_tutorial,"name"];$repo) |\
-                                 setpath([$jq_path_student,"tutorials",$jq_path_tutorial,"status"];$status_pased)' > $new_gradebook
+                                 setpath([$jq_path_student,"tutorials",$jq_path_tutorial,"status"];$status_pased) |\
+                                 setpath([$jq_path_student,"tutorials",$jq_path_tutorial,"score"];$tutorial_score)' > $new_gradebook
     fi
     
     update_score ${stud}
+    publish_gradebook
+}
+
+function smoke_test()
+{
+    local repo=$1
+    local url=$2
+    if [ -d "$repo" ]; then
+        rm $repo -rf
+    fi
+ 
+    local ret="error"
+    git clone $url
+    if [ $? -eq 0 ]; then        
+        if [ -d "$repo/smoke-test" ]; then
+            cd $repo/smoke-test
+            ./test.sh
+            ret=$?
+        else
+            echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
+        fi
+    else
+        echo -e "${red}GitHub seems unreachable${nc}" > /dev/stderr
+    fi
+
+    echo $ret
 }
 
 function ctrl_c() {
@@ -174,7 +224,7 @@ while true; do
             # for tutorials, simply give them for granted
             for tuto in $tutorials; do
                 if [ "${repo}" == "${tuto}-${stud}" ]; then                    
-                    update_tutorial ${stud} ${repo}
+                    update_tutorial ${stud} ${tuto}
                     proceed=true
                     break
                 fi
