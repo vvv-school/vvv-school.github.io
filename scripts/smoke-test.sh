@@ -4,16 +4,19 @@
 # Authors: Ugo Pattacini <ugo.pattacini@iit.it>
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
 
-dir=$(pwd)
-if [ $# -gt 1 ]; then   
-    cd $1
+if [ $# -lt 2 ]; then
+    echo "Usage: $0 <path-to-code> <path-to-test>"
+    exit 4
 fi
+
+code=$1
+test=$2
 
 if [ -d build-code ]; then 
     rm build-code -rf
 fi
 mkdir build-code && cd build-code
-cmake -DCMAKE_BUILD_TYPE=Release ../../
+cmake -DCMAKE_BUILD_TYPE=Release $1
 if [ $? -ne 0 ]; then
    exit 1
 fi
@@ -21,14 +24,14 @@ make install
 if [ $? -ne 0 ]; then
    exit 1
 fi
-cd $dir
+cd ../
 
 if [ -d build-test ]; then 
     rm build-test -rf
 fi
 rm build-test -rf
 mkdir build-test && cd build-test
-cmake -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCMAKE_BUILD_TYPE=Release $2
 make
 if [ $? -ne 0 ]; then
    exit 2
