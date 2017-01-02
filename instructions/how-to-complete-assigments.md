@@ -26,6 +26,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 >1. [Create a **new branch**](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) from `master`; you may call it as your `username`.
 1. [**Clone**](http://gitref.org/creating/#clone) the repository to your computer.
 1. Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
+1. If there exists a [**smoke test**](#smoke-testing), what about giving it a try? :wink:
 1. [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
 1. [Create a **pull request**](https://help.github.com/articles/creating-a-pull-request) (**PR**) with `master` as _base branch_ and `username` as _compare branch_.
 1. [**Request** a teacher to review your PR](https://help.github.com/articles/requesting-a-pull-request-review/) :wave: to turn in the assignment.
