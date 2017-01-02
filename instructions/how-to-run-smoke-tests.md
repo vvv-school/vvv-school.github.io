@@ -12,3 +12,4 @@ $ ./test.sh
 - **`1`** the code under test doesn't compile :hammer:
 - **`2`** the test itself doesn't compile :gun:
 - **`3`** test failed :x:
+- **`4`** generic error
