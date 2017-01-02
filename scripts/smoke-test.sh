@@ -9,15 +9,15 @@ if [ $# -lt 3 ]; then
     exit 4
 fi
 
-build=$1
-code=$2
-test=$3
+build_dir=$1
+code_dir=$2
+test_dir=$3
 
 if [ -d build-code ]; then 
     rm build-code -rf
 fi
 mkdir build-code && cd build-code
-cmake -DCMAKE_BUILD_TYPE=Release $code
+cmake -DCMAKE_BUILD_TYPE=Release $code_dir
 if [ $? -ne 0 ]; then
    exit 1
 fi
@@ -32,7 +32,7 @@ if [ -d build-test ]; then
 fi
 rm build-test -rf
 mkdir build-test && cd build-test
-cmake -DCMAKE_BUILD_TYPE=Release $test
+cmake -DCMAKE_BUILD_TYPE=Release $test_dir
 make
 if [ $? -ne 0 ]; then
    exit 2
@@ -40,10 +40,10 @@ fi
 cd ../
 
 # to let yarpmanager access the fixture
-export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test
+export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test_dir
 
 # to make the test library retrievable
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build/build-test/plugins
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build_dir/build-test/plugins
 
 yarp where > /dev/null 2>&1
 if [ $? -eq 0 ]; then
@@ -63,7 +63,7 @@ else
    sleep 1
 fi
 
-testrunner --verbose --suit test.xml > output.txt
+testrunner --verbose --suit $test_dir/test.xml > output.txt
 
 if [ "$kill_yarp" == "yes" ]; then
    killall yarpserver
