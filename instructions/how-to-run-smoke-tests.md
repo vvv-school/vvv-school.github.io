@@ -1,7 +1,7 @@
 # How to run smoke tests
 
 ### Usage
-Go in the **smoke-test** subfolder and run:
+Go in the **smoke-test** subdirectory and run:
 ```sh
 $ ./test.sh
 ```
