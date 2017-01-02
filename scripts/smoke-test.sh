@@ -39,9 +39,6 @@ if [ $? -ne 0 ]; then
 fi
 cd ../
 
-# enable interactive shell
-set -m
-
 # to let yarpmanager access the fixture
 export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test_dir
 
