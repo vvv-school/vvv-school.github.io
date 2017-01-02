@@ -1,12 +1,11 @@
 # How to run smoke tests
 
 ### Usage
+Go in the smoke-test subfolder and run:
 ```sh
-$ ./test.sh [path-to-smoke-test]
+$ ./test.sh
 ```
-If the option `path-to-smoke-test` is not given, then the current directory
-`./` is taken as input.
- 
+
 ### Exit Codes
 
 - **`0`** test passed :white_check_mark:
