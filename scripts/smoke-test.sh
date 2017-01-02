@@ -49,8 +49,9 @@ yarp where > /dev/null 2>&1
 if [ $? -eq 0 ]; then
    kill_yarp="no"
 else
-   kill_yarp="yes"
+   kill_yarp="yes"   
    yarpserver --write &
+   # > /dev/null 2>&1 doesn't seem working
    sleep 1
 fi
 
@@ -59,7 +60,7 @@ if [ $? -eq 0 ]; then
    kill_testnode="no"
 else
    kill_testnode="yes"
-   yarprun --server /testnode > &
+   yarprun --server /testnode > /dev/null 2>&1 &
    sleep 1
 fi
 
