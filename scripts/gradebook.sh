@@ -9,7 +9,7 @@
 # - jq
 
 if [ $# -lt 4 ]; then
-    echo "Usage: $0 <organization> <team> <path-to-gradebook> <build-dir>"
+    echo "Usage: $0 <organization> <team> <abspath-to-gradebook> <abspath-to-build>"
     exit 1
 fi
 
@@ -49,8 +49,11 @@ status_failed=":x:"
 
 # get students from $team
 token_header="-H \"Authorization: token $GIT_TOKEN_ORG_READ\""
-team_id=$(curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name=="$team")) | .[0] | .id')
-students=$(curl -s $token_header -G https://api.github.com/teams/$team_id/members | jq '.[] | .login' | sed 's/\"//g')
+
+query="curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name==\"$team\")) | .[0] | .id'"
+team_id=$(eval $query)
+query="curl -s $token_header -G https://api.github.com/teams/$team_id/members | jq '.[] | .login' | sed 's/\"//g'"
+students=$(eval $query)
 
 tutorials=$(cat $data | jq '.tutorials | .[] | .name' | sed 's/\"//g')
 assignments=$(cat $data | jq '.assignments | .[] | .name' | sed 's/\"//g')
@@ -207,7 +210,7 @@ while true; do
     repositories=$(curl -s https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\"//g')
     
     echo -e "Working out the students:\n${green}${students}${nc}\n"
-    echo -e "Against repositories in ${cyan}${org}:\n${blue}${repositories}${nc}\n"
+    echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
 
     # for each student in the list
     for stud in $students; do

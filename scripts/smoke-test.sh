@@ -5,7 +5,7 @@
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
 
 if [ $# -lt 3 ]; then
-    echo "Usage: $0 <path-to-build> <path-to-code> <path-to-test>"
+    echo "Usage: $0 <abspath-to-build> <abspath-to-code> <abspath-to-test>"
     exit 4
 fi
 
