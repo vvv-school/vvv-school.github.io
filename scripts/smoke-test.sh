@@ -39,6 +39,9 @@ if [ $? -ne 0 ]; then
 fi
 cd ../
 
+# enable interactive shell
+set -m
+
 # to let yarpmanager access the fixture
 export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test_dir
 
@@ -59,7 +62,7 @@ if [ $? -eq 0 ]; then
    kill_testnode="no"
 else
    kill_testnode="yes"
-   yarprun --server /testnode > /dev/null 2>&1 &
+   yarprun --server /testnode > &
    sleep 1
 fi
 
