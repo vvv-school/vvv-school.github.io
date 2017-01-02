@@ -219,11 +219,17 @@ function gc_student {
 }
 
 # add missing students as empty items
-function add_empty_student {
-    local $repositories=$1
+function add_missing_students {  
+    for stud in $students; do
+        local isin=$(eval "cat $gradebook_new | jq 'map(select(.username==\"${stud}\")) | .[0] | .username'")
+        if [ "$isin" == "null" ]; then
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq '.+ [{\"username\": \"${stud}\", \"tutorials\": [], \"assignments\": [], score: 0}]' > $gradebook_new"
+        fi
+    done
 }
 
-# graceful shut down
+# try to shut down gracefully
 function ctrl_c() {
     echo -e "${red}Trapped CTRL-C${nc}"
     exit 0
@@ -279,10 +285,12 @@ while true; do
                 fi
             done
         done
-        
+
+        # remove student's unavailable repositories
         gc_student $stud $repositories
     done
-    
-    add_empty_student $repositories
+
+    # add missing students as empty items    
+    add_missing_students
 done
 
