@@ -127,10 +127,10 @@ function publish_gradebook {
                 print "| $name | $status | $score |\n" >> README.md
             done
         done
-                    
+
         git add gradebook.json README.md
         git commit -m "updated by automatic grading script"
-        git push origin master
+        #git push origin master
         if [ $? -ne 0 ]; then
             echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
         fi        
@@ -154,13 +154,13 @@ function update_tutorial {
     local jq_path=$(cat $cur_gradebook | jq 'paths(.name?=="$repo")')
     if [ ! -z "$jq_path" ]; then
         cat $cur_gradebook | jq 'setpath([$jq_path,"status"];$status_passed)' > $new_gradebook
-    else        
+    else
         local jq_path_student=$(cat $cur_gradebook | jq 'paths(.username?=="$stud")')
         local jq_path_tutorial=0
         if [ ! -z "$jq_path_student" ]; then
             jq_path_tutorial=$(cat $cur_gradebook | jq '.[] | select(.username=="$stud") | .tutorials | length+1')
         else
-            jq_path_student=$(cat $cur_gradebook | jq 'length+1')            
+            jq_path_student=$(cat $cur_gradebook | jq 'length+1')
         fi
         
         local tutorial_score=$(cat $data | jq '.tutorials | map(select(.name=="$tuto")) | .[0] | .score')
