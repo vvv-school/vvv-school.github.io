@@ -209,6 +209,21 @@ function smoke_test()
     echo $ret
 }
 
+function update_assignment {
+}
+
+# remove student's unavailable repositories
+function gc_student {
+    local $stud=$1
+    local $repositories=$2
+}
+
+# add missing students as empty items
+function add_empty_student {
+    local $repositories=$1
+}
+
+# graceful shut down
 function ctrl_c() {
     echo -e "${red}Trapped CTRL-C${nc}"
     exit 0
@@ -264,6 +279,10 @@ while true; do
                 fi
             done
         done
+        
+        gc_student $stud $repositories
     done
+    
+    add_empty_student $repositories
 done
 
