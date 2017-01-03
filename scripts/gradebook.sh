@@ -156,7 +156,7 @@ function publish_gradebook {
             fi
             
             local totscore=$(eval "cat $cur_dir/student_data.tmp | jq '.score'")
-            echo -e "**Total Score = $totscore**" >> $README
+            echo -e "**Total Score = $totscore**\n" >> $README
             echo -e "---\n" >> $README
         done
         
