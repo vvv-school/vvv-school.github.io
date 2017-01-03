@@ -19,11 +19,11 @@ fi
 mkdir build-code && cd build-code
 cmake -DCMAKE_BUILD_TYPE=Release $code_dir
 if [ $? -ne 0 ]; then
-   exit 1
+   exit 2
 fi
 make install
 if [ $? -ne 0 ]; then
-   exit 1
+   exit 2
 fi
 cd ../
 
@@ -33,9 +33,12 @@ fi
 rm build-test -rf
 mkdir build-test && cd build-test
 cmake -DCMAKE_BUILD_TYPE=Release $test_dir
+if [ $? -ne 0 ]; then
+   exit 3
+fi
 make
 if [ $? -ne 0 ]; then
-   exit 2
+   exit 3
 fi
 cd ../
 
@@ -88,7 +91,7 @@ nc='\033[0m'
 npassed=$(grep -i "Number of passed test cases" output.txt | sed 's/[^0-9]*//g')
 if [ $npassed -eq 0 ]; then   
    echo -e "${red}xxxxx Test FAILED xxxxx${nc}\n"
-   exit 3
+   exit 1
 else
    echo -e "${green}===== Test PASSED =====${nc}\n"
    exit 0
