@@ -128,7 +128,7 @@ function publish_gradebook {
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
             local empty=true;
             
-            eval "cat student_data.tmp | jq '.tutorials'" > $cur_dir/tutorials_data.tmp
+            eval "cat $cur_dir/student_data.tmp | jq '.tutorials'" > $cur_dir/tutorials_data.tmp
             local num_tutorials_1=$(eval "cat $cur_dir/tutorials_data.tmp | jq 'length-1'")
             for t in `seq 0 $num_tutorials_1`; do
                 local name=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .name' | sed 's/\\\"//g'")
@@ -138,7 +138,7 @@ function publish_gradebook {
                 empty=false;
             done
         
-            eval "cat student_data.tmp | jq '.assignments'" > $cur_dir/assignments_data.tmp
+            eval "cat $cur_dir/student_data.tmp | jq '.assignments'" > $cur_dir/assignments_data.tmp
             local num_assignments_1=$(eval "cat $cur_dir/assignments_data.tmp | jq 'length-1'")
             for a in `seq 0 $num_assignments_1`; do
                 local name=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .name' | sed 's/\\\"//g'")
