@@ -120,10 +120,9 @@ function publish_gradebook {
         local num_students_1=$(eval "cat $gradebook_cur | jq 'length-1'")
         for i in `seq 0 $num_students_1`; do
             eval "cat $gradebook_cur | jq '.[$i]'" > $cur_dir/student_data.tmp
-            local username=$(eval "cat $cur_dir/student_data.tmp | jq '.username' | sed 's/\\\"//g'")
-            local totscore=$(eval "cat $cur_dir/student_data.tmp | jq '.score'")
+            local username=$(eval "cat $cur_dir/student_data.tmp | jq '.username' | sed 's/\\\"//g'")            
             echo "" >> $README
-            echo -e "### [**$username**](https://github.com/$username) has score = **$totscore**\n" >> $README
+            echo -e "### [**$username**](https://github.com/$username) Grade\n" >> $README            
             echo -e "| assignment | status | score |" >> $README
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
             local empty=true;
@@ -154,8 +153,8 @@ function publish_gradebook {
                 head -n -2 $cur_dir/readme.tmp > $README                
             fi
             
-            # newline
-            echo "" >> $README
+            local totscore=$(eval "cat $cur_dir/student_data.tmp | jq '.score'")
+            echo -e "**Total Score = $totscore**\n" >> $README
         done
         
         if [ -f $cur_dir/readme.tmp ]; then
