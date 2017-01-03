@@ -93,6 +93,7 @@ function update_score {
     echo -e "New score of ${green}${stud}${nc} is ${cyan}${score}${nc}" > /dev/stderr
     local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'") 
     jq_path=$(echo "$jq_path" | jq -c '.+["score"]')
+    
     cp $gradebook_new $gradebook_tmp
     eval "cat $gradebook_tmp | jq 'setpath(${jq_path};${score})' > $gradebook_new"
     rm $gradebook_tmp
@@ -100,6 +101,9 @@ function update_score {
 
 # push the new gradebook to GitHub
 function publish_gradebook {
+    # DBG
+    return 
+    
     cp $gradebook_new $gradebook_cur
     local cur_dir=$(pwd)
     
@@ -139,7 +143,7 @@ function publish_gradebook {
 
         git add gradebook.json README.md
         git commit -m "updated by automatic grading script"
-        #git push origin master
+        git push origin master
         if [ $? -ne 0 ]; then
             echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
         fi        
@@ -156,32 +160,40 @@ function update_tutorial {
     
     echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)" > /dev/stderr
 
-    local jq_path=$(eval "cat $gradebook_cur | jq -c 'paths(.name?==\"$repo\")'")
+    local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
     if [ ! -z "$jq_path" ]; then
         jq_path=$(echo "$jq_path" | jq -c '.+["status"]')
-        eval "cat $gradebook_cur | jq 'setpath(${jq_path};\"${status_passed}\")' > $gradebook_new"
+        
+        cp $gradebook_new $gradebook_tmp
+        eval "cat $gradebook_tmp | jq 'setpath(${jq_path};\"${status_passed}\")' > $gradebook_new"
+        rm $gradebook_tmp
     else
-        local jq_path_student=$(eval "cat $gradebook_cur | jq -c 'paths(.username?==\"$stud\")'")
+        local jq_path_student=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'")
         local jq_path_tutorial=0
         if [ ! -z "$jq_path_student" ]; then
-            jq_path_tutorial=$(eval "cat $gradebook_cur | jq '.[] | select(.username==\"$stud\") | .tutorials | length+1'")
+            jq_path_tutorial=$(eval "cat $gradebook_new | jq '.[] | select(.username==\"$stud\") | .tutorials | length+1'")
         else
-            jq_path_student=$(eval "cat $gradebook_cur | jq 'length+1'")
+            jq_path_student=$(eval "cat $gradebook_new | jq 'length+1'")
         fi
         
         local tutorial_score=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto\")) | .[0] | .score'")
         local jq_path_name=$(echo "$jq_path_student" | jq -c '.+["tutorials",$jq_path_tutorial,"name"]')
         local jq_path_status=$(echo "$jq_path_student" | jq -c '.+["tutorials",$jq_path_tutorial,"status"]')
         local jq_path_score=$(echo "$jq_path_student" | jq -c '.+["tutorials",$jq_path_tutorial,"score"]')
-        eval "cat $gradebook_cur | jq 'setpath(${jq_path_name};${repo})' > $gradebook_new"
-        eval "cat $gradebook_cur | jq 'setpath(${jq_path_status};${status_pased})' > $gradebook_new"
-        eval "cat $gradebook_cur | jq 'setpath(${jq_path_score};${tutorial_score})' > $gradebook_new"
+        
+        cp $gradebook_new $gradebook_tmp
+        eval "cat $gradebook_tmp | jq 'setpath(${jq_path_name};${repo})' > $gradebook_new"
+        
+        cp $gradebook_new $gradebook_tmp
+        eval "cat $gradebook_tmp | jq 'setpath(${jq_path_status};${status_passed})' > $gradebook_new"
+        
+        cp $gradebook_new $gradebook_tmp
+        eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${tutorial_score})' > $gradebook_new"
+        rm $gradebook_tmp
     fi
 
     update_score ${stud}
-    #publish_gradebook
-    
-    echo ""
+    publish_gradebook
 }
 
 function smoke_test()
@@ -194,7 +206,7 @@ function smoke_test()
  
     local ret="error"
     git clone $url
-    if [ $? -eq 0 ]; then        
+    if [ $? -eq 0 ]; then
         if [ -d "$repo/smoke-test" ]; then
             cd $repo/smoke-test
             ./test.sh
@@ -209,13 +221,69 @@ function smoke_test()
     echo $ret
 }
 
-function update_assignment {
-}
+# function update_assignment {
+# }
 
 # remove student's unavailable repositories
 function gc_student {
-    local $stud=$1
-    local $repositories=$2
+    local stud=$1
+    shift
+    local repositories=${@}
+
+    local jq_path_stud=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\") | .[0]'")
+    
+    local stud_tutorials=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .tutorials'")
+    local stud_tutorials_name=$(echo "$stud_tutorials" | jq '.[] | .name' | sed 's/\"//g')
+    for tuto in $stud_tutorials_name; do        
+        local isin=false
+        for repo in $repositories; do
+            if [ "${tuto}" == "${repo}" ]; then
+                isin=true
+                break
+            fi
+        done
+        
+        if [ "${isin}" == "false" ]; then
+            echo "Removing ${tuto} from gradebook, since it's not in ${org}"
+            echo "$stud_tutorials" > $gradebook_tmp
+            local jq_path_tuto=$(eval "cat $gradebook_tmp | jq -c 'paths(.name?==\"$tuto\") | .[0]'")
+                        
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'del(.[${jq_path_stud}].tutorials[${jq_path_tuto}])' > $gradebook_new"
+            rm $gradebook_tmp
+            
+            # recompute data
+            local stud_tutorials=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .tutorials'")
+        fi
+    done
+    
+    local stud_assignments=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .assignments'")
+    local stud_assignments_name=$(echo "$stud_assignments" | jq '.[] | .name' | sed 's/\"//g')
+    for assi in $stud_assignments_name; do
+        local isin=false
+        for repo in $repositories; do
+            if [ "${assi}" == "${repo}" ]; then
+                isin=true
+                break
+            fi
+        done
+
+        if [ "${isin}" == "false" ]; then
+            echo "Removing ${assi} from gradebook, since it's not in ${org}"
+            echo "$stud_assignments" > $gradebook_tmp
+            local jq_path_assi=$(eval "cat $gradebook_tmp | jq -c 'paths(.name?==\"$assi\") | .[0]'")
+
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'del(.[${jq_path_stud}].assignments[${jq_path_assi}])' > $gradebook_new"
+            rm $gradebook_tmp
+            
+            # recompute data
+            local stud_assignments=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .assignments'")
+        fi
+    done
+    
+    update_score ${stud}
+    publish_gradebook
 }
 
 # add missing students as empty items
@@ -227,11 +295,13 @@ function add_missing_students {
             eval "cat $gradebook_tmp | jq '.+ [{\"username\": \"${stud}\", \"tutorials\": [], \"assignments\": [], score: 0}]' > $gradebook_new"
         fi
     done
+    
+    publish_gradebook
 }
 
 # try to shut down gracefully
 function ctrl_c() {
-    echo -e "${red}Trapped CTRL-C${nc}"
+    echo -e "\n${red}Trapped CTRL-C${nc}\n"
     exit 0
 }
 
@@ -239,8 +309,18 @@ function ctrl_c() {
 trap ctrl_c SIGINT
 
 while true; do
-    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
+    # generate new gradebook from old one, if exists
+    if [ -f $gradebook_new ]; then
+        rm $gradebook_new
+    fi
+    if [ -f $gradebook_cur ]; then
+        cp $gradebook_cur $gradebook_new
+    else
+        touch $gradebook_new
+    fi
     
+    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
+        
     echo ""
     echo -e "Working out the students:\n${green}${students}${nc}\n"
     echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
@@ -248,10 +328,11 @@ while true; do
     # for each student in the list
     for stud in $students; do
         echo -e "${cyan}Grading ${green}${stud}${nc}"
-        cur_stud_assignments="[null]"
-        if [ -f $gradebook_cur ]; then
-            cur_stud_assignments=$(eval "cat $gradebook_cur | jq '. | map(select(.username == \"$stud\")) | .[0] | .assignments'")
-        fi 
+        
+        # remove student's unavailable repositories        
+        gc_student $stud ${repositories[@]}
+        
+        cur_stud_assignments=$(eval "cat $gradebook_new | jq '. | map(select(.username == \"$stud\")) | .[0] | .assignments'")
             
         # for each repository found within the organization
         for repo in $repositories; do
@@ -285,12 +366,10 @@ while true; do
                 fi
             done
         done
-
-        # remove student's unavailable repositories
-        gc_student $stud $repositories
+        
+        echo ""
     done
 
-    # add missing students as empty items    
+    # add missing students as empty items
     add_missing_students
 done
-
