@@ -104,7 +104,7 @@ function update_score {
 function publish_gradebook {
     cp $gradebook_new $gradebook_cur
 
-    git diff --exit-code > /dev/null
+    git diff --quiet
     if [ $? -ne 0 ]; then
         echo -e "${green}Publishing the gradebook${nc}\n" > /dev/stderr
         local keep_leading_lines=1
@@ -156,8 +156,8 @@ function publish_gradebook {
         fi
 
         git add $gradebook_cur $README
-        git commit -q -m "updated by automatic grading script"
-        git push -q origin master
+        git commit --quiet -m "updated by automatic grading script"
+        git push --quiet origin master
         if [ $? -ne 0 ]; then
             echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
         fi
