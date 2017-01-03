@@ -9,7 +9,7 @@ $ ./test.sh
 ### Exit Codes
 
 - **`0`** test passed :white_check_mark:
-- **`1`** code under test doesn't compile :hammer:
-- **`2`** test itself doesn't compile :gun:
-- **`3`** test failed :x:
+- **`1`** test failed :x:
+- **`2`** code under test doesn't compile :hammer:
+- **`3`** test itself doesn't compile :gun:
 - **`4`** generic error :scream:
