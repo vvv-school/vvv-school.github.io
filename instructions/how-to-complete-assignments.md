@@ -18,7 +18,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 
 >1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system :white_check_mark:
 1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
-1. Go in the **smoke-test** subdirectory :smoking: and [run **`./test.sh`**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
+1. Go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
 
 #### Collaborative Code Review
