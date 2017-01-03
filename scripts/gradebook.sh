@@ -116,9 +116,11 @@ function publish_gradebook {
             eval "cat $gradebook_cur | jq '.[$i]'" > student_data.tmp
             local username=$(eval "cat student_data.tmp | jq '.username' | sed 's/\\\"//g'")
             local totscore=$(eval "cat student_data.tmp | jq '.score'")
-            echo -e "### [**$username**](https://github.com/$username) has score = **$totscore**:\n" >> $README
+            echo "" >> $README
+            echo -e "### [**$username**](https://github.com/$username) has score = **$totscore**\n" >> $README
             echo -e "| repository | status | score |" >> $README
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
+            local empty=true;
             
             eval "cat student_data.tmp | jq '.tutorials'" > tutorials_data.tmp
             local num_tutorials_1=$(eval "cat tutorials_data.tmp | jq 'length-1'")
@@ -127,6 +129,7 @@ function publish_gradebook {
                 local status=$(eval "cat tutorials_data.tmp | jq '.[$t] | .status' | sed 's/\\\"//g'")
                 local score=$(eval "cat tutorials_data.tmp | jq '.[$t] | .score'")
                 echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
+                empty=false;
             done
         
             eval "cat student_data.tmp | jq '.assignments'" > assignments_data.tmp
@@ -136,7 +139,14 @@ function publish_gradebook {
                 local status=$(eval "cat assignments_data.tmp | jq '.[$a] | .status' | sed 's/\\\"//g'")
                 local score=$(eval "cat assignments_data.tmp | jq '.[$a] | .score'")
                 echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
+                empty=false;
             done
+            
+            if [ "${empty}" == "true" ]; then
+                # remove the table
+                cp $README readme.tmp
+                head -n -2 readme.tmp > $README                
+            fi
             
             # newline
             echo "" >> $README
@@ -354,7 +364,7 @@ function gc_student_repositories {
 
 # try to shut down gracefully
 function ctrl_c() {
-    echo -e "\n${red}Trapped CTRL-C${nc}\n"
+    echo -e "\n${red}Trapped CTRL-C, shutting down...${nc}\n" > /dev/stderr
     exit 0
 }
 
