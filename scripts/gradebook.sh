@@ -168,7 +168,7 @@ function publish_gradebook {
             rm $cur_dir/tutorials_data.tmp
         fi
         if [ -f $cur_dir/assignments_data.tmp ]; then
-            $cur_dir/rm assignments_data.tmp
+            rm $cur_dir/assignments_data.tmp
         fi
 
         git add $gradebook_cur $README
