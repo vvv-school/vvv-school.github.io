@@ -118,7 +118,7 @@ function publish_gradebook {
             local totscore=$(eval "cat student_data.tmp | jq '.score'")
             echo "" >> $README
             echo -e "### [**$username**](https://github.com/$username) has score = **$totscore**\n" >> $README
-            echo -e "| repository | status | score |" >> $README
+            echo -e "| assignment | status | score |" >> $README
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
             local empty=true;
             
