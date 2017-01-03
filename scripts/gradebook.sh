@@ -3,10 +3,14 @@
 # Copyright: (C) 2016 iCub Facility - Istituto Italiano di Tecnologia
 # Authors: Ugo Pattacini <ugo.pattacini@iit.it>
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
-
+#
 # Dependencies (through apt-get):
 # - curl
 # - jq
+#
+# The env variable GIT_TOKEN_ORG_READ should contain a valid GitHub
+# token with "org:read" permission to access the organization's data
+#
 
 if [ $# -lt 4 ]; then
     echo "Usage: $0 <organization> <team> <abspath-to-gradebook> <abspath-to-build>"
@@ -49,7 +53,7 @@ nc='\033[0m'
 status_passed=":white_check_mark:"
 status_failed=":x:"
 
-# GitHub token for authorized access (required for rate limit)
+# GitHub token for authorized access
 token_header="-H \"Authorization: token $GIT_TOKEN_ORG_READ\""
 
 # get students from $team
@@ -103,66 +107,68 @@ function update_score {
 # push the new gradebook to GitHub
 function publish_gradebook {
     cp $gradebook_new $gradebook_cur
+    cur_dir=$(pwd)
 
+    cd $path
     git diff --quiet
     if [ $? -ne 0 ]; then
         echo -e "${green}Publishing the gradebook${nc}\n" > /dev/stderr
         local keep_leading_lines=1
-        cp $README readme.tmp
-        head -"${keep_leading_lines}" readme.tmp > $README
+        cp $README $cur_dir/readme.tmp
+        head -"${keep_leading_lines}" $cur_dir/readme.tmp > $README
         
         local num_students_1=$(eval "cat $gradebook_cur | jq 'length-1'")
         for i in `seq 0 $num_students_1`; do
-            eval "cat $gradebook_cur | jq '.[$i]'" > student_data.tmp
-            local username=$(eval "cat student_data.tmp | jq '.username' | sed 's/\\\"//g'")
-            local totscore=$(eval "cat student_data.tmp | jq '.score'")
+            eval "cat $gradebook_cur | jq '.[$i]'" > $cur_dir/student_data.tmp
+            local username=$(eval "cat $cur_dir/student_data.tmp | jq '.username' | sed 's/\\\"//g'")
+            local totscore=$(eval "cat $cur_dir/student_data.tmp | jq '.score'")
             echo "" >> $README
             echo -e "### [**$username**](https://github.com/$username) has score = **$totscore**\n" >> $README
             echo -e "| assignment | status | score |" >> $README
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
             local empty=true;
             
-            eval "cat student_data.tmp | jq '.tutorials'" > tutorials_data.tmp
-            local num_tutorials_1=$(eval "cat tutorials_data.tmp | jq 'length-1'")
+            eval "cat student_data.tmp | jq '.tutorials'" > $cur_dir/tutorials_data.tmp
+            local num_tutorials_1=$(eval "cat $cur_dir/tutorials_data.tmp | jq 'length-1'")
             for t in `seq 0 $num_tutorials_1`; do
-                local name=$(eval "cat tutorials_data.tmp | jq '.[$t] | .name' | sed 's/\\\"//g'")
-                local status=$(eval "cat tutorials_data.tmp | jq '.[$t] | .status' | sed 's/\\\"//g'")
-                local score=$(eval "cat tutorials_data.tmp | jq '.[$t] | .score'")
+                local name=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .name' | sed 's/\\\"//g'")
+                local status=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .status' | sed 's/\\\"//g'")
+                local score=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .score'")
                 echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
                 empty=false;
             done
         
-            eval "cat student_data.tmp | jq '.assignments'" > assignments_data.tmp
-            local num_assignments_1=$(eval "cat assignments_data.tmp | jq 'length-1'")
+            eval "cat student_data.tmp | jq '.assignments'" > $cur_dir/assignments_data.tmp
+            local num_assignments_1=$(eval "cat $cur_dir/assignments_data.tmp | jq 'length-1'")
             for a in `seq 0 $num_assignments_1`; do
-                local name=$(eval "cat assignments_data.tmp | jq '.[$a] | .name' | sed 's/\\\"//g'")
-                local status=$(eval "cat assignments_data.tmp | jq '.[$a] | .status' | sed 's/\\\"//g'")
-                local score=$(eval "cat assignments_data.tmp | jq '.[$a] | .score'")
+                local name=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .name' | sed 's/\\\"//g'")
+                local status=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .status' | sed 's/\\\"//g'")
+                local score=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .score'")
                 echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
                 empty=false;
             done
             
             if [ "${empty}" == "true" ]; then
                 # remove the table
-                cp $README readme.tmp
-                head -n -2 readme.tmp > $README                
+                cp $README $cur_dir/readme.tmp
+                head -n -2 $cur_dir/readme.tmp > $README                
             fi
             
             # newline
             echo "" >> $README
         done
         
-        if [ -f readme.tmp ]; then
-            rm readme.tmp
+        if [ -f $cur_dir/readme.tmp ]; then
+            rm $cur_dir/readme.tmp
         fi
-        if [ -f student_data.tmp ]; then
-            rm student_data.tmp
+        if [ -f $cur_dir/student_data.tmp ]; then
+            rm $cur_dir/student_data.tmp
         fi
-        if [ -f tutorials_data.tmp ]; then
-            rm tutorials_data.tmp
+        if [ -f $cur_dir/tutorials_data.tmp ]; then
+            rm $cur_dir/tutorials_data.tmp
         fi
-        if [ -f assignments_data.tmp ]; then
-            rm assignments_data.tmp
+        if [ -f $cur_dir/assignments_data.tmp ]; then
+            $cur_dir/rm assignments_data.tmp
         fi
 
         git add $gradebook_cur $README
@@ -172,6 +178,8 @@ function publish_gradebook {
             echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
         fi
     fi
+    
+    cd $cur_dir
 }
 
 # update tutorial in the new gradebook
