@@ -155,9 +155,9 @@ function publish_gradebook {
             rm assignments_data.tmp
         fi
 
-        git add $gradebook_cur $README > /dev/null
-        git commit -m "updated by automatic grading script" > /dev/null
-        git push origin master > /dev/null
+        git add $gradebook_cur $README
+        git commit -q -m "updated by automatic grading script"
+        git push -q origin master
         if [ $? -ne 0 ]; then
             echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
         fi
