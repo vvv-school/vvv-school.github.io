@@ -150,7 +150,9 @@ function publish_gradebook {
             if [ "${empty}" == "true" ]; then
                 # remove the table
                 cp $README $cur_dir/readme.tmp
-                head -n -2 $cur_dir/readme.tmp > $README                
+                head -n -2 $cur_dir/readme.tmp > $README
+            else
+                echo "" >> $README
             fi
             
             local totscore=$(eval "cat $cur_dir/student_data.tmp | jq '.score'")
