@@ -385,6 +385,7 @@ while true; do
     repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
         
     echo ""
+    echo -e "${cyan}============================================================================${nc}"
     echo -e "Working out the students:\n${green}${students}${nc}\n"
     echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
     
