@@ -106,7 +106,7 @@ function publish_gradebook {
 
     git diff --exit-code > /dev/null
     if [ $? -ne 0 ]; then
-        echo -e "${green}Publishing the gradebook${nc}\n"
+        echo -e "${green}Publishing the gradebook${nc}\n" > /dev/stderr
         local keep_leading_lines=1
         cp $README readme.tmp
         head -"${keep_leading_lines}" readme.tmp > $README
@@ -116,7 +116,7 @@ function publish_gradebook {
             eval "cat $gradebook_cur | jq '.[$i]'" > student_data.tmp
             local username=$(eval "cat student_data.tmp | jq '.username' | sed 's/\\\"//g'")
             local totscore=$(eval "cat student_data.tmp | jq '.score'")
-            echo -e "[**$username**](https://github.com/$username) total score = **$totscore**\n" >> $README
+            echo -e "### [**$username**](https://github.com/$username) has score = **$totscore**:\n" >> $README
             echo -e "| repository | status | score |" >> $README
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
             
@@ -155,9 +155,9 @@ function publish_gradebook {
             rm assignments_data.tmp
         fi
 
-        git add $gradebook_cur $README
-        git commit -m "updated by automatic grading script"
-        git push origin master
+        git add $gradebook_cur $README > /dev/null
+        git commit -m "updated by automatic grading script" > /dev/null
+        git push origin master > /dev/null
         if [ $? -ne 0 ]; then
             echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
         fi
@@ -253,7 +253,7 @@ function gc_usernames_no_students {
         done
         
         if [ "${isin}" == "false" ]; then
-            echo "Removing ${user} from gradebook; he's not in ${team}"
+            echo "Removing ${user} from gradebook; he's not in ${team}" > /dev/stderr
             newline=true
             
             local jq_path_user=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$user\") | .[0]'")
@@ -276,7 +276,7 @@ function add_missing_students {
     for stud in $students; do
         local isin=$(eval "cat $gradebook_new | jq 'map(select(.username==\"${stud}\")) | .[0] | .username'")
         if [ "$isin" == "null" ]; then
-            echo "Adding ${stud} to gradebook"
+            echo "Adding ${stud} to gradebook" > /dev/stderr
             newline=true
             
             cp $gradebook_new $gradebook_tmp
@@ -310,7 +310,7 @@ function gc_student_repositories {
         done
         
         if [ "${isin}" == "false" ]; then
-            echo "Removing ${tuto} from gradebook; it's not in ${org}"
+            echo "Removing ${tuto} from gradebook; it's not in ${org}"  > /dev/stderr
             echo "$stud_tutorials" > $gradebook_tmp
             local jq_path_tuto=$(eval "cat $gradebook_tmp | jq -c 'paths(.name?==\"$tuto\") | .[0]'")
                         
@@ -335,7 +335,7 @@ function gc_student_repositories {
         done
 
         if [ "${isin}" == "false" ]; then
-            echo "Removing ${assi} from gradebook; it's not in ${org}"
+            echo "Removing ${assi} from gradebook; it's not in ${org}" > /dev/stderr
             echo "$stud_assignments" > $gradebook_tmp
             local jq_path_assi=$(eval "cat $gradebook_tmp | jq -c 'paths(.name?==\"$assi\") | .[0]'")
 
@@ -428,7 +428,4 @@ while true; do
         # newline
         echo ""
     done
-
-    # DBG
-    exit
 done
