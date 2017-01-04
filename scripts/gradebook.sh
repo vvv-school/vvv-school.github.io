@@ -272,7 +272,7 @@ function update_assignment {
 
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
     
-    local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name=="$repo")) | .[0].last_commit_date'")
+    local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date'")
     local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0].commit.committer.date'")
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
         echo -e "detected new activity on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
