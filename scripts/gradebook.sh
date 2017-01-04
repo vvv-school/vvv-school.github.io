@@ -91,7 +91,7 @@ function update_score {
               if [ "${status}" == "${status_passed}" ]; then
                  local sc=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].score'")
                  let "score = $score + $sc"
-              fi
+              fi              
               break
            fi 
         done
@@ -286,7 +286,7 @@ function update_assignment {
         smoke_test $repo https://github.com/${org}/${repo}.git        
         if [ $? -eq 0 ]; then
             status=$status_passed
-        fi        
+        fi
 
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
         if [ ! -z "$jq_path" ]; then
