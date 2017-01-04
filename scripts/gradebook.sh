@@ -9,7 +9,7 @@
 # - jq
 #
 # The env variable GIT_TOKEN_ORG_READ should contain a valid GitHub
-# token with "org:read" permission to access the organization's data
+# token with "org:read" permission to retrieve organization data
 #
 
 if [ $# -lt 4 ]; then
@@ -195,6 +195,30 @@ function publish_gradebook {
     cd $cur_dir
 }
 
+function smoke_test() {
+    local repo=$1
+    local url=$2
+    if [ -d "$repo" ]; then
+        rm $repo -rf
+    fi
+ 
+    local ret="error"
+    git clone $url
+    if [ $? -eq 0 ]; then
+        if [ -d "$repo/smoke-test" ]; then
+            cd $repo/smoke-test
+            ./test.sh
+            ret=$?
+        else
+            echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
+        fi
+    else
+        echo -e "${red}GitHub seems unreachable${nc}" > /dev/stderr
+    fi
+
+    echo $ret
+}
+
 # update tutorial in the new gradebook
 function update_tutorial {
     local stud=$1
@@ -219,7 +243,7 @@ function update_tutorial {
             jq_path_student=$(eval "cat $gradebook_new | jq 'length'")
         fi
 
-        local tutorial_score=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto\")) | .[0] | .score'")
+        local tutorial_score=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto\")) | .[0].score'")
 
         echo "$jq_path_student" > $gradebook_tmp        
         local jq_path_name=$(eval "cat $gradebook_tmp | jq -c '.+[\"tutorials\",$jq_path_tutorial,\"name\"]'")
@@ -241,32 +265,66 @@ function update_tutorial {
     publish_gradebook
 }
 
-# function update_assignment {
-# }
+function update_assignment {
+    local stud=$1
+    local assi=$2
+    local repo="${assi}-${stud}"
 
-function smoke_test()
-{
-    local repo=$1
-    local url=$2
-    if [ -d "$repo" ]; then
-        rm $repo -rf
-    fi
- 
-    local ret="error"
-    git clone $url
-    if [ $? -eq 0 ]; then
-        if [ -d "$repo/smoke-test" ]; then
-            cd $repo/smoke-test
-            ./test.sh
-            ret=$?
-        else
-            echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
+    echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
+    
+    local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name=="$repo")) | .[0].last_commit_date'")
+    local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0].commit.committer.date'")
+    if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
+        echo -e "detected new activity on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
+        local result=$(smoke_test $repo https://github.com/${org}/${repo}.git)
+        local status=$status_failed
+        if [ $result -eq 0 ]; then
+            status=$status_passed
         fi
-    else
-        echo -e "${red}GitHub seems unreachable${nc}" > /dev/stderr
+
+        local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
+        if [ ! -z "$jq_path" ]; then
+            local jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
+            local jq_path_date=$(echo "$jq_path" | jq -c '.+["last_commit_date"]')
+            
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_status};\"${status}\")' > $gradebook_new"
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_date};\"${repo_commit_date}\")' > $gradebook_new"
+            rm $gradebook_tmp
+        else
+            local jq_path_student=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'")
+            local jq_path_assignment=0
+            if [ ! -z "$jq_path_student" ]; then
+                jq_path_assignment=$(eval "cat $gradebook_new | jq '.[] | select(.username==\"$stud\") | .tutorials | length'")
+            else
+                jq_path_student=$(eval "cat $gradebook_new | jq 'length'")
+            fi
+
+            local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
+
+            echo "$jq_path_student" > $gradebook_tmp        
+            local jq_path_name=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"name\"]'")
+            local jq_path_status=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"status\"]'")
+            local jq_path_score=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"score\"]'")
+            local jq_path_date=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"last_commit_date\"]'")
+                    
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_name};\"${repo}\")' > $gradebook_new"
+            
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_status};\"${status}\")' > $gradebook_new"
+            
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${assignment_score})' > $gradebook_new"
+
+            cp $gradebook_new $gradebook_tmp
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};\"${repo_commit_date}\")' > $gradebook_new"
+            rm $gradebook_tmp
+        fi
     fi
 
-    echo $ret
+    update_score ${stud}
+    publish_gradebook
 }
 
 # remove usernames not in ${team}
@@ -399,10 +457,12 @@ while true; do
     fi
     if [ -f $gradebook_cur ]; then
         cp $gradebook_cur $gradebook_new
-    else
+    # otherwise produce an empy gradebook
+    else    
         echo "[]" > $gradebook_new
     fi
     
+    # retrieve names of public repositories in $org
     repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
         
     echo ""
@@ -410,25 +470,28 @@ while true; do
     echo -e "Working out the students:\n${green}${students}${nc}\n"
     echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
     
+    # remove from the gradebook users who are not students,
+    # since they can be potentially in the original gradebook
     gc_usernames_no_students
+    
+    # add up missing students to the current gradebook
     add_missing_students
 
+    # publish if a change has occurred
     publish_gradebook
 
     # for each student in the list
     for stud in $students; do
         echo -e "${cyan}==== Grading ${green}${stud}${nc}"
         
-        # remove student's unavailable repositories
+        # remove student's repositories that are not in $org
         gc_student_repositories $stud ${repositories[@]}
-        
-        cur_stud_assignments=$(eval "cat $gradebook_new | jq '. | map(select(.username == \"$stud\")) | .[0] | .assignments'")
-            
-        # for each repository found within the organization
-        for repo in $repositories; do
-            proceed=false;
-            
+
+        # for each repository found in $org
+        for repo in $repositories; do            
+
             # for tutorials, simply give them for granted
+            proceed=false;
             for tuto in $tutorials; do
                 if [ "${repo}" == "${tuto}-${stud}" ]; then                    
                     update_tutorial ${stud} ${tuto}
@@ -437,6 +500,8 @@ while true; do
                 fi
             done
             
+            # we've detected $repo as a tutorial
+            # hence skip the following cycle
             if [ "$proceed" == true ]; then
                 continue
             fi
@@ -444,14 +509,7 @@ while true; do
             # for assignments, run the smoke test
             for assi in $assignments; do
                 if [ "${repo}" == "${assi}-${stud}" ]; then
-                    echo -e "${cyan}${repo} is an assignment${nc}"
-                    cur_stud_assi=$(echo "$cur_stud_assignments" | jq '. | map(select(.name=="$repo")) | .[0]')
-                    last_commit_date=$(echo "$cur_stud_assi" | jq '.last_commit_date')
-                    repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0] | .commit | .committer | .date'")
-                    if [ "${last_commit_date}" == "${repo_commit_date}" ]; then
-                        echo -e "detected new activity on ${cyan}${repo}${nc} => start off testing"
-                        result=$(smoke_test $repo https://github.com/${org}/${repo}.git)
-                    fi
+                    update_assignment ${stud} ${assi}
                     break
                 fi
             done
