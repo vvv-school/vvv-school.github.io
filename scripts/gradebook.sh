@@ -204,12 +204,14 @@ function smoke_test() {
     fi
  
     local ret=-1
-    git clone $url
+    git clone --depth 1 -b master $url
     if [ $? -eq 0 ]; then
         if [ -d "$repo/smoke-test" ]; then
+            local cur_dir=$(pwd)
             cd $repo/smoke-test
             ./test.sh
             ret=$?
+            cd $cur_dir
         else
             echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
         fi
