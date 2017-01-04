@@ -68,14 +68,14 @@ assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g
 function update_score {
     local stud=$1
     
-    local stud_tutorials=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .tutorials | .[] | .name' | sed 's/\\\"//g'")
-    local stud_assignments=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0] | .assignments | .[] | .name' | sed 's/\\\"//g'")
+    local stud_tutorials=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0].tutorials | .[] | .name' | sed 's/\\\"//g'")
+    local stud_assignments=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0].assignments | .[] | .name' | sed 's/\\\"//g'")
 
     local score=0
     for tuto1 in $stud_tutorials; do
         for tuto2 in $tutorials; do
            if [ "${tuto1}" == "${tuto2}-${stud}" ]; then
-              local tmp=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto2\")) | .[0] | .score'")
+              local tmp=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto2\")) | .[0].score'")
               let "score = $score + $tmp"
               break
            fi 
@@ -85,11 +85,10 @@ function update_score {
     for assi1 in $stud_assignments; do
         for assi2 in $assignments; do
            if [ "${assi1}" == "${assi2}-${stud}" ]; then
-              local item=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0]'")
-              local tmp=$(echo "$item" | jq '.status')
-              if [ "${tmp}" == "${status_passed}" ]; then
-                 tmp=$(echo "$item" | jq '.score')
-                 let "score = $score + $tmp"
+              local status=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].status'")              
+              if [ "${status}" == "${status_passed}" ]; then
+                 local sc=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].score'")
+                 let "score = $score + $sc"
               fi
               break
            fi 
@@ -309,9 +308,9 @@ function update_assignment {
             
             echo "$jq_path_student" > $gradebook_tmp        
             local jq_path_name=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"name\"]'")
-            local jq_path_status=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"status\"]'")
-            local jq_path_score=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"score\"]'")
+            local jq_path_status=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"status\"]'")            
             local jq_path_date=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"last_commit_date\"]'")
+            local jq_path_score=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"score\"]'")
                     
             cp $gradebook_new $gradebook_tmp
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_name};\"${repo}\")' > $gradebook_new"
@@ -320,10 +319,10 @@ function update_assignment {
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_status};\"${status}\")' > $gradebook_new"
             
             cp $gradebook_new $gradebook_tmp
-            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${assignment_score})' > $gradebook_new"
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_date};\"${repo_commit_date}\")' > $gradebook_new"            
 
             cp $gradebook_new $gradebook_tmp
-            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_date};\"${repo_commit_date}\")' > $gradebook_new"
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${assignment_score})' > $gradebook_new"
             rm $gradebook_tmp
         fi
     fi
