@@ -133,6 +133,9 @@ function publish_gradebook {
                 local name=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .name' | sed 's/\\\"//g'")
                 local status=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .status' | sed 's/\\\"//g'")
                 local score=$(eval "cat $cur_dir/tutorials_data.tmp | jq '.[$t] | .score'")
+                if [ "$status" != "$status_passed" ]; then
+                    score=0
+                fi
                 echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
                 empty=false;
             done
@@ -143,6 +146,9 @@ function publish_gradebook {
                 local name=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .name' | sed 's/\\\"//g'")
                 local status=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .status' | sed 's/\\\"//g'")
                 local score=$(eval "cat $cur_dir/assignments_data.tmp | jq '.[$a] | .score'")
+                if [ "$status" != "$status_passed" ]; then
+                    score=0
+                fi                
                 echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
                 empty=false;
             done
