@@ -122,7 +122,7 @@ function publish_gradebook {
             eval "cat $gradebook_cur | jq '.[$i]'" > $cur_dir/student_data.tmp
             local username=$(eval "cat $cur_dir/student_data.tmp | jq '.username' | sed 's/\\\"//g'")            
             echo "" >> $README
-            echo -e "### [**$username**](https://github.com/$username) Grade\n" >> $README            
+            echo -e "### [**$username**](https://github.com/$username) grade\n" >> $README            
             echo -e "| assignment | status | score |" >> $README
             echo -e "|    :--:    |  :--:  | :--:  |" >> $README
             local empty=true;
@@ -167,7 +167,7 @@ function publish_gradebook {
             if [ $totscore -eq 0 ]; then
                 color="orange"
             fi
-            echo -e "![Total Score](https://img.shields.io/badge/Total--Score-${totscore}-${color}.svg?style=${style})\n" >> $README
+            echo -e "![total score](https://img.shields.io/badge/total_score-${totscore}-${color}.svg?style=${style})\n" >> $README
             echo -e "---\n" >> $README
         done
         
