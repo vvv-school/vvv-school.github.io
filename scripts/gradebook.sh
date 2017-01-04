@@ -273,17 +273,17 @@ function update_assignment {
 
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
     
-    local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date'")
-    local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date'")
+    local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date' | sed 's/\\\"//g'")
+    local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
 
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
         echo -e "${yellow}detected new activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         
         local status=$status_failed
-        smoke_test $repo https://github.com/${org}/${repo}.git
+        smoke_test $repo https://github.com/${org}/${repo}.git        
         if [ $? -eq 0 ]; then
             status=$status_passed
-        fi
+        fi        
 
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
         if [ ! -z "$jq_path" ]; then
@@ -304,7 +304,7 @@ function update_assignment {
             fi
 
             local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
-
+            
             echo "$jq_path_student" > $gradebook_tmp        
             local jq_path_name=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"name\"]'")
             local jq_path_status=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"status\"]'")
@@ -321,7 +321,7 @@ function update_assignment {
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${assignment_score})' > $gradebook_new"
 
             cp $gradebook_new $gradebook_tmp
-            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};\"${repo_commit_date}\")' > $gradebook_new"
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_date};\"${repo_commit_date}\")' > $gradebook_new"
             rm $gradebook_tmp
         fi
     fi
@@ -469,7 +469,7 @@ while true; do
     if [ ! -f $gradebook_new ]; then 
         echo "[]" > $gradebook_new
     fi
-    
+
     # retrieve names of public repositories in $org
     repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
         
