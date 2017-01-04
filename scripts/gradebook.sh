@@ -203,7 +203,7 @@ function smoke_test() {
         rm $repo -rf
     fi
  
-    local ret="error"
+    local ret=-1
     git clone $url
     if [ $? -eq 0 ]; then
         if [ -d "$repo/smoke-test" ]; then
@@ -217,7 +217,7 @@ function smoke_test() {
         echo -e "${red}GitHub seems unreachable${nc}" > /dev/stderr
     fi
 
-    echo $ret
+    return $ret
 }
 
 # update tutorial in the new gradebook
@@ -274,12 +274,14 @@ function update_assignment {
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
     
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date'")
-    local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0].commit.committer.date'")
+    local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date'")
+
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
         echo -e "${yellow}detected new activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
-        local result=$(smoke_test $repo https://github.com/${org}/${repo}.git)
+        
         local status=$status_failed
-        if [ $result -eq 0 ]; then
+        smoke_test $repo https://github.com/${org}/${repo}.git
+        if [ $? -eq 0 ]; then
             status=$status_passed
         fi
 
@@ -444,7 +446,7 @@ function gc_student_repositories {
 
 # try to shut down gracefully
 function ctrl_c() {
-    echo -e "\n${red}Trapped CTRL-C, shutting down...${nc}\n" > /dev/stderr
+    echo -e "\n${red}shutting down...${nc}\n" > /dev/stderr
     exit 0
 }
 
@@ -452,14 +454,19 @@ function ctrl_c() {
 trap ctrl_c SIGINT
 
 while true; do
-    # generate new gradebook from old one, if exists
     if [ -f $gradebook_new ]; then
         rm $gradebook_new
     fi
+    
+    # generate new gradebook from old one, if exists
     if [ -f $gradebook_cur ]; then
-        cp $gradebook_cur $gradebook_new
+        if [ -s $gradebook_cur ]; then
+            cp $gradebook_cur $gradebook_new
+        fi
+    fi
+    
     # otherwise produce an empy gradebook
-    else    
+    if [ ! -f $gradebook_new ]; then 
         echo "[]" > $gradebook_new
     fi
     
@@ -484,7 +491,7 @@ while true; do
     # for each student in the list
     for stud in $students; do
         echo -e "${cyan}==== Grading ${green}${stud}${nc}"
-        
+              
         # remove student's repositories that are not in $org
         gc_student_repositories $stud ${repositories[@]}
 
@@ -492,7 +499,6 @@ while true; do
         for repo in $repositories; do            
 
             # for tutorials, simply give them for granted
-            proceed=false;
             for tuto in $tutorials; do
                 if [ "${repo}" == "${tuto}-${stud}" ]; then                    
                     update_tutorial ${stud} ${tuto}
@@ -500,13 +506,7 @@ while true; do
                     break
                 fi
             done
-            
-            # we've detected $repo as a tutorial
-            # hence skip the following cycle
-            if [ "$proceed" == true ]; then
-                continue
-            fi
-            
+                        
             # for assignments, run the smoke test
             for assi in $assignments; do
                 if [ "${repo}" == "${assi}-${stud}" ]; then
