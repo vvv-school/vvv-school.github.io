@@ -75,8 +75,8 @@ function update_score {
     for tuto1 in $stud_tutorials; do
         for tuto2 in $tutorials; do
            if [ "${tuto1}" == "${tuto2}-${stud}" ]; then
-              local tmp=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto2\")) | .[0].score'")
-              let "score = $score + $tmp"
+              local sc=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto2\")) | .[0].score'")
+              let "score = $score + $sc"
               break
            fi 
         done
@@ -84,8 +84,10 @@ function update_score {
     
     for assi1 in $stud_assignments; do
         for assi2 in $assignments; do
-           if [ "${assi1}" == "${assi2}-${stud}" ]; then
-              local status=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].status'")              
+           if [ "${assi1}" == "${assi2}-${stud}" ]; then              
+              local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$assi1\")'")
+              jq_path=$(echo "$jq_path" | jq -c '.+["status"]')
+              local status=$(eval "cat $gradebook_new | jq 'getpath(${jq_path})' | sed 's/\\\"//g'")
               if [ "${status}" == "${status_passed}" ]; then
                  local sc=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].score'")
                  let "score = $score + $sc"
@@ -278,7 +280,7 @@ function update_assignment {
     local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
 
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
-        echo -e "${yellow}detected new activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
+        echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         
         local status=$status_failed
         smoke_test $repo https://github.com/${org}/${repo}.git        
@@ -346,7 +348,7 @@ function gc_usernames_no_students {
         done
         
         if [ "${isin}" == "false" ]; then
-            echo "Removing ${user} from gradebook; he's not in ${team}" > /dev/stderr
+            echo -e "Removing ${red}${user}${nc} from gradebook; he's not in ${green}${team}${nc}" > /dev/stderr
             newline=true
             
             local jq_path_user=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$user\") | .[0]'")
@@ -369,7 +371,7 @@ function add_missing_students {
     for stud in $students; do
         local isin=$(eval "cat $gradebook_new | jq 'map(select(.username==\"${stud}\")) | .[0] | .username'")
         if [ "$isin" == "null" ]; then
-            echo "Adding ${stud} to gradebook" > /dev/stderr
+            echo -e "Adding ${green}${stud}${nc} to gradebook" > /dev/stderr
             newline=true
             
             cp $gradebook_new $gradebook_tmp
@@ -403,7 +405,7 @@ function gc_student_repositories {
         done
         
         if [ "${isin}" == "false" ]; then
-            echo "Removing ${tuto} from gradebook; it's not in ${org}"  > /dev/stderr
+            echo -e "Removing ${cyan}${tuto}${nc} from gradebook; it's not in ${cyan}${org}${nc}"  > /dev/stderr
             echo "$stud_tutorials" > $gradebook_tmp
             local jq_path_tuto=$(eval "cat $gradebook_tmp | jq -c 'paths(.name?==\"$tuto\") | .[0]'")
                         
