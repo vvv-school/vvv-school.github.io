@@ -45,6 +45,7 @@ fi
 # color codes
 red='\033[1;31m'
 green='\033[1;32m'
+yellow='\033[1;33m'
 blue='\033[1;34m'
 cyan='\033[1;36m'
 nc='\033[0m'
@@ -275,7 +276,7 @@ function update_assignment {
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date'")
     local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/vvv-school/$repo/commits | jq '.[0].commit.committer.date'")
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
-        echo -e "detected new activity on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
+        echo -e "${yellow}detected new activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         local result=$(smoke_test $repo https://github.com/${org}/${repo}.git)
         local status=$status_failed
         if [ $result -eq 0 ]; then
