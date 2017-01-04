@@ -162,7 +162,12 @@ function publish_gradebook {
             fi
             
             local totscore=$(eval "cat $cur_dir/student_data.tmp | jq '.score'")
-            echo -e "![Total Score](https://img.shields.io/badge/Total--Score-${totscore}-brightgreen.svg)\n" >> $README
+            local color="brightgreen"
+            local style="flat-square"
+            if [ $totscore -eq 0 ]; then
+                color="orange"
+            fi
+            echo -e "![Total Score](https://img.shields.io/badge/Total--Score-${totscore}-${color}.svg?style=${style})\n" >> $README
             echo -e "---\n" >> $README
         done
         
