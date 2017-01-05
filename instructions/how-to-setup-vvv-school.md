@@ -120,13 +120,21 @@ You just need to let a script run continuously in background to collect informat
 On a Linux machine where:
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting for login.
 
->To store credentials just for one hour:
+>To store credentials for one hour:
 ```sh
-$ git config [options] credential.helper "cache --timeout=3600" 
+$ git config [options] credential.helper 'cache --timeout=3600'
 ```
-To store credentials forever (until you purge it):
+To flush the cache earlier:
+```sh
+$ git credential-cache exit
+```
+To store credentials forever (or until you erase):
 ```sh
 $ git config [options] credential.helper store
+```
+To unset storing credentials:
+```sh
+$ git config [options] --unset-all credential.helper
 ```
 `options` can be:
   - `--local` affecting only the current git directory.
