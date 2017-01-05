@@ -28,14 +28,14 @@ During **vvv{yy}** school, teachers will be giving **frontal lessons** and **han
 There are two categories of hands-on:
 
 #### Tutorials
->A tutorial is a repository containing complete code to cover a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (it's already complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be used by **automatic grading** process.
+>A tutorial is a repository containing complete code to cover a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (it's already complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be used by [**automatic grading**](#automatic_grading) process.
 
 >[**tutorial_cartesian-interface**](https://github.com/vvv-school/tutorial_cartesian-interface) is an example of tutorial you can design yours from.
 
 >Be tidy and call your tutorials with the prefix **tutorial_**.
 
 #### Assignments
->An assignment is a repository that contains **starter code** students are required to complete with their own solutions. To run the **automatic grading** process based on assignments, teachers responsible for the course need to code a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing) inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
+>An assignment is a repository that contains **starter code** students are required to complete with their own solutions. To run the [**automatic grading**](#automatic_grading) process based on assignments, teachers responsible for the course need to code a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing) inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
 
 >[**assignment_make-it-roll**](https://github.com/vvv-school/assignment_make-it-roll) is an example of assignment you can design yours from.
 
@@ -47,7 +47,7 @@ Thereby, to deal with students assignments for each course, we have to create th
 Therefore, for each course, do:
 - [Create the **organization**](https://help.github.com/articles/creating-a-new-organization-from-scratch) **vvv{yy}-course**.
 - It's not strictly necessary to give all teachers read/write permissions to the course organization: course maintainer is just enough :wink:
-- [Create a brand new **classroom**](https://classroom.github.com/classrooms/new) on top of **vvv{yy}-{course}**. You should see in **vvv{yy}={course}** the list; if not, grant GitHub access first (clik on the link at the bottom of the page).
+- [Create a brand new **classroom**](https://classroom.github.com/classrooms/new) on top of **vvv{yy}-{course}**. You should see in **vvv{yy}-{course}** the list; if not, grant GitHub access first (clik on the link at the bottom of the page).
 
 
 ### VVV{YY} School courses repositories
@@ -92,7 +92,7 @@ The format is pretty much intuitive. Here's an example:
 ```
 Be careful, a repository can be **listed only once**.
 
-## Run automatic grading
+## Automatic grading
 
 ### Launch the challenge
 
