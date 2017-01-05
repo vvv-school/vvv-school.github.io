@@ -20,7 +20,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
 1. Go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
-1. Check out the **course gradebook** and see whether you've really made the grade :triumph: :clap:
+1. Check out the **course gradebook** and boast about that with your mates :triumph: :clap:
 1. [only **assignments**] [**Duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) within your GitHub account to retain forever the outcome of your hard work :muscle: This way, we can make sure that deleting the assignment from the _GitHub Education_ dashboard won't cause any harm to your precious :gem:
 
 #### Collaborative Code Review
