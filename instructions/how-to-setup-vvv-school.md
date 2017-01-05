@@ -169,4 +169,4 @@ $ cd vvv{yy}-{course}
 $ ./gradebook.sh
 ```
 
-The gradebook will be published online at the course webpage: https://github.com/vvv{yy}-{course}.github.io.
+The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
