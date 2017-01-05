@@ -116,14 +116,31 @@ At this point, students can follow these general [**instructions**](../instructi
 
 You just need to let a script run continuously in background to collect information on the assignments and publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
 
-On a Linux machine where you have:
-- your git credentials stored locally 
-- 
-launch in a row:
+On a Linux machine where:
+- you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting for login.
+To store credentials just for one hour:
+```sh
+$ git config [options] credential.helper "cache --timeout=3600" 
+```
+To store credentials forever (until you purge it):
+```sh
+$ git config [options] crendential.helper store
+```
+`options` can be:
+  - `--local` affecting only the current git directory.
+  - `--global` affecting all git directories of the current user.
+  - `--system` affecting all git directories on the system.
+- Additionally, you have to be a **OAuth user** with `read:org` scope to retrieve from [GitHub API](https://developer.github.com/v3/orgs/teams/) reserved information regarding teams. To do so, after you created a [personal access token on GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use), save the token as an environment variable:
+
+```sh
+$ export GIT_TOKEN_ORG_READ={token}
+```
+
+Finally, do:
 ```sh
 $ git clone https://github.com/vvv{yy}-{course}.git
 $ cd vvv{yy}-{course}
 $ ./gradebook.sh
 ```
 
-The gradebook is published online at the course webpage https://github/vvv{yy}-{course}.github.io.
+The gradebook is published online at the course webpage https://github.com/vvv{yy}-{course}.github.io.
