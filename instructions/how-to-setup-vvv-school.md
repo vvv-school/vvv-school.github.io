@@ -1,6 +1,6 @@
 # How to set up a VVV{YY} School
 
-**YY** is the year (e.g. **17**, **18**...)
+**YY** is the school year (e.g. **17**, **18**...)
 
 ## VVV{YY} School Repository
 
