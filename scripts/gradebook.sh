@@ -186,13 +186,12 @@ function publish_gradebook {
             rm $cur_dir/assignments_data.tmp
         fi
 
-        # DBG
-        #git add $gradebook_cur $README
-        #git commit --quiet -m "updated by automatic grading script"
-        #git push --quiet origin master
-        #if [ $? -ne 0 ]; then
-        #    echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
-        #fi
+        git add $gradebook_cur $README
+        git commit --quiet -m "updated by automatic grading script"
+        git push --quiet origin master
+        if [ $? -ne 0 ]; then
+            echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
+        fi
     fi
     
     cd $cur_dir
@@ -297,7 +296,7 @@ function update_assignment {
         smoke_test $repo https://github.com/${org}/${repo}.git        
         if [ $? -eq 0 ]; then
             status=$status_passed
-        fi        
+        fi
 
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
         if [ ! -z "$jq_path" ]; then
