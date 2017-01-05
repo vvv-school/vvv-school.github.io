@@ -37,7 +37,7 @@ There are two categories of hands-on:
 #### Assignments
 >An assignment is a repository that contains **starter code** the students are required to complete with their own solutions. To run the [**automatic grading**](#automatic-grading) process based on assignments, teachers responsible for the course need to code a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing) inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
 
->Students can follow these general [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments.
+>Students can follow these general [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments. However, nothing prevents a teacher from accepting an assignment himself and solve it together with students.
 
 >[**assignment_make-it-roll**](https://github.com/vvv-school/assignment_make-it-roll) is an example of assignment you can design yours from.
 
@@ -113,11 +113,17 @@ These are the settings we have to use:
 - **Don't give students** _Admin permissions_ on their repository :x:
 - **Add your starter code from GitHub**: pick up your tutorial or assignment from [vvv-school](https://github.com/vvv-school).
 
-You'll be given a link you must now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
+You'll be given an **invitation link** you must now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
 
 Repeat the process for all the hands-on you have in your course. It can be done all at once, or progressively, depending on the pace that suits you best.
 
 At this point, students can follow these general [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments.
+
+In case you, the teacher, decide to solve an assignment together with students, proceed as follows:
+- **click on the invitation link** to accept the assignment yourself;
+- during the hands-on, work within the newly created repository alongside the students;
+- highlight the use of **smoke-test**.
+- don't worry :wink:, your contribution won't be counted during automatic grading since you're not a member of **vvv{yy}-students** team.
 
 ### Update the gradebook
 
