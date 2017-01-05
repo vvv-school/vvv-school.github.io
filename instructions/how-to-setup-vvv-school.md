@@ -125,7 +125,7 @@ $ git config [options] credential.helper "cache --timeout=3600"
 ```
 To store credentials forever (until you purge it):
 ```sh
-$ git config [options] crendential.helper store
+$ git config [options] credential.helper store
 ```
 `options` can be:
   - `--local` affecting only the current git directory.
