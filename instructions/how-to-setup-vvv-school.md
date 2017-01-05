@@ -117,7 +117,7 @@ At this point, students can follow these general [**instructions**](../instructi
 
 You just need to let a script run continuously in background to collect information on the assignments and publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
 
-On a Linux machine where:
+On a Linux machine:
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting for login.
 
 >To store credentials for one hour:
