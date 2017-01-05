@@ -60,6 +60,7 @@ Consider these further notes:
 
 - If you didn't do it while creating the new repository, edit the **description** and the **website** fields of the repository page with, respectively, **Gradebook of VVV{YY} Robot {course}** and **https://vvv{yy}-{course}.github.io**.
 - **GitHub Pages** are already enabled by default, given the chosen name of the repository. The file **`_config.yml`** used by GitHub Pages to set up the style should be already contained inside (thanks to duplication).
+- Remember to put a link to https://vvv{yy}-{course}.github.io inside **vvv-school/vvv{yy}/gradebook.md**.
 
 #### Gear up for automatic grading
 
@@ -106,5 +107,9 @@ These are the settings we have to use:
 - **Add your starter code from GitHub**: select the name of your tutorial and/or assignment from [vvv-school](https://github.com/vvv-school).
 
 You'll be given a link you ought to share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
+
+Repeat the process for all the assignments you have in your course. It can be done all at once, or progressively, depending on the pace that suits you best.
+
+At this point, students can follow these [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments.
 
 ### Update the gradebook
