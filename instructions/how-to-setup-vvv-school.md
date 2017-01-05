@@ -103,7 +103,7 @@ Be careful, a repository can be **listed only once**.
 Once you're all set, you can [create an **individual assignment**]() from the dashboard of your **GitHub Classrom**.
 
 These are the settings we have to use:
-- **Your assignment title**: make up a nice name.
+- **Your assignment title**: make up a name; it's not that significant.
 - **Your assignment repository prefix**: must be equal to the name of the **starter code**.
 - Tick on **Public** :white_check_mark:
 - **Don't give students** _Admin permissions_ on their repository :x:
