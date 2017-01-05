@@ -241,6 +241,7 @@ function update_tutorial {
     
     echo -e "${cyan}${repo} is a tutorial${nc} => given for granted ;)" > /dev/stderr
 
+    # we assume it exists only one $repo in the gradebook
     local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
     if [ ! -z "$jq_path" ]; then
         jq_path=$(echo "$jq_path" | jq -c '.+["status"]')
@@ -298,7 +299,9 @@ function update_assignment {
             status=$status_passed
         fi
 
-        local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")        
+        local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
+        
+        # we assume it exists only one $repo in the gradebook
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")        
         if [ ! -z "$jq_path" ]; then
             local jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
