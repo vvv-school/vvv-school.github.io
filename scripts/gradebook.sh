@@ -307,7 +307,11 @@ function update_assignment {
             
             cp $gradebook_new $gradebook_tmp
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_status};\"${status}\")' > $gradebook_new"
+            
+            cp $gradebook_new $gradebook_tmp
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_date};\"${repo_commit_date}\")' > $gradebook_new"
+            
+            cp $gradebook_new $gradebook_tmp
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${assignment_score})' > $gradebook_new"
             rm $gradebook_tmp
         else
