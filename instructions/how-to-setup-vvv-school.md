@@ -122,8 +122,8 @@ At this point, students can follow these general [**instructions**](../instructi
 In case you, the teacher, decide to solve an assignment together with students, proceed as follows:
 - **click on the invitation link** to accept the assignment yourself;
 - during the hands-on, work within the newly created repository alongside with students;
-- highlight the use of **smoke-test**.
-- don't worry :wink:, your contribution won't be counted during automatic grading since you're not a member of **vvv{yy}-students** team.
+- highlight the use of **smoke-test**;
+- your contribution won't be counted during automatic grading since you're not a member of **vvv{yy}-students** team.
 
 ### Update the gradebook
 
