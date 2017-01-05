@@ -1,6 +1,6 @@
 # How to set up a VVV{YY} School
 
-**YY** is the year (e.g. 17, 18...)
+**YY** is the year (e.g. **17**, **18**...)
 
 ## VVV{YY} School Main Repository
 
@@ -12,6 +12,8 @@ Then, do the following steps:
 - Within [vvv-school](https://github/vvv-school), [create two **teams**](https://help.github.com/articles/creating-a-team): **vvv{yy}-teachers** and **vvv{yy}-students**. Start off filling in the teachers team for the time being, while we will be waiting for all students to sign up on GitHub. Remember that teams visibility is restricted to the organization's members, hence don't spread out links to them, since non-members won't be able to access teams info.
 - Replace all the links in the **README.md**.
 - Create a [**welcome issue**](https://github.com/vvv-school/vvv17/issues/1) in **Q&A**. Don't forget to replace links therein.
-- Create just one page in the **Wiki** containing the **instructions to follow before arriving at VVV** and link it from within the home page. We have a [**template**](../instructions/before-arriving-at-vvv.md) for it, but you would need to tailor it a bit in order to put correct links to resources (e.g. new Q&A, new mailing list...). If there are instructions that are likely to be reused in the future schools, don't forget to **update the template** accordingly.
+- Create just one page in the **Wiki** containing the **instructions to follow before arriving at VVV** and link it from within the Wiki home page. We have a [**template**](../instructions/before-arriving-at-vvv.md) for it, but you would need to tailor it a bit in order to put correct links to resources (e.g. new Q&A, new mailing list...). If there are instructions that are likely to be reused in the future schools, don't forget to **update the template** accordingly.
+- [Configure the **GitHub Pages**](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/#enabling-github-pages-to-publish-your-site-from-master-or-gh-pages) to publish from the **`master`** branch. The file **`_config.yml`** used by GitHub Pages to set up the style should be already contained inside the repository (thanks to duplication).
+- Edit the **description** and the **website** fields of the repository page with, respectively, **Resources for VVV{YY} School** and **https://vvv-school.github.io/vvv{yy}**.
 
 ## VVV{YY} School Gradebook Repositories
