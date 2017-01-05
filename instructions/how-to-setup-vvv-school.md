@@ -63,7 +63,7 @@ Consider these further notes:
 - If you didn't do it while creating the new repository, edit the **description** and the **website** fields of the repository page with, respectively, **Gradebook of VVV{YY} Robot {course}** and **https://vvv{yy}-{course}.github.io**.
 - **GitHub Pages** are already enabled by default, given the chosen name of the repository. The file **`_config.yml`** used by GitHub Pages to set up the style should be already contained inside (thanks to duplication).
 - Edit just the first line of **README.md** file, putting **Gradebook of VVV{YY} Robot {course}**. The rest of the file will be overwritten by the [**automatic grading**](#automatic-grading) process.
-- Remember to put a link to https://vvv{yy}-{course}.github.io inside **vvv-school/vvv{yy}/gradebook.md**.
+- Remember to put a link to _https://vvv{yy}-{course}.github.io_ inside **vvv-school/vvv{yy}/gradebook.md**.
 
 #### Gear up for automatic grading
 
