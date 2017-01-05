@@ -91,7 +91,7 @@ function update_score {
               if [ "${status}" == "${status_passed}" ]; then
                  local sc=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].score'")
                  let "score = $score + $sc"
-              fi              
+              fi
               break
            fi 
         done
@@ -186,12 +186,13 @@ function publish_gradebook {
             rm $cur_dir/assignments_data.tmp
         fi
 
-        git add $gradebook_cur $README
-        git commit --quiet -m "updated by automatic grading script"
-        git push --quiet origin master
-        if [ $? -ne 0 ]; then
-            echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
-        fi
+        # DBG
+        #git add $gradebook_cur $README
+        #git commit --quiet -m "updated by automatic grading script"
+        #git push --quiet origin master
+        #if [ $? -ne 0 ]; then
+        #    echo -e "${red}Problems detected while pushing to GitHub${nc}" > /dev/stderr
+        #fi
     fi
     
     cd $cur_dir
@@ -208,11 +209,21 @@ function smoke_test() {
     git clone --depth 1 -b master $url
     if [ $? -eq 0 ]; then
         if [ -d "$repo/smoke-test" ]; then
-            local cur_dir=$(pwd)
-            cd $repo/smoke-test
-            ./test.sh
+            # run the original helper script anyway, not the one in $repo,
+            # to avoid any possible hacking ;)
+            if [ -d smoke-test-tmp ]; then
+                rm smoke-test-tmp -rf
+            fi
+            git clone --depth 1 -b master https://github.com/vvv-school/vvv-school.github.io.git ./smoke-test-tmp/helpers
+            
+            # we need absolute paths
+            mkdir ./smoke-test-tmp/build
+            local build_dir=$(pwd)/smoke-test-tmp/build
+            local code_dir=$(pwd)/$repo
+            local test_dir=$code_dir/smoke-test
+            
+            ./smoke-test-tmp/helpers/scripts/smoke-test.sh $build_dir $code_dir $test_dir
             ret=$?
-            cd $cur_dir
         else
             echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
         fi
@@ -286,7 +297,7 @@ function update_assignment {
         smoke_test $repo https://github.com/${org}/${repo}.git        
         if [ $? -eq 0 ]; then
             status=$status_passed
-        fi
+        fi        
 
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
         if [ ! -z "$jq_path" ]; then
