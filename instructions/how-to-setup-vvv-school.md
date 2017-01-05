@@ -28,7 +28,7 @@ During **vvv{yy}** school, teachers will be giving **frontal lessons** and **han
 There are two categories of hands-on:
 
 #### Tutorials
->A tutorial is a repository containing complete code used to explain a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (the code is complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be used by [**automatic grading**](#automatic-grading) process.
+>A tutorial is a repository containing complete code used to explain a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (the code is complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be counted by [**automatic grading**](#automatic-grading) process.
 
 >[**tutorial_cartesian-interface**](https://github.com/vvv-school/tutorial_cartesian-interface) is an example of tutorial you can design yours from.
 
