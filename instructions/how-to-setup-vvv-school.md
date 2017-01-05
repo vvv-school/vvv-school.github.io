@@ -110,6 +110,20 @@ You'll be given a link you ought to share with students. The easiest and the mos
 
 Repeat the process for all the assignments you have in your course. It can be done all at once, or progressively, depending on the pace that suits you best.
 
-At this point, students can follow these [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments.
+At this point, students can follow these general [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments.
 
 ### Update the gradebook
+
+You just need to let a script run continuously in background to collect information on the assignments and publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
+
+On a Linux machine where you have:
+- your git credentials stored locally 
+- 
+launch in a row:
+```sh
+$ git clone https://github.com/vvv{yy}-{course}.git
+$ cd vvv{yy}-{course}
+$ ./gradebook.sh
+```
+
+The gradebook is published online at the course webpage https://github/vvv{yy}-{course}.github.io.
