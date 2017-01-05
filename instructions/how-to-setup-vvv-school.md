@@ -56,7 +56,7 @@ Therefore, for each course, do:
 
 Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** (e.g. [vvv17-kinematics/vvv17-kinematics.github](https://github.com/vvv17-kinematics/vvv17-kinematics.github.io)), and aims to automatically handle the **course gradebook**.
 
-Then, let's create this last repository! Also here, everything is alredy mostly done, since we can [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) **vvv{yy-1}-{course}/vvv{yy-1}-{course}.github.io** into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+Then, let's create this last repository! Also here, everything is already mostly done, since we can [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) **vvv{yy-1}-{course}/vvv{yy-1}-{course}.github.io** into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
 
 Consider these further notes:
 
