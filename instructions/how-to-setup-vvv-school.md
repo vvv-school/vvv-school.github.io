@@ -98,9 +98,13 @@ Be careful, a repository can be **listed only once**.
 
 ## Automatic grading
 
+**Automatic grading** is a process that runs continuously in background to collect information from students assignments to then publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
+
+We have to go through two steps:
+
 ### Challenge students
 
-Once you're all set, you can [create an **individual assignment**]() from the dashboard of your **GitHub Classrom**.
+Once you're all set, you can [create an **individual assignment**](https://education.github.community/t/video-setting-up-individual-assignments/2150) from the dashboard of your **GitHub Classrom**.
 
 These are the settings we have to use:
 - **Your assignment title**: make up a name; it's not that significant.
@@ -109,7 +113,7 @@ These are the settings we have to use:
 - **Don't give students** _Admin permissions_ on their repository :x:
 - **Add your starter code from GitHub**: pick up your tutorial or assignment from [vvv-school](https://github.com/vvv-school).
 
-You'll be given a link you ought to share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
+You'll be given a link you must now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
 
 Repeat the process for all the hands-on you have in your course. It can be done all at once, or progressively, depending on the pace that suits you best.
 
@@ -117,9 +121,10 @@ At this point, students can follow these general [**instructions**](../instructi
 
 ### Update the gradebook
 
-You just need to let a script run continuously in background to collect information on the assignments and publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
+We use a **Linux system** to run the script for the automatic grading.
 
-On a Linux machine:
+#### Prerequisites 
+
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting for login.
 
 >To store credentials for one hour:
@@ -148,10 +153,10 @@ $ git config [options] --unset-all credential.helper
 ```sh
 $ export GIT_TOKEN_ORG_READ=token-hash-goes-here
 ```
-
 If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink:
 
-Finally, do:
+#### Launch the script
+
 ```sh
 $ git clone https://github.com/vvv{yy}-{course}.git
 $ cd vvv{yy}-{course}
