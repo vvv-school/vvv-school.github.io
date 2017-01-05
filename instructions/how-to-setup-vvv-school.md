@@ -19,6 +19,9 @@ Then, do the following steps:
 
 ## Set up VVV{YY} School Gradebook Organizations
 
+During **vvv{yy}** school, teachers will be giving frontal lessons and hands-on sessions regarding diverse courses, e.g. **kinematics**, **dynamics**, **vision** and so on so forth. To this end, we make use of the [**GitHub Education**](https://education.github.com) platform.
+
+To deal with students assignments for each course, we have to create the dedicated organization **vvv{yy}-{course}** (e.g. [vvv17-kinematics](https://github.com/vvv17-kinematics)). This choice allows us to use a [**GitHub Classroom**](https://classroom.github.com) specific to each course as well as to avoid cluttering the main [vvv-school](https://github.com/vvv-school) organization with lots of students repositories that will be automatically generated via the classroom mechanism.
 
 
 ### VVV{YY} School Gradebook Repository
