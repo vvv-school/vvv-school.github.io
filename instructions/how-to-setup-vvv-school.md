@@ -28,16 +28,16 @@ During **vvv{yy}** school, teachers will be giving **frontal lessons** and **han
 There are two categories of hands-on:
 
 #### Tutorials
->A tutorial is a repository containing complete code to cover a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (it's already complete); thus, their score is low (e.g. **1,2**).
+>A tutorial is a repository containing complete code to cover a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (it's already complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be used by **automatic grading** process.
 
->[**tutorial_cartesian-interface**](https://github.com/vvv-school/tutorial_cartesian-interface) is an example of tutorial you can derive yours from.
+>[**tutorial_cartesian-interface**](https://github.com/vvv-school/tutorial_cartesian-interface) is an example of tutorial you can design yours from.
 
 >Be tidy and call your tutorials with the prefix **tutorial_**.
 
 #### Assignments
->An assignment is a repository that contains **starter code** students are required to complete with their own solutions. To run **automatic grading** based on assignments, teachers responsible for the course need to code a **smoke-test** inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
+>An assignment is a repository that contains **starter code** students are required to complete with their own solutions. To run the **automatic grading** process based on assignments, teachers responsible for the course need to code a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing) inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
 
->[**assignment_make-it-roll**](https://github.com/vvv-school/assignment_make-it-roll) is an example of assignment you can derive yours from.
+>[**assignment_make-it-roll**](https://github.com/vvv-school/assignment_make-it-roll) is an example of assignment you can design yours from.
 
 >Be tidy and call your assignments with the prefix **assignment_**.
 
@@ -54,7 +54,7 @@ Therefore, for each course, do:
 
 Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** (e.g. [vvv17-kinematics/vvv17-kinematics.github](https://github.com/vvv17-kinematics/vvv17-kinematics.github.io)), and aims to automatically handle the **course gradebook**.
 
-Then, let's create this last repository! Also here, everything is mostly already done, since we can  [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) **vvv{yy-1}-{course}/vvv{yy-1}-{course}.github.io** into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+Then, let's create this last repository! Also here, everything is mostly already done, since we can [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) **vvv{yy-1}-{course}/vvv{yy-1}-{course}.github.io** into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
 
 Consider these further notes:
 
@@ -91,3 +91,20 @@ The format is pretty much intuitive. Here's an example:
 }
 ```
 Be careful, a repository can be **listed only once**.
+
+## Run automatic grading
+
+### Launch the challenge
+
+Once you're all set, you can [create an **individual assignment**]() from the course **GitHub Classrom** dashboard.
+
+These are the settings we have to use:
+- **Your assignment title**: make up a nice name.
+- **Your assignment repository prefix**: must be equal to the name of the **starter code**.
+- Tick on **Public** :white_check_mark:
+- **Don't give students** _Admin permissions_ on their repository :x:
+- **Add your starter code from GitHub**: select the name of your tutorial and/or assignment from [vvv-school](https://github.com/vvv-school).
+
+You'll be given a link you ought to share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
+
+### Update the gradebook
