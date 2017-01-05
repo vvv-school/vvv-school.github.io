@@ -36,7 +36,7 @@ $ iCub_SIM
 Should you experience any problem, don't hesitate to contact us by posting to our ✉️ **mailing list** or even better to our 👋 **Q&A system**.
 
 ## Gear up
-In view of attending the school, there might be still some time you want to exploit to gear up, especially if you feel you can improve your pace at the school by taking some refresher training. Don't worry though, we're going to cover most of the following points together (some are considered prerequisites, e.g. C++, Linux):
+In view of attending the school, there might be still some time you want to exploit to gear up, especially if you feel you can improve your pace at the school by taking some refresher training. Don't worry though, we're going to cover most of the following points together (some are considered prerequisites, e.g. Linux, C++):
 
 - [Ubuntu: A beginner's Guide](http://www.makeuseof.com/tag/ubuntu-an-absolute-beginners-guide).
 - [Ubuntu: Master the command line](http://ryanstutorials.net/linuxtutorial/commandline.php).
