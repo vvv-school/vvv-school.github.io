@@ -11,7 +11,7 @@ Everything is mostly done, since we can  [**duplicate** the repository](https://
 Then, do the following steps:
 - If you didn't do it while creating the new repository, edit the **description** and the **website** fields of the repository page with, respectively, **Resources for VVV{YY} School** and **https://vvv-school.github.io/vvv{yy}**.
 - Within [vvv-school](https://github/vvv-school), [create two **teams**](https://help.github.com/articles/creating-a-team): **vvv{yy}-teachers** and **vvv{yy}-students**. Start off filling in the teachers team for the time being, while we will be waiting for all students to sign up on GitHub. Remember that teams visibility is restricted to the organization's members, hence don't spread out links to them, since non-members won't be able to access teams info.
-- Add up **vvv{yy}-students** as team with [**read permission**](https://help.github.com/articles/managing-team-access-to-an-organization-repository) to **vvv{yy}**.
+- Add up **vvv{yy}-students** as [**team with read permission**](https://help.github.com/articles/managing-team-access-to-an-organization-repository) to **vvv{yy}**, so that students can edit the Wiki.
 - Replace all the links in **README.md**, **teachers.md** and **students.md** files.
 - Create a [**welcome issue**](https://github.com/vvv-school/vvv17/issues/1) in **Q&A**. Don't forget to replace links therein.
 - Create just one page in the **Wiki** containing the [**instructions to follow before arriving at VVV**](https://github.com/vvv-school/vvv17/wiki/Before-arriving-at-VVV) and link it from within the Wiki home page. We have a [**template**](../instructions/before-arriving-at-vvv.md) for it, but you would need to tailor it slightly in order to adjust links to resources (e.g. new Q&A, new mailing list...). If there are instructions that are likely to be reused for upcoming schools, don't forget to **update the template** accordingly.
@@ -28,14 +28,14 @@ During **vvv{yy}** school, teachers will be giving **frontal lessons** and **han
 There are two categories of hands-on:
 
 #### Tutorials
->A tutorial is a repository containing complete code to cover a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (it's already complete); thus, their score is low (i.e. **1**).
+>A tutorial is a repository containing complete code to cover a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (it's already complete); thus, their score is low (e.g. **1,2**).
 
 >[**tutorial_cartesian-interface**](https://github.com/vvv-school/tutorial_cartesian-interface) is an example of tutorial you can derive yours from.
 
 >Be tidy and call your tutorials with the prefix **tutorial_**.
 
 #### Assignments
->An assignment is a repository that contains **starter code** students are required to complete with their own solutions. To run **automatic grading** based on assignments, teachers responsible for the course need to code a **smoke-test** inside the assignment. Typically, assignments have higher scores (**> 1**) depending on their difficulty.
+>An assignment is a repository that contains **starter code** students are required to complete with their own solutions. To run **automatic grading** based on assignments, teachers responsible for the course need to code a **smoke-test** inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
 
 >[**assignment_make-it-roll**](https://github.com/vvv-school/assignment_make-it-roll) is an example of assignment you can derive yours from.
 
@@ -63,4 +63,31 @@ Consider these further notes:
 
 #### Gear up for automatic grading
 
-You have to fill in the **data.json** file contained in the repositories
+Within the course repository, you have to fill in the **data.json** file containing info on **tutorials** and **assignments** regarding this particular **{course}**.
+
+The format is pretty much intuitive. Here's an example:
+```json
+{
+    "tutorials": [
+        {
+            "name": "tutorial_gaze-interface",
+            "url": "https://github.com/vvv-school/tutorial_gaze-interface.git",
+            "score": 1
+        },
+        {
+            "name": "tutorial_cartesian-interface",
+            "url": "https://github.com/vvv-school/tutorial_cartesian-interface.git",
+            "score": 1
+        }      
+    ],
+    
+    "assignments": [
+        {
+            "name": "assignment_make-it-roll",
+            "url": "https://github.com/vvv-school/assignment_make-it-roll",
+            "score": 5
+        }    
+    ]    
+}
+```
+Be careful, a repository can be **listed only once**.
