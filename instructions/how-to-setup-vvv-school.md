@@ -98,7 +98,7 @@ Be careful, a repository can be **listed only once**.
 
 ## Automatic grading
 
-### Launch the challenge
+### Challenge students
 
 Once you're all set, you can [create an **individual assignment**]() from the dashboard of your **GitHub Classrom**.
 
