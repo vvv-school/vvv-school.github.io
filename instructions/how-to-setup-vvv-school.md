@@ -48,7 +48,7 @@ Thereby, to deal with students hands-on for each course, we have to create the d
 
 Therefore, for each course, do:
 - [Create the **organization**](https://help.github.com/articles/creating-a-new-organization-from-scratch) **vvv{yy}-course**.
-- It's not strictly necessary to give all teachers read/write permissions to the course organization: one maintainer per course is enough :wink:
+- It's not strictly necessary to give all teachers read/write permissions to the organization: one maintainer per course is enough :wink:
 - [Create a brand new **classroom**](https://classroom.github.com/classrooms/new) on top of **vvv{yy}-{course}**. You should see in **vvv{yy}-{course}** the list; if not, grant GitHub access first (clik on the link at the bottom of the page).
 
 
