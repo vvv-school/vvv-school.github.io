@@ -298,14 +298,17 @@ function update_assignment {
             status=$status_passed
         fi
 
-        local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
+        local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")        
+        local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")        
         if [ ! -z "$jq_path" ]; then
             local jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
             local jq_path_date=$(echo "$jq_path" | jq -c '.+["last_commit_date"]')
+            local jq_path_score=$(echo "$jq_path" | jq -c '.+["score"]')
             
             cp $gradebook_new $gradebook_tmp
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_status};\"${status}\")' > $gradebook_new"
             eval "cat $gradebook_tmp | jq 'setpath(${jq_path_date};\"${repo_commit_date}\")' > $gradebook_new"
+            eval "cat $gradebook_tmp | jq 'setpath(${jq_path_score};${assignment_score})' > $gradebook_new"
             rm $gradebook_tmp
         else
             local jq_path_student=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'")
@@ -314,9 +317,7 @@ function update_assignment {
                 jq_path_assignment=$(eval "cat $gradebook_new | jq '.[] | select(.username==\"$stud\") | .tutorials | length'")
             else
                 jq_path_student=$(eval "cat $gradebook_new | jq 'length'")
-            fi
-
-            local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
+            fi            
             
             echo "$jq_path_student" > $gradebook_tmp        
             local jq_path_name=$(eval "cat $gradebook_tmp | jq -c '.+[\"assignments\",$jq_path_assignment,\"name\"]'")
