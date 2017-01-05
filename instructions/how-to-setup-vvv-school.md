@@ -15,7 +15,7 @@ Then, do the following steps:
 - Create a [**welcome issue**](https://github.com/vvv-school/vvv17/issues/1) in **Q&A**. Don't forget to replace links therein.
 - Create just one page in the **Wiki** containing the [**instructions to follow before arriving at VVV**](https://github.com/vvv-school/vvv17/wiki/Before-arriving-at-VVV) and link it from within the Wiki home page. We have a [**template**](../instructions/before-arriving-at-vvv.md) for it, but you would need to tailor it slightly in order to adjust links to resources (e.g. new Q&A, new mailing list...). If there are instructions that are likely to be reused for upcoming schools, don't forget to **update the template** accordingly.
 - [Configure the **GitHub Pages**](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/#enabling-github-pages-to-publish-your-site-from-master-or-gh-pages) to publish from the **`master`** branch. The file **`_config.yml`** used by GitHub Pages to set up the style should be already contained inside the repository (thanks to duplication).
-- Fill in the file **gradebook.md** with proper links to the GitHub page of the [gradebook repositories]().
+- Fill in the file **gradebook.md** with proper links to the GitHub page of the [gradebook repositories](#vvvyy-school-gradebook-repository).
 
 ## Set up VVV{YY} School Gradebook Organizations
 
