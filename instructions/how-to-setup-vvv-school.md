@@ -118,7 +118,8 @@ You just need to let a script run continuously in background to collect informat
 
 On a Linux machine where:
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting for login.
-To store credentials just for one hour:
+
+>To store credentials just for one hour:
 ```sh
 $ git config [options] credential.helper "cache --timeout=3600" 
 ```
@@ -130,6 +131,7 @@ $ git config [options] crendential.helper store
   - `--local` affecting only the current git directory.
   - `--global` affecting all git directories of the current user.
   - `--system` affecting all git directories on the system.
+
 - Additionally, you have to be a **OAuth user** with `read:org` scope to retrieve from [GitHub API](https://developer.github.com/v3/orgs/teams/) reserved information regarding teams. To do so, after you created a [personal access token on GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use), save the token as an environment variable:
 
 ```sh
