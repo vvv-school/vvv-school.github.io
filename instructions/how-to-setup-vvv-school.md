@@ -138,7 +138,7 @@ $ git config [options] credential.helper store
 $ export GIT_TOKEN_ORG_READ=token-hash-number-goes-here
 ```
 
-If you don't want to mess up with your user account credentials, you might consider using the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink:
+If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink:
 
 Finally, do:
 ```sh
