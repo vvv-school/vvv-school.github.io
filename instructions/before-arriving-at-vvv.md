@@ -53,5 +53,5 @@ In view of attending the school, there might be still some time you want to expl
 - [iCub](http://wiki.icub.org/iCub/main/dox/html/icub_tutorials.html).
 
 #### A.O.B.
-- How to trim (survive) [GitHub notifications](https://help.github.com/articles/managing-notifications) 🔔. Disabling them all is not an option 😏
+- How to trim (survive) [GitHub notifications](https://help.github.com/articles/managing-notifications) 🔔. Disabling them all is not an option 😏 In short, you can subscribe/unsubscribe to notifications in multiple ways, the most relevant being per repository or per issue.
 - We have also an active community on [![iCub Research](http://ssl.gstatic.com/images/icons/gplus-32.png)](https://plus.google.com/u/0/communities/116897884020660435466?prsrc=3) you might want to subscribe to 😛.
