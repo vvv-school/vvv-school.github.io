@@ -98,7 +98,7 @@ Be careful, a repository can be **listed only once**.
 
 ## Automatic grading
 
-**Automatic grading** is a process that runs continuously in background to collect information from students assignments to then publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
+**Automatic grading** is a process that runs continuously in background to collect information from students submissions to then publish results nicely, as it is done for example here: https://vvv17-kinematics.github.io.
 
 We have to go through two steps:
 
