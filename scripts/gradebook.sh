@@ -8,7 +8,7 @@
 # - curl
 # - jq
 #
-# The env variable GIT_TOKEN_ORG_READ should contain a valid GitHub
+# The env variable GITHUB_TOKEN_ORG_READ should contain a valid GitHub
 # token with "org:read" permission to retrieve organization data
 #
 
@@ -17,8 +17,8 @@ if [ $# -lt 4 ]; then
     exit 1
 fi
 
-if [ -z "$GIT_TOKEN_ORG_READ" ]; then
-    echo -e "${red}env variable GIT_TOKEN_ORG_READ is not set${data}${nc}\n"
+if [ -z "$GITHUB_TOKEN_ORG_READ" ]; then
+    echo -e "${red}env variable GITHUB_TOKEN_ORG_READ is not set${data}${nc}\n"
     exit 2
 fi
 
@@ -55,7 +55,7 @@ status_passed=":white_check_mark:"
 status_failed=":x:"
 
 # GitHub token for authorized access
-token_header="-H \"Authorization: token $GIT_TOKEN_ORG_READ\""
+token_header="-H \"Authorization: token $GITHUB_TOKEN_ORG_READ\""
 
 # get students from $team
 team_id=$(eval "curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name==\"$team\")) | .[0] | .id'")
