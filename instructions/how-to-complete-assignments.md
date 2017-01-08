@@ -53,7 +53,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
     - Is the **code architecture** well designed in terms of **components**, **operations**, **synchronism**?
     - To which **extent** are the requirements accomplished?
 1. Once the student has positively addressed all the points 👍🎉, **merge the PR** only if `master` is the _base branch_, otherwise just **close the PR** 👈
-1. Finally, to avoid overcrowding the organization, arrange to [transfer the **ownership**](https://help.github.com/articles/transferring-a-repository-owned-by-your-organization) of the repository to the student GitHub account 💰. Importantly, transferring the ownership would also allow students to retain forever the outcome of their hard work :muscle: This way, we can make sure that deleting the assignment from the _GitHub Education_ dashboard won't cause any harm to their precious :gem:
+1. Finally, to avoid overcrowding the organization, arrange to [transfer the **ownership**](https://help.github.com/articles/transferring-a-repository-owned-by-your-organization) of the repository to the student GitHub account 💰. You can use your account as intermediate step, since a direct transfer from organizations to other users is not allowed. Importantly, transferring the ownership will also enable students to **retain forever the outcome of their hard work** :muscle: This way, we can make sure that deleting the assignment from the _GitHub Education_ dashboard won't cause any harm to their precious :gem:
 
 >Sometimes, it might be beneficial to commit code to student's repository. To this end, follow these steps:
 
