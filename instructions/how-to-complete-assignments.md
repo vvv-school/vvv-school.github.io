@@ -21,7 +21,6 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 1. If present, go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
 1. Check out the **course gradebook** and boast about that with your mates :triumph: :clap:
-1. [only **assignments**] Finally, [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) within your GitHub account to retain forever the outcome of your hard work :muscle: This way, we can make sure that deleting the assignment from the _GitHub Education_ dashboard won't cause any harm to your precious :gem:
 
 #### Collaborative Code Review
 
@@ -54,8 +53,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
     - Is the **code architecture** well designed in terms of **components**, **operations**, **synchronism**?
     - To which **extent** are the requirements accomplished?
 1. Once the student has positively addressed all the points 👍🎉, **merge the PR** only if `master` is the _base branch_, otherwise just **close the PR** 👈
-1. To avoid overcrowding the organization, arrange to [transfer the **ownership**](https://help.github.com/articles/transferring-a-repository-owned-by-your-organization) of the repository to the student GitHub account 💰. Transferring the ownership could be _optional_ if you decide to jump straight to step 5.
-1. Finally, applying step 4 does not guarantee that the student can retain the repository forever, since deleting the assignment from the _GitHub Education_ dashboard will cause that all the participant repositories will be deleted too 😲. To prevent this, ask the student to [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository).
+1. Finally, to avoid overcrowding the organization, arrange to [transfer the **ownership**](https://help.github.com/articles/transferring-a-repository-owned-by-your-organization) of the repository to the student GitHub account 💰. Importantly, transferring the ownership would also allow students to retain forever the outcome of their hard work :muscle: This way, we can make sure that deleting the assignment from the _GitHub Education_ dashboard won't cause any harm to their precious :gem:
 
 >Sometimes, it might be beneficial to commit code to student's repository. To this end, follow these steps:
 
