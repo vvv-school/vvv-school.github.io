@@ -20,7 +20,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
 1. If present, go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
-1. Check out the **course gradebook** and boast about that with your mates :triumph: :clap:
+1. Check out the **course gradebook** and boast of the result with your mates :triumph: :clap:
 
 #### Collaborative Code Review
 
