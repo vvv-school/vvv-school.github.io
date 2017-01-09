@@ -28,7 +28,7 @@ During **vvv{yy}** school, teachers will be giving **frontal lessons** and **han
 There are two categories of hands-on:
 
 #### Tutorials
->A tutorial is a repository containing complete code used to explain a particular aspect of the course. During lessons, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (the code is complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be counted by [**automatic grading**](#automatic-grading) process.
+>A tutorial is a repository containing complete code used to explain a particular aspect of the course. During lessons and/or hands-on, teachers and students can work on it together. Tutorials will be therefore assigned within the classroom, even though students are not required to provide any solution (the code is complete); thus, their score is low (e.g. **1,2**). A tutorial may or may not provide a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing); at any rate, it won't be counted by [**automatic grading**](#automatic-grading) process.
 
 >[**tutorial_cartesian-interface**](https://github.com/vvv-school/tutorial_cartesian-interface) is an example of tutorial you can design yours from.
 
@@ -37,7 +37,7 @@ There are two categories of hands-on:
 #### Assignments
 >An assignment is a repository that contains **starter code** the students are required to complete with their own solutions. To run the [**automatic grading**](#automatic-grading) process based on assignments, teachers responsible for the course need to code a [**smoke-test**](https://github.com/vvv-school/vvv-school.github.io/blob/master/instructions/how-to-complete-assignments.md#smoke-testing) inside the assignment. Typically, assignments have higher scores (**> 2**) depending on their difficulty.
 
->Students can follow these general [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments; in particular, the section on [**Smoke Testing**](../instructions/how-to-complete-assignments.md#smoke-testing). However, nothing prevents a teacher from accepting an assignment himself and solve it together with students.
+>Students can follow these general [**instructions**](../instructions/how-to-complete-assignments.md#instructions-for-students) to complete the assignments; in particular, the section on [**Smoke Testing**](../instructions/how-to-complete-assignments.md#smoke-testing) that will help check whether the assignment can be considered passed. Also, an assignment contains **specific instructions** (within _README.md_) detailing how students should proceed with the code. Note that nothing prevents a teacher from accepting an assignment himself and solve it together with students. Teachers are suggested to store a possible solution to the assignment as a (private) repository on their own GitHub account.
 
 >[**assignment_make-it-roll**](https://github.com/vvv-school/assignment_make-it-roll) is an example of assignment you can design yours from.
 
