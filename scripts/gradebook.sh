@@ -26,7 +26,7 @@ org=$1
 team=$2
 path=$3
 
-if [ ! -d "$4" ]; then
+if [ ! -d $4 ]; then
     mkdir $4
 fi
 cd "$4"
@@ -200,14 +200,14 @@ function publish_gradebook {
 function smoke_test() {
     local repo=$1
     local url=$2
-    if [ -d "$repo" ]; then
+    if [ -d $repo ]; then
         rm $repo -rf
     fi
  
     local ret=-1
     git clone --depth 1 -b master $url
     if [ $? -eq 0 ]; then
-        if [ -d "$repo/smoke-test" ]; then
+        if [ -d $repo/smoke-test ]; then
             if [ -f $repo/smoke-test/test-type ]; then
                 test_type=$(head -1 $repo/smoke-test/test-type)     
                 # run the original helper script anyway, not the one in $repo,
