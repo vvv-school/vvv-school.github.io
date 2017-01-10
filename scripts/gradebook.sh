@@ -206,7 +206,6 @@ function smoke_test() {
  
     local ret=-1
     git clone --depth 1 -b master $url
-    echo "DBG: git clone --depth 1 -b master $url"
     if [ $? -eq 0 ]; then
         if [ -d $repo/smoke-test ]; then
             if [ -f $repo/smoke-test/test-type ]; then                
