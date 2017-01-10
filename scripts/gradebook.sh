@@ -221,7 +221,7 @@ function smoke_test() {
             local code_dir=$(pwd)/$repo
             local test_dir=$code_dir/smoke-test
             
-            ./smoke-test-tmp/helpers/scripts/smoke-test.sh $build_dir $code_dir $test_dir
+            ./smoke-test-tmp/helpers/scripts/smoke-test-cpp.sh $build_dir $code_dir $test_dir
             ret=$?
         else
             echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
