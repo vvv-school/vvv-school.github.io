@@ -208,21 +208,26 @@ function smoke_test() {
     git clone --depth 1 -b master $url
     if [ $? -eq 0 ]; then
         if [ -d "$repo/smoke-test" ]; then
-            # run the original helper script anyway, not the one in $repo,
-            # to avoid any possible hacking ;)
-            if [ -d smoke-test-tmp ]; then
-                rm smoke-test-tmp -rf
+            if [ -f $repo/smoke-test/test-type ]; then
+                test_type=$(head -1 $repo/smoke-test/test-type)     
+                # run the original helper script anyway, not the one in $repo,
+                # to avoid any possible hacking ;)
+                if [ -d smoke-test-tmp ]; then
+                    rm smoke-test-tmp -rf
+                fi
+                git clone --depth 1 -b master https://github.com/vvv-school/vvv-school.github.io.git ./smoke-test-tmp/helpers
+                
+                # we need absolute paths
+                mkdir ./smoke-test-tmp/build
+                local build_dir=$(pwd)/smoke-test-tmp/build
+                local code_dir=$(pwd)/$repo
+                local test_dir=$code_dir/smoke-test
+                
+                ./smoke-test-tmp/helpers/scripts/smoke-test-${test_type}.sh $build_dir $code_dir $test_dir
+                ret=$?
+            else
+                echo -e "${red}test-type is missing${nc}" > /dev/stderr
             fi
-            git clone --depth 1 -b master https://github.com/vvv-school/vvv-school.github.io.git ./smoke-test-tmp/helpers
-            
-            # we need absolute paths
-            mkdir ./smoke-test-tmp/build
-            local build_dir=$(pwd)/smoke-test-tmp/build
-            local code_dir=$(pwd)/$repo
-            local test_dir=$code_dir/smoke-test
-            
-            ./smoke-test-tmp/helpers/scripts/smoke-test-cpp.sh $build_dir $code_dir $test_dir
-            ret=$?
         else
             echo -e "${red}${repo} does not contain smoke-test${nc}" > /dev/stderr
         fi
