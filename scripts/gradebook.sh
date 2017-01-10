@@ -208,8 +208,7 @@ function smoke_test() {
     git clone --depth 1 -b master $url
     if [ $? -eq 0 ]; then
         if [ -d $repo/smoke-test ]; then
-            if [ -f $repo/smoke-test/test-type ]; then
-                test_type=$(head -1 $repo/smoke-test/test-type)     
+            if [ -f $repo/smoke-test/test-type ]; then                
                 # run the original helper script anyway, not the one in $repo,
                 # to avoid any possible hacking ;)
                 if [ -d smoke-test-tmp ]; then
@@ -223,6 +222,7 @@ function smoke_test() {
                 local code_dir=$(pwd)/$repo
                 local test_dir=$code_dir/smoke-test
                 
+                test_type=$(head -1 $repo/smoke-test/test-type)
                 ./smoke-test-tmp/helpers/scripts/smoke-test-${test_type}.sh $build_dir $code_dir $test_dir
                 ret=$?
             else
