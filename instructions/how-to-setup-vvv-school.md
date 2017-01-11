@@ -2,7 +2,14 @@
 
 **YY** is the school year (e.g. **17**, **18**...)
 
-## VVV{YY} School repository
+#### Basic ideas
+- The repository [**vvv-school/vvv{yy}**](#set-up-vvv{yy}-school-repository) represents the entry point to the school. It's where we handle the Wiki, the Q&A system, school material (e.g. links to slides) and, generally, all the resources we need.
+- Each day we'll run a **course** (e.g. kinematics, dynamics, vision...) that consists of teaching theories during **frontal lessons** so as giving [**hands-on**](#hands-on) sessions.
+- Teachers can use two tools during hands-on and/or lessons: [**tutorials**](#tutorials) and [**assignments**](#assignments). They correspond to single repositories stored in [**vvv-school** organization](https://github.com/vvv-school).
+- Teachers make use of [GitHub Education](https://education.github.com) to invite students to follow tutorials and solve assignments. To this end, each teacher is required to create a new organization where students' assignments will be created by means of **automatic sandboxing** through **GitHub Classrooms**.
+- Provided that there are many students, we cannot afford to do [**code review**](../instructions/how-to-complete-assignments.md#collaborative-code-review-1) on a student basis. Instead, we can use an [**automatic grading**](#automatic-grading) mechanism to challenge students and let teachers understand which student needs help.
+
+## Set up VVV{YY} School repository
 
 The repository will be named **vvv-school/vvv{yy}** (e.g. [vvv-school/vvv17](https://github.com/vvv-school/vvv17)).
 
