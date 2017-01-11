@@ -11,7 +11,7 @@ $ sudo apt-get install icub-common
 ```
 
 ## Setup environment variables
-Look at environment variables [**here**](../environment.sh).
+Look at environment variables [**here**](./instructions/environment.sh).
 
 ## Get the code
 ```sh
