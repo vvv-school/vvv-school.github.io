@@ -49,10 +49,18 @@ fi
 cd ../
 
 # to let yarpmanager access the fixture
-export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test_dir
+if [ -z "$YARP_DATA_DIRS" ]; then
+   export YARP_DATA_DIRS=$test_dir
+else
+   export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test_dir
+fi
 
 # to make the test library retrievable
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build_dir/build-test/plugins
+if [ -z "$LD_LIBRARY_PATH" ]; then
+   export LD_LIBRARY_PATH=$build_dir/build-test/plugins
+else
+   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build_dir/build-test/plugins
+fi
 
 yarp where > /dev/null 2>&1
 if [ $? -eq 0 ]; then
