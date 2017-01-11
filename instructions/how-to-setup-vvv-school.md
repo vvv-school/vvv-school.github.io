@@ -138,7 +138,7 @@ We use a **Linux system** to run the script for the automatic grading.
 
 #### Prerequisites 
 
-- you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting for login.
+- you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without prompting continuously for login.
 
 >To store credentials for one hour:
 ```sh
