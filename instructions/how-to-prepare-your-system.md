@@ -36,7 +36,7 @@ $ make install
 ```sh
 $ cd $ROBOT_CODE/icub-main
 $ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_icubmod_cartesiancontrollerserver=ON -DENABLE_icubmod_cartesiancontrollerclient=ON -DENABLE_icubmod_gazecontrollerclient=ON../
+$ cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_icubmod_cartesiancontrollerserver=ON -DENABLE_icubmod_cartesiancontrollerclient=ON -DENABLE_icubmod_gazecontrollerclient=ON ../
 $ make install
 ```
 
@@ -52,6 +52,6 @@ $ make install
 ```sh
 $ cd $ROBOT_CODE/robot-testing
 $ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_MIDDLEWARE_PLUGINS=ON../
+$ cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_MIDDLEWARE_PLUGINS=ON ../
 $ make install
 ```
