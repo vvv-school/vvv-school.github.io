@@ -24,7 +24,7 @@ $ git clone https://github.com/robotology/icub-contrib-common.git
 $ git clone https://github.com/robotology/robot-testing.git
 ```
 
-## Install code
+## Install the code
 
 ### Install yarp
 ```sh
