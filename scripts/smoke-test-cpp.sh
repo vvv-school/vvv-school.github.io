@@ -81,10 +81,7 @@ else
    sleep 1
 fi
 
-if [ -f output.txt ]; then
-    rm output.txt
-fi
-testrunner --verbose --suit $test_dir/test.xml | tee output.txt
+testrunner --verbose --suit $test_dir/test.xml > output.txt
 
 if [ "$kill_testnode" == "yes" ]; then
    killall -9 yarprun
