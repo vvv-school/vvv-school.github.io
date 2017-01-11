@@ -2,7 +2,7 @@
 
 **Official installation instructions** can be found in our [**manual**](http://wiki.icub.org/wiki/ICub_Software_Installation).
 
-Nonetheless, here's a guide we suggest to follow for installation on _Linux_ systems (e.g. for a **Ubuntu Xenial** distribution), which is in turn the way we prepared our **VM**.
+Nonetheless, here's a guide we suggest to follow for installation on _Linux_ systems (e.g. for a **Ubuntu Xenial** distribution), which is in turn the way we prepared our **Virtual Machine**.
 
 ## Install depedencies
 ```sh
