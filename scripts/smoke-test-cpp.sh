@@ -73,6 +73,9 @@ else
    sleep 1
 fi
 
+if [ -f output.txt ]; then
+    rm output.txt
+fi
 testrunner --verbose --suit $test_dir/test.xml > output.txt
 
 if [ "$kill_testnode" == "yes" ]; then
@@ -86,21 +89,25 @@ fi
 cd build-code
 make uninstall && cd ../
 
-cat output.txt
-
 # color codes
 red='\033[1;31m'
 green='\033[1;32m'
 nc='\033[0m'
 
-npassed=$(grep -i "Number of passed test cases" output.txt | sed 's/[^0-9]*//g')
-if [ $npassed -eq 0 ]; then   
+npassed=0
+if [ -f output.txt ]; then
+    cat output.txt
+    npassed=$(grep -i "Number of passed test cases" output.txt | sed 's/[^0-9]*//g')
+else
+    echo -e "${red}Unable to get test output${nc}\n"    
+fi
+
+cd $cur_dir
+if [ $npassed -eq 0 ]; then
    echo -e "${red}xxxxx Test FAILED xxxxx${nc}\n"
-   cd $cur_dir
    exit 1
 else
    echo -e "${green}===== Test PASSED =====${nc}\n"
-   cd $cur_dir
    exit 0
 fi
 
