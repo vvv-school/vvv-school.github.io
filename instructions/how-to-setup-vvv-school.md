@@ -30,7 +30,7 @@ Then, do the following steps:
 During **vvv{yy}** school, teachers will be giving **frontal lessons** and **hands-on sessions** regarding diverse courses, e.g. **kinematics**, **dynamics**, **vision** and so on.
 
 ### Hands-on
-**Hands-on** are repositories stored in [vvv-school](https://github.com/vvv-school) organization, which we handle using the [**GitHub Education**](https://education.github.com) platform.
+**Hands-on** are repositories stored in [**vvv-school** organization](https://github.com/vvv-school), which we handle using the [**GitHub Education**](https://education.github.com) platform.
 
 There are two categories of hands-on:
 
