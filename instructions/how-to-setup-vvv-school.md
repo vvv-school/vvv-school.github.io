@@ -159,7 +159,7 @@ $ git config [options] --unset-all credential.helper
 ```sh
 $ export GITHUB_TOKEN_ORG_READ=token-hash-goes-here
 ```
-If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: To do so, ask [**@pattacini**](https://github.com/pattacini) for login and password.
+If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) for login and password).
 
 #### Launch the script
 
