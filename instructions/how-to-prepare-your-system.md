@@ -22,7 +22,7 @@ $ rosdep update
 $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 $ echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc
 
-# if you need to comminicate with external machine, define the names:
+# if you need to communicate with external machine, define the names:
 $ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311" >> ~/.bashrc
 # add in /etc/hosts name and ip of all the machines in the ros network
 # restart bash
