@@ -114,7 +114,10 @@ function publish_gradebook {
     cd $path
     git diff --quiet
     if [ $? -ne 0 ]; then
-        echo -e "${green}Publishing the gradebook${nc}\n" > /dev/stderr
+        website=$(git remote show origin | grep -i -m 1 url)
+        website=($website)
+        website=${website[2]}
+        echo -e "${green}Publishing the gradebook to $website${nc}\n" > /dev/stderr
         local keep_leading_lines=1
         cp $README $cur_dir/readme.tmp
         head -"${keep_leading_lines}" $cur_dir/readme.tmp > $README
@@ -138,7 +141,7 @@ function publish_gradebook {
                 if [ "$status" != "$status_passed" ]; then
                     score=0
                 fi
-                echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
+                echo -e "| [$name](https://github.com/$org/$name) | $status | **$score** |" >> $README
                 empty=false;
             done
         
@@ -151,7 +154,7 @@ function publish_gradebook {
                 if [ "$status" != "$status_passed" ]; then
                     score=0
                 fi                
-                echo -e "| [$name](https://github.com/$org/$name) | $status | $score |" >> $README
+                echo -e "| [$name](https://github.com/$org/$name) | $status | **$score** |" >> $README
                 empty=false;
             done
             
