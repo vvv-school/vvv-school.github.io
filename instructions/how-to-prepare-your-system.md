@@ -6,6 +6,7 @@ Nonetheless, here's a **guide we suggest to follow** for installation on _Linux_
 
 ## Install depedencies
 ```sh
+# YARP related dependencies
 $ sudo sh -c 'echo "deb http://www.icub.org/ubuntu xenial contrib/science" > /etc/apt/sources.list.d/icub.list'
 $ sudo apt-get update
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
@@ -21,9 +22,9 @@ $ rosdep update
 $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 $ echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc
 
-# if needed to comminicate with external machine you need to define the names
+# if you need to comminicate with external machine, define the names:
 $ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311" >> ~/.bashrc
-# add in /etc/hosts name and ip of all the machine in the ros network
+# add in /etc/hosts name and ip of all the machines in the ros network
 # restart bash
 
 # moveIT installation steps
