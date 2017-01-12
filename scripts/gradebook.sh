@@ -326,7 +326,7 @@ function update_assignment {
             local jq_path_student=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'")
             local jq_path_assignment=0
             if [ ! -z "$jq_path_student" ]; then
-                jq_path_assignment=$(eval "cat $gradebook_new | jq '.[] | select(.username==\"$stud\") | .tutorials | length'")
+                jq_path_assignment=$(eval "cat $gradebook_new | jq '.[] | select(.username==\"$stud\") | .assignments | length'")
             else
                 jq_path_student=$(eval "cat $gradebook_new | jq 'length'")
             fi            
