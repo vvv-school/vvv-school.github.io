@@ -14,13 +14,6 @@ code_dir=$2
 test_dir=$3
 cur_dir=$(pwd)
 
-if [ -f ${test_dir}/pre-test.sh ]; then
-    tmp_dir=$(pwd)
-    cd $test_dir
-    ./pre-test.sh
-    cd $tmp_dir
-fi
-
 cd $build_dir
 if [ -d build-code ]; then 
     rm build-code -rf
@@ -88,7 +81,21 @@ else
    sleep 1
 fi
 
+if [ -f ${test_dir}/pre-test.sh ]; then
+    tmp_dir=$(pwd)
+    cd $test_dir
+    ./pre-test.sh
+    cd $tmp_dir
+fi
+
 testrunner --verbose --suit $test_dir/test.xml > output.txt
+
+if [ -f ${test_dir}/post-test.sh ]; then
+    tmp_dir=$(pwd)
+    cd $test_dir
+    ./post-test.sh
+    cd $tmp_dir
+fi
 
 if [ "$kill_testnode" == "yes" ]; then
    killall -9 yarprun
@@ -100,13 +107,6 @@ fi
 
 cd build-code
 make uninstall && cd ../
-
-if [ -f ${test_dir}/post-test.sh ]; then
-    tmp_dir=$(pwd)
-    cd $test_dir
-    ./post-test.sh
-    cd $tmp_dir
-fi
 
 # color codes
 red='\033[1;31m'
