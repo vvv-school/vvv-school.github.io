@@ -4,7 +4,7 @@
 
 Nonetheless, here's a **guide we suggest to follow** for installation on _Linux_ systems (e.g. for a _Ubuntu Xenial_ distribution), which is in turn the way we prepared our **Virtual Machine**.
 
-## Install depedencies
+## Install dependencies
 ```sh
 # YARP related dependencies
 $ sudo sh -c 'echo "deb http://www.icub.org/ubuntu xenial contrib/science" > /etc/apt/sources.list.d/icub.list'
@@ -44,9 +44,16 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 export ROBOT_CODE=~/robot-code
 export ROBOT_INSTALL=~/robot-install
 
-export PATH=${PATH}:${ROBOT_INSTALL}/bin
+export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
-export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib
+export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib:${ROBOT_CODE}/codyco-superbuild/build/install/share/codyco
+```
+
+## Setup git configuration
+In order to install the `codyco-superbuild` software you must have git configured on your machine. If you have already performed the following steps you can jump to the next section.
+```sh
+$ git config --global user.name "Your name"
+$ git config --global user.email "youremail@domain.com"
 ```
 
 ## Get the code
@@ -56,6 +63,7 @@ $ git clone https://github.com/robotology/yarp.git
 $ git clone https://github.com/robotology/icub-main.git
 $ git clone https://github.com/robotology/icub-contrib-common.git
 $ git clone https://github.com/robotology/robot-testing.git
+$ git clone https://github.com/robotology/codyco-superbuild.git
 ```
 
 ## Install the code
@@ -90,4 +98,12 @@ $ cd $ROBOT_CODE/robot-testing
 $ mkdir build && cd build
 $ cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_MIDDLEWARE_PLUGINS=ON ../
 $ make install
+```
+
+### Install codyco-superbuild
+```sh
+$ cd $ROBOT_CODE/codyco-superbuild
+$ mkdir build && cd build
+$ cmake ..
+$ make
 ```
