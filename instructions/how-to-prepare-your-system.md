@@ -10,6 +10,24 @@ $ sudo sh -c 'echo "deb http://www.icub.org/ubuntu xenial contrib/science" > /et
 $ sudo apt-get update
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
 $ sudo apt-get install icub-common
+
+# ROS installation steps
+$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+$ sudo apt-get update
+$ sudo apt-get install ros-kinetic-desktop-full
+$ sudo rosdep init
+$ rosdep update
+$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+$ echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc
+
+# if needed to comminicate with external machine you need to define the names
+$ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311" >> ~/.bashrc
+# add in /etc/hosts name and ip of all the machine in the ros network
+# restart bash
+
+# moveIT installation steps
+$ sudo apt-get install ros-kinetic-moveit
 ```
 
 ## Setup environment variables
