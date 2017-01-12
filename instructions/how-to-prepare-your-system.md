@@ -8,8 +8,8 @@ Nonetheless, here's a **guide we suggest to follow** for installation on _Linux_
 ```sh
 # YARP related dependencies
 $ sudo sh -c 'echo "deb http://www.icub.org/ubuntu xenial contrib/science" > /etc/apt/sources.list.d/icub.list'
-$ sudo apt-get update
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
+$ sudo apt-get update
 $ sudo apt-get install icub-common
 
 # ROS installation steps
