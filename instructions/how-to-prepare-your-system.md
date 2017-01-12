@@ -33,7 +33,6 @@ $ sudo apt-get install ros-kinetic-moveit
 
 ## Setup environment variables
 ```sh
-# you could "source" this file from your .bashrc
 # we assume you have available these two repositories in your home:
 # ~/robot-code
 # ~/robot-install
@@ -104,6 +103,6 @@ $ make install
 ```sh
 $ cd $ROBOT_CODE/codyco-superbuild
 $ mkdir build && cd build
-$ cmake ..
+$ cmake ../
 $ make
 ```
