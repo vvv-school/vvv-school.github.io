@@ -53,6 +53,7 @@ In order to install the `codyco-superbuild` software you must have git configure
 ```sh
 $ git config --global user.name "[firstname lastname]"
 $ git config --global user.email "[valid email]"
+$ git config --global color.pager true
 $ git config --global color.ui auto
 ```
 
