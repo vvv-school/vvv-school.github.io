@@ -88,7 +88,7 @@ if [ -f ${test_dir}/pre-test.sh ]; then
     cd $tmp_dir
 fi
 
-testrunner --verbose --suit $test_dir/test.xml > output.txt
+testrunner --verbose --suit $test_dir/test.xml
 
 if [ -f ${test_dir}/post-test.sh ]; then
     tmp_dir=$(pwd)
@@ -114,11 +114,11 @@ green='\033[1;32m'
 nc='\033[0m'
 
 npassed=0
-if [ -f output.txt ]; then
-    cat output.txt
-    npassed=$(grep -i "Number of passed test cases" output.txt | sed 's/[^0-9]*//g')
+if [ -f result.txt ]; then
+    cat result.txt
+    npassed=$(grep -i "Number of passed test cases" result.txt | sed 's/[^0-9]*//g')
 else
-    echo -e "${red}Unable to get test output${nc}\n"    
+    echo -e "${red}Unable to get test result${nc}\n"    
 fi
 
 cd $cur_dir
