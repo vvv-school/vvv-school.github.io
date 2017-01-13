@@ -1,4 +1,4 @@
-## Preamble
+## Introduction
 
 **Official installation instructions** can be found in our [**manual**](http://wiki.icub.org/wiki/ICub_Software_Installation).
 
