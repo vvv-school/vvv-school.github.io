@@ -59,6 +59,10 @@ export ROBOT_INSTALL=~/robot-install
 export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
 export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib:${ROBOT_CODE}/codyco-superbuild/build/install/share/codyco
+
+# gazebo plugins and model
+export GAZEBO_PLUGIN_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/lib
+export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gazebo/models
 ```
 
 ## Setup git configuration
