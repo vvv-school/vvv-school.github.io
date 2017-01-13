@@ -31,6 +31,19 @@ $ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:1131
 $ sudo apt-get install ros-kinetic-moveit
 ```
 
+**Note** `ros-desktop` package should have installed also the Gazebo simulator. If this is not the case, please install also the following package
+```sh
+$ sudo apt-get install gazebo7 libgazebo7-dev
+```
+
+## Matlab/Simulink
+Some lessons, tutorials and assignments may require the presence of Matlab and Simulink installed.
+If you do not have a valid licence, you can require a 30 days free trial directly at [Mathwork](https://it.mathworks.com/programs/trials/trial_request.html?prodcode=SL). Be sure to have access to the following Matlab producs:
+ - MATLAB
+ - Simulink
+ 
+If you have the freedom to choose a version, please select *R2016b*.
+
 ## Setup environment variables
 ```sh
 # we assume you have available these two repositories in your home:
@@ -105,6 +118,6 @@ $ make install
 ```sh
 $ cd $ROBOT_CODE/codyco-superbuild
 $ mkdir build && cd build
-$ cmake ../
+$ cmake .. -DCODYCO_USES_GAZEBO:BOOL=ON
 $ make
 ```
