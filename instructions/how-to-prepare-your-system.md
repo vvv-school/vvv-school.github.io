@@ -51,8 +51,9 @@ export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${
 ## Setup git configuration
 In order to install the `codyco-superbuild` software you must have git configured on your machine. If you have already performed the following steps you can jump to the next section.
 ```sh
-$ git config --global user.name "Your name"
-$ git config --global user.email "youremail@domain.com"
+$ git config --global user.name "[firstname lastname]"
+$ git config --global user.email "[valid email]"
+$ git config --global color.ui auto
 ```
 
 ## Get the code
