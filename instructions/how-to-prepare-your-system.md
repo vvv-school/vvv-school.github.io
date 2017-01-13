@@ -37,8 +37,8 @@ $ sudo apt-get install gazebo7 libgazebo7-dev
 ```
 
 ## Matlab/Simulink
-Some lessons, tutorials and assignments may require the presence of Matlab and Simulink installed.
-If you do not have a valid licence, you can require a 30 days free trial directly at [Mathwork](https://it.mathworks.com/programs/trials/trial_request.html?prodcode=SL). Be sure to have access to the following Matlab producs:
+Some lessons, tutorials and assignments may require the availability of Matlab and Simulink installed.
+If you do not have a valid licence, you can require a 30 days free trial directly at [Mathwork](https://it.mathworks.com/programs/trials/trial_request.html?prodcode=SL). Be sure to have access to the following Matlab products:
  - MATLAB
  - Simulink
  
