@@ -4,6 +4,8 @@
 
 ## Introduction
 
+### Basic concepts
+
 - The repository [**vvv-school/vvv{yy}**](#set-up-vvvyy-school-repository) represents the "hall" of the school, that is the school entry point. It's where we handle the Wiki, the Q&A system, school material (e.g. links to slides) and, generally, all the resources we need. With [GitHub Pages](https://pages.github.com) we can render the hall quite nicely.
 - Each day we'll run a **course** (e.g. kinematics, dynamics, vision...) that consists in teaching theories during **frontal lessons** so as giving [**hands-on**](#hands-on) sessions.
 - Teachers have two instruments during hands-on and/or lessons: [**tutorials**](#tutorials) and [**assignments**](#assignments). They correspond to single repositories stored in [**vvv-school** organization](https://github.com/vvv-school).
