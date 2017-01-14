@@ -2,7 +2,7 @@
 
 **Official installation instructions** can be found in our [**manual**](http://wiki.icub.org/wiki/ICub_Software_Installation).
 
-Nonetheless, for attending the school, **we warmly suggest you to follow the guide** below for installation on _Linux_ systems (e.g. for a _Ubuntu Xenial_ distribution), which is in turn the way we prepared our **Virtual Machine**.
+However, for attending VVV school we do **support only Linux systems**, hence **we warmly suggest you to follow the installation guide** below (e.g. for a _Ubuntu Xenial_ distribution), which is in turn the way we prepared our **Virtual Machine**.
 
 ## Install dependencies
 ```sh
