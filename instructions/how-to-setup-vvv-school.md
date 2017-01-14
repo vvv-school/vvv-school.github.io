@@ -73,7 +73,7 @@ To start with, you need to apply the following changes:
 
 - Edit the **description** and the **website** fields of the repository page.
 - **GitHub Pages** are already enabled by default, given the chosen name of the repository. The file **`_config.yml`** used by GitHub Pages to set up the style should be already contained inside (thanks to duplication).
-- Edit the first line of **README.md** file. The rest of the file will be overwritten by the [**automatic grading**](#automatic-grading) process.
+- Edit the first line of [**README.md**](https://github.com/vvv-school/template_vvvyy-course.github.io/blob/master/README.md) file. The rest of the file will be overwritten by the [**automatic grading**](#automatic-grading) process.
 - Edit the _organization's name_ so as the the _students' team name_ within the [**gadebook.sh**](https://github.com/vvv-school/template_vvvyy-course.github.io/blob/master/gradebook.sh#L11-L12) script.
 - Remember to put a link to _https://vvv{yy}-{course}.github.io_ inside **vvv-school/vvv{yy}/gradebook.md**.
 
