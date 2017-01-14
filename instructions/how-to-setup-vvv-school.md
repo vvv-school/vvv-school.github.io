@@ -65,21 +65,21 @@ Therefore, for each course, do:
 
 ### VVV{YY} School courses repositories
 
-Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** (e.g. [vvv17-kinematics/vvv17-kinematics.github](https://github.com/vvv17-kinematics/vvv17-kinematics.github.io)), and aims to automatically handle the **course gradebook**.
+Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** and aims to automatically handle the **course gradebook**.
 
-Then, let's create this last repository! Also here, everything is already mostly done, since we can [**duplicate** the repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) **vvv{yy-1}-{course}/vvv{yy-1}-{course}.github.io** into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+Then, let's create this last repository! Also here, everything is already mostly done: you can [**duplicate** the template repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository) [**vvv-school/template_vvvyy-course.github.io**](https://github.com/vvv-school/template_vvvyy-course.github.io) into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
 
-Consider these further notes:
+To start with, you need to apply the following changes:
 
-- If you didn't do it while creating the new repository, edit the **description** and the **website** fields of the repository page with, respectively, **Gradebook of VVV{YY} Robot {course}** and **https://vvv{yy}-{course}.github.io**.
+- Edit the **description** and the **website** fields of the repository page.
 - **GitHub Pages** are already enabled by default, given the chosen name of the repository. The file **`_config.yml`** used by GitHub Pages to set up the style should be already contained inside (thanks to duplication).
-- Edit the first line of **README.md** file, putting **Gradebook of VVV{YY} Robot {course}**. The rest of the file will be overwritten by the [**automatic grading**](#automatic-grading) process.
-- Edit **gadebook.sh** to replace the current name of the organization with **vvv{yy}-{course}**.
+- Edit the first line of **README.md** file. The rest of the file will be overwritten by the [**automatic grading**](#automatic-grading) process.
+- Edit the name of the organization so as the name of the students' team within the **gadebook.sh** script.
 - Remember to put a link to _https://vvv{yy}-{course}.github.io_ inside **vvv-school/vvv{yy}/gradebook.md**.
 
 #### Gear up for automatic grading
 
-Within the course repository, you have to fill in the **data.json** file containing info on **tutorials** and **assignments** regarding this particular **{course}**.
+Finally, you have to fill in the **data.json** file containing info on **tutorials** and **assignments** regarding this particular **{course}**.
 
 The format is pretty much intuitive. Here's an example:
 ```json
