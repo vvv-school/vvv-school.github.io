@@ -202,10 +202,10 @@ $ mkdir build && cd build
 $ cmake ../
 $ make install
 
-# Caffe + Hierarchical Image Representation config
 # import and setup configuration file
 $ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
-# Open the imported file imagenet_val_cutfc6.prototxt and modify the absolute path to the mean image
-# this path should be $Caffe_ROOT/data/ilsvrc12/imagenet_mean.binaryproto 
-# with the value of $Caffe_ROOT on your machine substituted
+
+# Edit the imported file ~/.local/share/yarp/contexts/himrep/imagenet_val_cutfc6.prototxt
+# to modify the absolute path to the mean image pointing to ${Caffe_ROOT}/data/ilsvrc12/imagenet_mean.binaryproto 
+# replacing ${Caffe_ROOT} with its actual value
 ```
