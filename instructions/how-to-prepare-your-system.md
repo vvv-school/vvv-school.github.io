@@ -23,9 +23,7 @@ $ rosdep update
 # moveIT installation steps
 $ sudo apt-get install ros-kinetic-moveit
 
-# Caffe (cpu only installation). If you require CUDA please install CUDA 8.0 & cuDNN beforehand.
-
-# Caffe dependencies
+# Caffe dependencies (cpu only installation). If you require CUDA, please install CUDA 8.0 & cuDNN beforehand.
 # OpenBLAS
 $ sudo apt-get install libopenblas-dev
 # boost
