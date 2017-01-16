@@ -70,11 +70,11 @@ $ sudo ./install
 
 Follow the onscreen instructions. You have to login with your Mathwork account
 
-![Image of mathwork login in installer](https://github.com/vvv-school/vvv-school.github.io/images/instructions_matlab_install_license.png)
+![Image of mathwork login in installer](https://github.com/vvv-school/vvv-school.github.io/blob/master/images/instructions_matlab_install_login.png)
 
 and when prompted select the correct license you requested (e.g. *Self Serve R2016b Trial* in the following image)
 
-![Image of mathwork login in installer](https://github.com/vvv-school/vvv-school.github.io/images/instructions_matlab_install_login.png)
+![Image of mathwork login in installer](https://github.com/vvv-school/vvv-school.github.io/blob/master/images/instructions_matlab_install_license.png)
 
 Finilize the installation following the onscreen instructions and by adding the simlink in `/usr/local/bin`.
 
