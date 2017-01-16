@@ -63,6 +63,7 @@ If you have the freedom to choose a version, please select *R2016b*.
 We assume that you have the following directories available in your home:
 - `~/robot-code`
 - `~/robot-install`
+
 You can then create the file `~/.bashrc-dev` containing the following instructions:
 ```sh
 # to enhance git experience in the console ;)
@@ -96,6 +97,7 @@ Finally, do:
 ```sh
 $ echo "source ~./bashrc-dev" >> ~/.bashrc
 ```
+And restart the `bash`.
 
 ## Setup Yarp autocompletion
 ```sh
