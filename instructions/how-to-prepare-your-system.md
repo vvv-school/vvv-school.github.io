@@ -184,7 +184,7 @@ $ make install
 ```sh
 $ cd $ROBOT_CODE/codyco-superbuild
 $ mkdir build && cd build
-$ cmake .. -DCODYCO_USES_GAZEBO:BOOL=ON
+$ cmake -DCODYCO_USES_GAZEBO:BOOL=ON ../
 $ make
 ```
 
@@ -192,6 +192,6 @@ $ make
 ```sh
 $ cd $ROBOT_CODE/event-driven
 $ mkdir build && cd build
-$ cmake .. -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/OpenCV
+$ cmake -DV_10BITCODEC:BOOL=ON ../
 $ make install
 ```
