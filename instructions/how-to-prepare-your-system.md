@@ -78,15 +78,16 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 export ROBOT_CODE=~/robot-code
 export ROBOT_INSTALL=~/robot-install
 
+# caffe configuration
 export Caffe_ROOT=$ROBOT_CODE/caffe
-
-export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
-export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib:${ROBOT_CODE}/codyco-superbuild/build/install/share/codyco
 
 # gazebo plugins and model
 export GAZEBO_PLUGIN_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/lib
 export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gazebo/models
+
+export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
+export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib:${ROBOT_CODE}/codyco-superbuild/build/install/share/codyco
 ```
 
 ## Setup Yarp autocompletion
@@ -189,6 +190,7 @@ $ cmake ./
 $ make
 $ cd ../
 $ mkdir build && cd build
+$ cmake ../
 $ make install
 
 # Caffe + Hierarchical Image Representation config
