@@ -7,13 +7,13 @@ However, for attending VVV school we do **support only Linux systems**, hence **
 ## Install dependencies
 ```sh
 # YARP related dependencies
-$ sudo sh -c 'echo "deb http://www.icub.org/ubuntu xenial contrib/science" > /etc/apt/sources.list.d/icub.list'
+$ sudo sh -c 'echo "deb http://www.icub.org/ubuntu $(lsb_release -c | awk '{print $2}') contrib/science" > /etc/apt/sources.list.d/icub.list'
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
 $ sudo apt-get update
 $ sudo apt-get install icub-common
 
 # ROS installation steps
-$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -c | awk '{print $2}') main" > /etc/apt/sources.list.d/ros-latest.list'
 $ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
 $ sudo apt-get update
 $ sudo apt-get install ros-kinetic-desktop-full
