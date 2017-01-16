@@ -19,11 +19,11 @@ $ sudo apt-get update
 $ sudo apt-get install ros-kinetic-desktop-full
 $ sudo rosdep init
 $ rosdep update
-$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-$ echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc
+$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc-dev
+$ echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc-dev
 
 # instead, if you need to communicate with external machine, define the names:
-$ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311" >> ~/.bashrc
+$ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311" >> ~/.bashrc-dev
 # add in /etc/hosts name and ip of all the machines in the ros network
 # restart bash
 
@@ -68,12 +68,9 @@ $ make install
 
 # Caffe configuration
 # Set the Caffe_ROOT environment variable to your Caffe's source root directory.
+$ echo "export Caffe_ROOT=/FULL_PATH_OF_DIR" >> ~/.bashrc-dev
 $ cd $Caffe_ROOT && scripts/download_model_binary.py models/bvlc_reference_caffenet
 $ cd $Caffe_ROOT && ./data/ilsvrc12/get_ilsvrc_aux.sh
-$ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
-# Open the imported file imagenet_val_cutfc6.prototxt and modify the absolute path to the mean image
-# this path should be $Caffe_ROOT/data/ilsvrc12/imagenet_mean.binaryproto 
-# with the value of $Caffe_ROOT on your machine substituted
 
 # Hierarchical Image Representation
 $ git clone https://github.com/robotology/himrep.git
@@ -86,6 +83,13 @@ $ mkdir build
 $ cd build
 $ make 
 $ make install
+
+# Caffe + Hierarchical Image Representation config
+# import and setup configuration file
+$ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
+# Open the imported file imagenet_val_cutfc6.prototxt and modify the absolute path to the mean image
+# this path should be $Caffe_ROOT/data/ilsvrc12/imagenet_mean.binaryproto 
+# with the value of $Caffe_ROOT on your machine substituted
 ```
 
 **Note** `ros-desktop` package should have installed also the Gazebo simulator. If this is not the case, please install also the following package
