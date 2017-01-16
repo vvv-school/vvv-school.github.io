@@ -89,6 +89,11 @@ export GAZEBO_PLUGIN_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/lib
 export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gazebo/models
 ```
 
+## Setup Yarp autocompletion
+```sh
+$ sudo ln -s $ROBOT_CODE/yarp/scripts/yarp_completion /etc/bash_completion.d/yarp_completion
+```
+
 ## Setup git configuration
 In order to install the `codyco-superbuild` software you must have git configured on your machine. If you have already performed the following steps, you can jump to the next section.
 ```sh
@@ -116,7 +121,7 @@ $ git clone https://github.com/robotology/himrep.git
 
 ## Install the code
 
-### Install yarp
+### Install Yarp
 ```sh
 $ cd $ROBOT_CODE/yarp
 $ mkdir build && cd build
@@ -150,7 +155,6 @@ $ make install
 
 ### Install Caffe
 ```sh
-# Caffe compilation
 $ cd $ROBOT_CODE/caffe
 $ mkdir build && cd build
 $ cmake -DBLAS=Open ../
