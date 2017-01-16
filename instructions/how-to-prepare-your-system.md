@@ -236,5 +236,4 @@ $ cd $ROBOT_CODE
 $ mkdir datasets && cd datasets
 $ wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
 $ unzip testData_20120803_095402.zip
-$ rm testData_20120803_095402.zip
 ```
