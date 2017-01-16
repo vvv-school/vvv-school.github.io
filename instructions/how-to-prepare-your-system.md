@@ -53,11 +53,30 @@ $ sudo apt-get install gazebo7 libgazebo7-dev
 
 ## Matlab/Simulink
 Some lessons, tutorials and assignments may require to have **Matlab** and **Simulink** installed.
-If you do not have a valid licence, you can require a 30 days free trial directly at [Mathwork](https://it.mathworks.com/programs/trials/trial_request.html?prodcode=SL). Be sure to have access to the following Matlab products:
+If you do not have a valid licence, you can require a 30 days free trial directly at [Mathwork](https://it.mathworks.com/programs/trials/trial_request.html?prodcode=SL). Be sure to have access (or to require access) to the following Matlab products:
  - MATLAB
  - Simulink
  
 If you have the freedom to choose a version, please select *R2016b*.
+
+Full installation instructions for Matlab can be found [here](https://mathworks.com/help/install/ug/install-mathworks-software.html).
+The following are a short extract, specialized for GNU/Linux of the full documentation.
+
+Once you downloaded the correct installer, unzip it.
+Open the terminal and move to the extracted folder and then execute the `install` script with administrator permissions:
+```
+$ sudo ./install
+```
+
+Follow the onscreen instructions. You have to login with your Mathwork account
+
+![Image of mathwork login in installer](https://github.com/vvv-school/vvv-school.github.io/images/instructions_matlab_install_license.png)
+
+and when prompted select the correct license you requested (e.g. *Self Serve R2016b Trial* in the following image)
+
+![Image of mathwork login in installer](https://github.com/vvv-school/vvv-school.github.io/images/instructions_matlab_install_login.png)
+
+Finilize the installation following the onscreen instructions and by adding the simlink in `/usr/local/bin`.
 
 ## Setup environment variables
 We assume that you have the following directories available in your home path:
