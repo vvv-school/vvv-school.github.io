@@ -29,6 +29,39 @@ $ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:1131
 
 # moveIT installation steps
 $ sudo apt-get install ros-kinetic-moveit
+
+# **caffe (cpu only installation)**. If you require CUDA please install CUDA 8.0 & cuDNN beforehand.
+# installation of **dependencies**
+# OpenBLAS
+sudo apt-get install libopenblas-dev
+# boost
+sudo apt-get install libboost-all-dev
+# Google Protobuf Buffers C++
+sudo apt-get install libprotobuf-dev protobuf-compiler
+# Google Logging
+sudo apt-get install libgoogle-glog-dev
+# Google Flags
+sudo apt-get install libgflags-dev
+# LevelDB
+sudo apt-get install libleveldb-dev
+# HDF5
+sudo apt-get install libhdf5-serial-dev
+# LMDB
+sudo apt-get install liblmdb-dev
+# snappy:
+sudo apt-get install libsnappy-dev
+# **Caffe libraries**
+git clone https://www.github.com/BVLC/caffe.git
+cd caffe
+git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
+# **Caffe compilation**
+cd caffe
+mkdir build
+cd build
+ccmake ../ (set BLAS to open or Open)
+make all
+make runtest
+make install
 ```
 
 **Note** `ros-desktop` package should have installed also the Gazebo simulator. If this is not the case, please install also the following package
