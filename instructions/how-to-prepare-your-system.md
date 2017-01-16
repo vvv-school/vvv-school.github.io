@@ -192,6 +192,6 @@ $ make
 ```sh
 $ cd $ROBOT_CODE/event-driven
 $ mkdir build && cd build
-$ cmake -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/opencv ../
+$ cmake -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/OpenCV ../
 $ make install
 ```
