@@ -19,13 +19,6 @@ $ sudo apt-get update
 $ sudo apt-get install ros-kinetic-desktop-full
 $ sudo rosdep init
 $ rosdep update
-$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc-dev
-$ echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc-dev
-
-# instead, if you need to communicate with external machine, define the names:
-$ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311" >> ~/.bashrc-dev
-# add in /etc/hosts name and ip of all the machines in the ros network
-# restart bash
 
 # moveIT installation steps
 $ sudo apt-get install ros-kinetic-moveit
@@ -78,8 +71,18 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 export ROBOT_CODE=~/robot-code
 export ROBOT_INSTALL=~/robot-install
 
+# ros
+source /opt/ros/kinetic/setup.bash
+export ROS_MASTER_URI=https://localhost:11311
+# instead, if you need to communicate with an external machine, use:
+# export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311"
+# and add in /etc/hosts name and ip of all the machines in the ros network
+
 # caffe configuration
-export Caffe_ROOT=$ROBOT_CODE/caffe
+export Caffe_ROOT=${ROBOT_CODE}/caffe
+
+# liblinear
+export LIBSVMLIN_DIR=${ROBOT_CODE}/himrep/liblinear-1.91
 
 # gazebo plugins and model
 export GAZEBO_PLUGIN_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/lib
