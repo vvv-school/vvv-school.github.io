@@ -119,7 +119,7 @@ $ git clone https://github.com/robotology-playground/event-driven.git
 $ git clone https://www.github.com/BVLC/caffe.git
 $ cd caffe
 $ git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
-$ cd ..
+$ cd ../
 $ git clone https://github.com/robotology/himrep.git
 ```
 
