@@ -51,45 +51,6 @@ $ sudo apt-get install libhdf5-serial-dev
 $ sudo apt-get install liblmdb-dev
 # snappy:
 $ sudo apt-get install libsnappy-dev
-
-# Caffe libraries
-$ git clone https://www.github.com/BVLC/caffe.git
-$ cd caffe
-$ git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
-
-# Caffe compilation
-$ cd caffe
-$ mkdir build
-$ cd build
-$ ccmake ../ (set BLAS to open or Open)
-$ make all
-$ make runtest
-$ make install
-
-# Caffe configuration
-# Set the Caffe_ROOT environment variable to your Caffe's source root directory.
-$ echo "export Caffe_ROOT=/FULL_PATH_OF_DIR" >> ~/.bashrc-dev
-$ cd $Caffe_ROOT && scripts/download_model_binary.py models/bvlc_reference_caffenet
-$ cd $Caffe_ROOT && ./data/ilsvrc12/get_ilsvrc_aux.sh
-
-# Hierarchical Image Representation
-$ git clone https://github.com/robotology/himrep.git
-$ cd himrep
-$ cd liblinear-1.91
-$ cmake .
-$ make
-$ cd ..
-$ mkdir build
-$ cd build
-$ make 
-$ make install
-
-# Caffe + Hierarchical Image Representation config
-# import and setup configuration file
-$ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
-# Open the imported file imagenet_val_cutfc6.prototxt and modify the absolute path to the mean image
-# this path should be $Caffe_ROOT/data/ilsvrc12/imagenet_mean.binaryproto 
-# with the value of $Caffe_ROOT on your machine substituted
 ```
 
 **Note** `ros-desktop` package should have installed also the Gazebo simulator. If this is not the case, please install also the following package
@@ -116,6 +77,8 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 
 export ROBOT_CODE=~/robot-code
 export ROBOT_INSTALL=~/robot-install
+
+export Caffe_ROOT=$ROBOT_CODE/caffe
 
 export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
@@ -144,6 +107,11 @@ $ git clone https://github.com/robotology/icub-contrib-common.git
 $ git clone https://github.com/robotology/robot-testing.git
 $ git clone https://github.com/robotology/codyco-superbuild.git
 $ git clone https://github.com/robotology-playground/event-driven.git
+$ git clone https://www.github.com/BVLC/caffe.git
+$ cd caffe
+$ git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
+$ cd ..
+$ git clone https://github.com/robotology/himrep.git
 ```
 
 ## Install the code
@@ -180,6 +148,19 @@ $ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABL
 $ make install
 ```
 
+### Install Caffe
+```sh
+# Caffe compilation
+$ cd $ROBOT_CODE/caffe
+$ mkdir build && cd build
+$ cmake -DBLAS=Open ../
+$ make all
+$ make runtest
+$ make install
+$ ./scripts/download_model_binary.py models/bvlc_reference_caffenet
+$ ./data/ilsvrc12/get_ilsvrc_aux.sh
+```
+
 ### Install codyco-superbuild
 ```sh
 $ cd $ROBOT_CODE/codyco-superbuild
@@ -194,4 +175,22 @@ $ cd $ROBOT_CODE/event-driven
 $ mkdir build && cd build
 $ cmake -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/OpenCV ../
 $ make install
+```
+
+### Install himrep
+```sh
+$ cd $ROBOT_CODE/himrep
+$ cd liblinear-1.91
+$ cmake ./
+$ make
+$ cd ../
+$ mkdir build && cd build
+$ make install
+
+# Caffe + Hierarchical Image Representation config
+# import and setup configuration file
+$ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
+# Open the imported file imagenet_val_cutfc6.prototxt and modify the absolute path to the mean image
+# this path should be $Caffe_ROOT/data/ilsvrc12/imagenet_mean.binaryproto 
+# with the value of $Caffe_ROOT on your machine substituted
 ```
