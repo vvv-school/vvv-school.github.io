@@ -143,6 +143,7 @@ $ git clone https://github.com/robotology/icub-main.git
 $ git clone https://github.com/robotology/icub-contrib-common.git
 $ git clone https://github.com/robotology/robot-testing.git
 $ git clone https://github.com/robotology/codyco-superbuild.git
+$ git clone https://github.com/robotology-playground/event-driven.git
 ```
 
 ## Install the code
@@ -185,4 +186,12 @@ $ cd $ROBOT_CODE/codyco-superbuild
 $ mkdir build && cd build
 $ cmake .. -DCODYCO_USES_GAZEBO:BOOL=ON
 $ make
+```
+
+### Install event-driven
+```sh
+$ cd $ROBOT_CODE/event-driven
+$ mkdir build && cd build
+$ cmake .. -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/OpenCV
+$ make install
 ```
