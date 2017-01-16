@@ -60,11 +60,11 @@ If you do not have a valid licence, you can require a 30 days free trial directl
 If you have the freedom to choose a version, please select *R2016b*.
 
 ## Setup environment variables
+We assume that you have the following directories available in your home:
+- `~/robot-code`
+- `~/robot-install`
+You can then create the file `~/.bashrc-dev` containing the following instructions:
 ```sh
-# we assume you have available these two repositories in your home:
-# ~/robot-code
-# ~/robot-install
-
 # to enhance git experience in the console ;)
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[00;32m\]$(__git_ps1'
 
@@ -91,6 +91,10 @@ export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gaz
 export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
 export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib:${ROBOT_CODE}/codyco-superbuild/build/install/share/codyco
+```
+Finally, do:
+```sh
+$ echo "source ~./bashrc-dev" >> ~/.bashrc
 ```
 
 ## Setup Yarp autocompletion
