@@ -95,7 +95,7 @@ export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${
 ```
 Finally, do:
 ```sh
-$ echo "source ~./bashrc-dev" >> ~/.bashrc
+$ echo "source ~/.bashrc-dev" >> ~/.bashrc
 ```
 And restart the `bash`.
 
