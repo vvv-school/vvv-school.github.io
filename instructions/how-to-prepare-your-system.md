@@ -111,6 +111,8 @@ export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gaz
 export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib
 export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${ROBOT_INSTALL}/share/ICUBcontrib:${ROBOT_CODE}/codyco-superbuild/build/install/share/codyco
+
+export MATLABPATH=${ROBOT_CODE}/codyco-superbuild/build/install/mex:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox/images
 ```
 Finally, do:
 ```sh
