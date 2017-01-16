@@ -206,6 +206,6 @@ $ make install
 $ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
 
 # Edit the imported file ~/.local/share/yarp/contexts/himrep/imagenet_val_cutfc6.prototxt
-# to modify the absolute path to the mean image pointing to ${Caffe_ROOT}/data/ilsvrc12/imagenet_mean.binaryproto 
+# to modify the absolute path to the mean image and make it point to ${Caffe_ROOT}/data/ilsvrc12/imagenet_mean.binaryproto 
 # replacing ${Caffe_ROOT} with its actual value
 ```
