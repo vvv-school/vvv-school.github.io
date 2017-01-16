@@ -209,3 +209,11 @@ $ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
 # to modify the absolute path to the mean image and make it point to ${Caffe_ROOT}/data/ilsvrc12/imagenet_mean.binaryproto 
 # replacing ${Caffe_ROOT} with its actual value
 ```
+
+## Download datasets
+```sh
+$ cd $ROBOT_CODE
+$ wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
+$ unzip testData_20120803_095402.zip
+$ rm testData_20120803_095402.zip
+```
