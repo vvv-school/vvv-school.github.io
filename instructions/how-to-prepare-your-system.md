@@ -60,7 +60,7 @@ If you do not have a valid licence, you can require a 30 days free trial directl
 If you have the freedom to choose a version, please select *R2016b*.
 
 ## Setup environment variables
-We assume that you have the following directories available in your home:
+We assume that you have the following directories available in your home path:
 - `~/robot-code`
 - `~/robot-install`
 
