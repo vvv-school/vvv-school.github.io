@@ -30,9 +30,9 @@ $ echo "export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:1131
 # moveIT installation steps
 $ sudo apt-get install ros-kinetic-moveit
 
-# #######caffe (cpu only installation). If you require CUDA please install CUDA 8.0 & cuDNN beforehand.
-# installation of dependencies
+# Caffe (cpu only installation). If you require CUDA please install CUDA 8.0 & cuDNN beforehand.
 
+# Caffe dependencies
 # OpenBLAS
 $ sudo apt-get install libopenblas-dev
 # boost
@@ -53,9 +53,9 @@ $ sudo apt-get install liblmdb-dev
 $ sudo apt-get install libsnappy-dev
 
 # Caffe libraries
-git clone https://www.github.com/BVLC/caffe.git
-cd caffe
-git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
+$ git clone https://www.github.com/BVLC/caffe.git
+$ cd caffe
+$ git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
 
 # Caffe compilation
 $ cd caffe
@@ -64,6 +64,27 @@ $ cd build
 $ ccmake ../ (set BLAS to open or Open)
 $ make all
 $ make runtest
+$ make install
+
+# Caffe configuration
+# Set the Caffe_ROOT environment variable to your Caffe's source root directory.
+$ cd $Caffe_ROOT && scripts/download_model_binary.py models/bvlc_reference_caffenet
+$ cd $Caffe_ROOT && ./data/ilsvrc12/get_ilsvrc_aux.sh
+$ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
+# Open the imported file imagenet_val_cutfc6.prototxt and modify the absolute path to the mean image
+# this path should be $Caffe_ROOT/data/ilsvrc12/imagenet_mean.binaryproto 
+# with the value of $Caffe_ROOT on your machine substituted
+
+# Hierarchical Image Representation
+$ git clone https://github.com/robotology/himrep.git
+$ cd himrep
+$ cd liblinear-1.91
+$ cmake .
+$ make
+$ cd ..
+$ mkdir build
+$ cd build
+$ make 
 $ make install
 ```
 
