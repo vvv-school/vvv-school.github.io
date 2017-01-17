@@ -3,8 +3,8 @@
 We make use of [**GitHub Education**](https://education.github.com) to manage the assignments for the students.
 Two methods are given to accomplish the assignment:
 
-1. [**Smoke Testing the Code**](https://en.wikipedia.org/wiki/Smoke_testing_(software))
-2. [**Collaborative Code Review with Pull Requests**](https://help.github.com/articles/about-pull-requests/)
+1. [**Smoke Testing the Code**](https://en.wikipedia.org/wiki/Smoke_testing_(software)). Preferred method for VVVV School.
+2. [**Collaborative Code Review with Pull Requests**](https://help.github.com/articles/about-pull-requests).
 
 ## Instructions for **Students**
 
@@ -15,6 +15,8 @@ If you're dealing with a **tutorial** (i.e. the repository name starts with the 
 Instead, if you're dealing with an **assignment** (i.e. the repository name starts with the prefix _assignment_), then you are required to submit your solution within the new repository.
 
 #### Smoke Testing
+
+This is the method we adopt for students at **VVV School**.
 
 >1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system. If you're using our VM, it is already installed :computer: :white_check_mark:
 1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
