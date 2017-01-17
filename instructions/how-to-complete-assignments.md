@@ -16,7 +16,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 
 #### Smoke Testing
 
->1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system :computer: :white_check_mark: (it is already installled in the VM) 
+>1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system :computer: :white_check_mark: If you're using our VM, it is already installed.
 1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
 1. If present, go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
