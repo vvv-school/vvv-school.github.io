@@ -3,7 +3,7 @@
 We make use of [**GitHub Education**](https://education.github.com) to manage the assignments for the students.
 Two methods are given to accomplish the assignment:
 
-1. [**Smoke Testing the Code**](https://en.wikipedia.org/wiki/Smoke_testing_(software)). Preferred method for VVVV School.
+1. [**Smoke Testing the Code**](https://en.wikipedia.org/wiki/Smoke_testing_(software)). Preferred method for _VVVV School_.
 2. [**Collaborative Code Review with Pull Requests**](https://help.github.com/articles/about-pull-requests).
 
 ## Instructions for **Students**
