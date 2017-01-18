@@ -20,6 +20,12 @@ $ sudo apt-get install ros-kinetic-desktop-full
 $ sudo rosdep init
 $ rosdep update
 
+# ROS for NAO installation steps
+$ sudo apt-get install ros-kinetic-nao-robot
+$ sudo apt-get install ros-kinetic-nao-meshes
+$ sudo apt-get install ros-kinetic-naoqi-dcm-driver
+$ sudo apt-get install ros-kinetic-naoqi-bridge
+
 # moveIT installation steps
 $ sudo apt-get install ros-kinetic-moveit
 
