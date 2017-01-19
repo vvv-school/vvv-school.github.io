@@ -115,7 +115,7 @@ nc='\033[0m'
 npassed=0
 if [ -f result.txt ]; then
     cat result.txt
-    npassed=$(grep -i "Number of passed test cases" result.txt | sed 's/[^0-9]*//g')
+    npassed=$(awk '/Number of passed test cases/{print $7}' result.txt)
 else
     echo -e "${red}Unable to get test result${nc}\n"    
 fi
