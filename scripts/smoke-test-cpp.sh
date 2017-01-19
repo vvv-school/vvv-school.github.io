@@ -16,7 +16,7 @@ cur_dir=$(pwd)
 
 cd $build_dir
 if [ -d build-code ]; then 
-    rm build-code -rf
+    rm build-code -Rf
 fi
 mkdir build-code && cd build-code
 cmake -DCMAKE_BUILD_TYPE=Release $code_dir
@@ -32,9 +32,9 @@ fi
 cd ../
 
 if [ -d build-test ]; then 
-    rm build-test -rf
+    rm build-test -Rf
 fi
-rm build-test -rf
+rm build-test -Rf
 mkdir build-test && cd build-test
 cmake -DCMAKE_BUILD_TYPE=Release $test_dir
 if [ $? -ne 0 ]; then
