@@ -204,7 +204,7 @@ function smoke_test() {
     local repo=$1
     local url=$2
     if [ -d $repo ]; then
-        rm $repo -rf
+        rm $repo -Rf
     fi
  
     local ret=-1
@@ -215,7 +215,7 @@ function smoke_test() {
                 # run the original helper script anyway, not the one in $repo,
                 # to avoid any possible hacking ;)
                 if [ -d smoke-test-tmp ]; then
-                    rm smoke-test-tmp -rf
+                    rm smoke-test-tmp -Rf
                 fi
                 git clone --depth 1 -b master https://github.com/vvv-school/vvv-school.github.io.git ./smoke-test-tmp/helpers
                 
