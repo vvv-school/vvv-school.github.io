@@ -197,7 +197,7 @@ $ cmake -DBLAS=Open ../
 $ make all
 $ make runtest
 $ make install
-$ cd ..
+$ cd ../
 $ ./scripts/download_model_binary.py models/bvlc_reference_caffenet
 $ ./data/ilsvrc12/get_ilsvrc_aux.sh
 ```
