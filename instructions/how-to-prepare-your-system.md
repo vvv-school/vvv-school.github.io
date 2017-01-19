@@ -7,52 +7,52 @@ However, for attending VVV school we do **support only Linux systems**, hence **
 ## Install dependencies
 ```sh
 # YARP related dependencies
-$ sudo sh -c 'echo "deb http://www.icub.org/ubuntu $(lsb_release -c | awk '"'"'{print $2}'"'"') contrib/science" > /etc/apt/sources.list.d/icub.list'
-$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
-$ sudo apt-get update
-$ sudo apt-get install icub-common
+sudo sh -c 'echo "deb http://www.icub.org/ubuntu $(lsb_release -c | awk '"'"'{print $2}'"'"') contrib/science" > /etc/apt/sources.list.d/icub.list'
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
+sudo apt-get update
+sudo apt-get install icub-common
 
 # ROS installation steps
-$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -c | awk '"'"'{print $2}'"'"') main" > /etc/apt/sources.list.d/ros-latest.list'
-$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-$ sudo apt-get update
-$ sudo apt-get install ros-kinetic-desktop-full
-$ sudo rosdep init
-$ rosdep update
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -c | awk '"'"'{print $2}'"'"') main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+sudo apt-get update
+sudo apt-get install ros-kinetic-desktop-full
+sudo rosdep init
+rosdep update
 
 # ROS for NAO installation steps
-$ sudo apt-get install ros-kinetic-nao-robot
-$ sudo apt-get install ros-kinetic-nao-meshes
-$ sudo apt-get install ros-kinetic-naoqi-dcm-driver
-$ sudo apt-get install ros-kinetic-naoqi-bridge
+sudo apt-get install ros-kinetic-nao-robot
+sudo apt-get install ros-kinetic-nao-meshes
+sudo apt-get install ros-kinetic-naoqi-dcm-driver
+sudo apt-get install ros-kinetic-naoqi-bridge
 
 # moveIT installation steps
-$ sudo apt-get install ros-kinetic-moveit
+sudo apt-get install ros-kinetic-moveit
 
 # Caffe dependencies (cpu only installation). If you require CUDA, please install CUDA 8.0 & cuDNN beforehand.
 # OpenBLAS
-$ sudo apt-get install libopenblas-dev
+sudo apt-get install libopenblas-dev
 # boost
-$ sudo apt-get install libboost-all-dev
+sudo apt-get install libboost-all-dev
 # Google Protobuf Buffers C++
-$ sudo apt-get install libprotobuf-dev protobuf-compiler
+sudo apt-get install libprotobuf-dev protobuf-compiler
 # Google Logging
-$ sudo apt-get install libgoogle-glog-dev
+sudo apt-get install libgoogle-glog-dev
 # Google Flags
-$ sudo apt-get install libgflags-dev
+sudo apt-get install libgflags-dev
 # LevelDB
-$ sudo apt-get install libleveldb-dev
+sudo apt-get install libleveldb-dev
 # HDF5
-$ sudo apt-get install libhdf5-serial-dev
+sudo apt-get install libhdf5-serial-dev
 # LMDB
-$ sudo apt-get install liblmdb-dev
+sudo apt-get install liblmdb-dev
 # snappy:
-$ sudo apt-get install libsnappy-dev
+sudo apt-get install libsnappy-dev
 ```
 
 **Note** `ros-desktop` package should have installed also the Gazebo simulator. If this is not the case, please install also the following package
 ```sh
-$ sudo apt-get install gazebo7 libgazebo7-dev
+sudo apt-get install gazebo7 libgazebo7-dev
 ```
 
 ## Matlab/Simulink
@@ -69,7 +69,7 @@ The following are a short extract, specialized for GNU/Linux of the full documen
 Once you downloaded the correct installer, unzip it.
 Open the terminal and move to the extracted folder and then execute the `install` script with administrator permissions:
 ```
-$ sudo ./install
+sudo ./install
 ```
 
 Follow the onscreen instructions. You have to login with your Mathwork account
@@ -121,115 +121,115 @@ export YARP_DATA_DIRS=${ROBOT_INSTALL}/share/yarp:${ROBOT_INSTALL}/share/iCub:${
 ```
 Finally, do:
 ```sh
-$ echo "source ~/.bashrc-dev" >> ~/.bashrc
+echo "source ~/.bashrc-dev" >> ~/.bashrc
 ```
 And restart the `bash`.
 
 ## Setup Yarp autocompletion
 ```sh
-$ sudo ln -s $ROBOT_CODE/yarp/scripts/yarp_completion /etc/bash_completion.d/yarp_completion
+sudo ln -s $ROBOT_CODE/yarp/scripts/yarp_completion /etc/bash_completion.d/yarp_completion
 ```
 
 ## Setup git configuration
 In order to install the `codyco-superbuild` software you must have git configured on your machine. If you have already performed the following steps, you can jump to the next section.
 ```sh
-$ git config --global user.name "[firstname lastname]"
-$ git config --global user.email "[valid email]"
-$ git config --global color.pager true
-$ git config --global color.ui auto
+git config --global user.name "[firstname lastname]"
+git config --global user.email "[valid email]"
+git config --global color.pager true
+git config --global color.ui auto
 ```
 
 ## Get the code
 ```sh
-$ cd $ROBOT_CODE
-$ git clone https://github.com/robotology/yarp.git
-$ git clone https://github.com/robotology/icub-main.git
-$ git clone https://github.com/robotology/icub-contrib-common.git
-$ git clone https://github.com/robotology/robot-testing.git
-$ git clone https://github.com/robotology/codyco-superbuild.git
-$ git clone https://github.com/robotology-playground/event-driven.git
-$ git clone https://www.github.com/BVLC/caffe.git
-$ cd caffe
-$ git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
-$ cd ../
-$ git clone https://github.com/robotology/himrep.git
+cd $ROBOT_CODE
+git clone https://github.com/robotology/yarp.git
+git clone https://github.com/robotology/icub-main.git
+git clone https://github.com/robotology/icub-contrib-common.git
+git clone https://github.com/robotology/robot-testing.git
+git clone https://github.com/robotology/codyco-superbuild.git
+git clone https://github.com/robotology-playground/event-driven.git
+git clone https://www.github.com/BVLC/caffe.git
+cd caffe
+git checkout b2982c7eef65a1b94db6f22fb8bb7caa986e6f29
+cd ../
+git clone https://github.com/robotology/himrep.git
 ```
 
 ## Install the code
 
 ### Install Yarp
 ```sh
-$ cd $ROBOT_CODE/yarp
-$ mkdir build && cd build
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DCREATE_GUIS=ON -DCREATE_LIB_MATH=ON ../
-$ make install
+cd $ROBOT_CODE/yarp
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DCREATE_GUIS=ON -DCREATE_LIB_MATH=ON ../
+make install
 ```
 
 ### Install icub-main
 ```sh
-$ cd $ROBOT_CODE/icub-main
-$ mkdir build && cd build
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_icubmod_cartesiancontrollerserver=ON -DENABLE_icubmod_cartesiancontrollerclient=ON -DENABLE_icubmod_gazecontrollerclient=ON ../
-$ make install
+cd $ROBOT_CODE/icub-main
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_icubmod_cartesiancontrollerserver=ON -DENABLE_icubmod_cartesiancontrollerclient=ON -DENABLE_icubmod_gazecontrollerclient=ON ../
+make install
 ```
 
 ### Install icub-contrib-common
 ```sh
-$ cd $ROBOT_CODE/icub-contrib-common
-$ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL ../
-$ make install
+cd $ROBOT_CODE/icub-contrib-common
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL ../
+make install
 ```
 
 ### Install robot-testing
 ```sh
-$ cd $ROBOT_CODE/robot-testing
-$ mkdir build && cd build
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_MIDDLEWARE_PLUGINS=ON ../
-$ make install
+cd $ROBOT_CODE/robot-testing
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ROBOT_INSTALL -DENABLE_MIDDLEWARE_PLUGINS=ON ../
+make install
 ```
 
 ### Install Caffe
 ```sh
-$ cd $ROBOT_CODE/caffe
-$ mkdir build && cd build
-$ cmake -DBLAS=Open ../
-$ make all
-$ make runtest
-$ make install
-$ ./scripts/download_model_binary.py models/bvlc_reference_caffenet
-$ ./data/ilsvrc12/get_ilsvrc_aux.sh
+cd $ROBOT_CODE/caffe
+mkdir build && cd build
+cmake -DBLAS=Open ../
+make all
+make runtest
+make install
+./scripts/download_model_binary.py models/bvlc_reference_caffenet
+./data/ilsvrc12/get_ilsvrc_aux.sh
 ```
 
 ### Install codyco-superbuild
 ```sh
-$ cd $ROBOT_CODE/codyco-superbuild
-$ mkdir build && cd build
-$ cmake -DCODYCO_USES_GAZEBO:BOOL=ON ../
-$ make
+cd $ROBOT_CODE/codyco-superbuild
+mkdir build && cd build
+cmake -DCODYCO_USES_GAZEBO:BOOL=ON ../
+make
 ```
 
 ### Install event-driven
 ```sh
-$ cd $ROBOT_CODE/event-driven
-$ mkdir build && cd build
-$ cmake -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/OpenCV ../
-$ make install
+cd $ROBOT_CODE/event-driven
+mkdir build && cd build
+cmake -DV_10BITCODEC:BOOL=ON -DOpenCV_DIR=/usr/share/OpenCV ../
+make install
 ```
 
 ### Install himrep
 ```sh
-$ cd $ROBOT_CODE/himrep
-$ cd liblinear-1.91
-$ cmake ./
-$ make
-$ cd ../
-$ mkdir build && cd build
-$ cmake ../
-$ make install
+cd $ROBOT_CODE/himrep
+cd liblinear-1.91
+cmake ./
+make
+cd ../
+mkdir build && cd build
+cmake ../
+make install
 
 # import and setup configuration file
-$ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
+yarp-config context --import himrep imagenet_val_cutfc6.prototxt
 
 # Edit the imported file ~/.local/share/yarp/contexts/himrep/imagenet_val_cutfc6.prototxt
 # to modify the absolute path to the mean image and make it point to ${Caffe_ROOT}/data/ilsvrc12/imagenet_mean.binaryproto 
@@ -238,8 +238,8 @@ $ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
 
 ## Download datasets
 ```sh
-$ cd $ROBOT_CODE
-$ mkdir datasets && cd datasets
-$ wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
-$ unzip testData_20120803_095402.zip
+cd $ROBOT_CODE
+mkdir datasets && cd datasets
+wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
+unzip testData_20120803_095402.zip
 ```
