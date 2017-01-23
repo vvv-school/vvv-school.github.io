@@ -6,6 +6,12 @@ However, for attending VVV school we do **support only Linux systems**, hence **
 
 ## Install dependencies
 ```sh
+# Build essential
+$ sudo apt-get install build-essential
+$ sudo apt-get install cmake
+$ sudo apt-get install cmake-curses-gui
+$ sudo apt-get install libedit-dev
+
 # YARP related dependencies
 $ sudo sh -c 'echo "deb http://www.icub.org/ubuntu $(lsb_release -c | awk '"'"'{print $2}'"'"') contrib/science" > /etc/apt/sources.list.d/icub.list'
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
