@@ -199,7 +199,9 @@ $ make install
 ```sh
 $ cd $ROBOT_CODE/caffe
 $ mkdir build && cd build
-$ cmake -DBLAS=Open ../
+# If one needs to compile Caffe without CUDA capabilities please use -DCPU_ONLY=ON 
+# otherwise remove it from the line below.
+$ cmake -DBLAS=Open -DCPU_ONLY=ON ../ 
 $ make all
 $ make runtest
 $ make install
