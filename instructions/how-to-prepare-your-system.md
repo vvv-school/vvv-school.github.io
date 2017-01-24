@@ -6,7 +6,7 @@ However, for attending VVV school we do **support only Linux systems**, hence **
 
 ## Install dependencies
 ```sh
-# Build essential
+# Essentials
 $ sudo apt-get install build-essential
 $ sudo apt-get install git
 $ sudo apt-get install cmake
