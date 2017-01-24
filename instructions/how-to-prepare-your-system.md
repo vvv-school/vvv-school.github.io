@@ -8,6 +8,7 @@ However, for attending VVV school we do **support only Linux systems**, hence **
 ```sh
 # Build essential
 $ sudo apt-get install build-essential
+$ sudo apt-get install git
 $ sudo apt-get install cmake
 $ sudo apt-get install cmake-curses-gui
 $ sudo apt-get install libedit-dev
