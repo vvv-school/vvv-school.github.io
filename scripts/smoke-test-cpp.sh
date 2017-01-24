@@ -105,7 +105,8 @@ if [ "$kill_yarp" == "yes" ]; then
 fi
 
 cd build-code
-make uninstall && cd ../
+make uninstall
+cd ../
 
 # color codes
 red='\033[1;31m'
