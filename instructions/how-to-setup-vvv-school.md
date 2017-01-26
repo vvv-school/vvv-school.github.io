@@ -17,7 +17,7 @@
 
 The repository will be named **vvv-school/vvv{yy}** (e.g. [vvv-school/vvv17](https://github.com/vvv-school/vvv17)).
 
-Everything is already mostly done, since we can [**import** the repository](https://help.github.com/articles/importing-a-repository-with-github-importer) **vvv{yy-1}** into **vvv{yy}**. Note that **duplicating** seems a better choice than **forking**: we break up any _subtle relationship_ between the two repositories.
+Everything is already mostly done, since we can [**import** the repository](https://help.github.com/articles/importing-a-repository-with-github-importer) **vvv{yy-1}** into **vvv{yy}**. Note that **importing** seems a better choice than **forking**: we break up any _subtle relationship_ between the two repositories.
 
 Then, do the following steps:
 - If you didn't do it while creating the new repository, edit the **description** and the **website** fields of the repository page with, respectively, **Resources for VVV{YY} School** and **https://vvv-school.github.io/vvv{yy}**.
