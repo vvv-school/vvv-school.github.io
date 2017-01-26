@@ -62,6 +62,13 @@ else
    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build_dir/build-test/plugins
 fi
 
+if [ -f ${test_dir}/pre-test.sh ]; then
+    tmp_dir=$(pwd)
+    cd $test_dir
+    source pre-test.sh
+    cd $tmp_dir
+fi
+
 yarp where
 if [ $? -eq 0 ]; then
    kill_yarp="no"
@@ -78,13 +85,6 @@ else
    kill_testnode="yes"
    yarprun --server /testnode &
    sleep 1
-fi
-
-if [ -f ${test_dir}/pre-test.sh ]; then
-    tmp_dir=$(pwd)
-    cd $test_dir
-    source pre-test.sh
-    cd $tmp_dir
 fi
 
 testrunner --verbose --suit $test_dir/test.xml
