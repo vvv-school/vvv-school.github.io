@@ -114,15 +114,17 @@ green='\033[1;32m'
 nc='\033[0m'
 
 npassed=0
+nfailed=0
 if [ -f result.txt ]; then
     cat result.txt
     npassed=$(awk '/Number of passed test cases/{print $7}' result.txt)
+    nfailed=$(awk '/Number of failed test cases/{print $7}' result.txt)
 else
     echo -e "${red}Unable to get test result${nc}\n"    
 fi
 
 cd $cur_dir
-if [ $npassed -eq 0 ]; then
+if [ $npassed -eq 0 ] || [ $nfailed -gt 0 ]; then
    echo -e "${red}xxxxx Test FAILED xxxxx${nc}\n"
    exit 1
 else
