@@ -177,7 +177,7 @@ We use a **Linux system** to run the script for the automatic grading.
 - Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to parse [GitHub API](https://developer.github.com/v3) responses:
 
   ```sh
-  $ sudo apt-get install jq
+  $ sudo apt install jq
   ```
 
 #### Launch the script
