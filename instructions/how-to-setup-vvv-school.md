@@ -145,7 +145,7 @@ We use a **Linux system** to run the script for the automatic grading.
 
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without keep prompting for login.
 
->To store credentials for one hour:
+  >To store credentials for one hour:
 ```sh
 $ git config [options] credential.helper 'cache --timeout=3600'
 ```
