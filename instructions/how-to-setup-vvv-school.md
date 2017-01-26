@@ -146,22 +146,22 @@ We use a **Linux system** to run the script for the automatic grading.
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without keep prompting for login.
 
   >To store credentials for one hour:
-  >```sh
+  ```sh
   $ git config [options] credential.helper 'cache --timeout=3600'
   ```
-  >To flush the cache earlier:
-  >```sh
+  To flush the cache earlier:
+  ```sh
   $ git credential-cache exit
   ```
-  >To store credentials forever (or until you erase):
-  >```sh
+  To store credentials forever (or until you erase):
+  ```sh
   $ git config [options] credential.helper store
   ```
-  >To unset storing credentials:
-  >```sh
+  To unset storing credentials:
+  ```sh
   $ git config [options] --unset-all credential.helper
   ```
-  >`options` can be:
+  `options` can be:
     >- `--local` affecting only the current git directory.
     >- `--global` affecting all git directories of the current user.
     >- `--system` affecting all git directories on the system.
@@ -174,8 +174,8 @@ We use a **Linux system** to run the script for the automatic grading.
   
   If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**vvv-school-bot**](https://github.com/vvv-school-bot) to be a collaborator of **vvv{yy}-{course}/vvv{yy}-{course}.github.io** with _write permission_.
 - Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to analyze responses from **GitHub API**:
-  
-  >```sh
+
+  ```sh
   $ sudo apt-get install jq
   ```
 
