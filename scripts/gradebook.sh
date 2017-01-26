@@ -203,6 +203,7 @@ function publish_gradebook {
 function smoke_test() {
     local repo=$1
     local url=$2
+    local orig_repo=$3
     if [ -d $repo ]; then
         rm -Rf $repo
     fi
@@ -212,8 +213,15 @@ function smoke_test() {
     if [ $? -eq 0 ]; then
         if [ -d $repo/smoke-test ]; then
             if [ -f $repo/smoke-test/test-type ]; then                
-                # run the original helper script anyway, not the one in $repo,
-                # to avoid any possible hacking ;)
+                # run the original helper script and test anyway,
+                # not the one in $repo, to avoid any possible hacking ;)
+                local orig_url=$(eval "cat $data | jq '.assignments | map(select(.name==\"$orig_repo\")) | .[0].url' | sed 's/\\\"//g'")
+                
+                if [ -d $orig_repo ]; then
+                    rm -Rf $orig_repo
+                fi
+                git clone --depth 1 -b master $orig_url $orig_repo
+
                 if [ -d smoke-test-tmp ]; then
                     rm -Rf smoke-test-tmp
                 fi
@@ -223,7 +231,7 @@ function smoke_test() {
                 mkdir ./smoke-test-tmp/build
                 local build_dir=$(pwd)/smoke-test-tmp/build
                 local code_dir=$(pwd)/$repo
-                local test_dir=$code_dir/smoke-test
+                local test_dir=$(pwd)/$orig_repo/smoke-test
                 
                 test_type=$(head -1 $repo/smoke-test/test-type)
                 ./smoke-test-tmp/helpers/scripts/smoke-test-${test_type}.sh $build_dir $code_dir $test_dir
@@ -302,7 +310,7 @@ function update_assignment {
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         
         local status=$status_failed
-        smoke_test $repo https://github.com/${org}/${repo}.git        
+        smoke_test $repo https://github.com/${org}/${repo}.git $assi
         if [ $? -eq 0 ]; then
             status=$status_passed
         fi
