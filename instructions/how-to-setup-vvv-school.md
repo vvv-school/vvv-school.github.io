@@ -167,11 +167,14 @@ $ git config [options] --unset-all credential.helper
   - `--system` affecting all git directories on the system.
 
 - Additionally, you have to be a **OAuth user** with `read:org` scope to retrieve from [GitHub API](https://developer.github.com/v3/orgs/teams/) reserved information regarding teams. To do so, after you created a [personal access token on GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use), save the token in the environment variable **GITHUB_TOKEN_ORG_READ**:
+  
   ```sh
   $ export GITHUB_TOKEN_ORG_READ=token-hash-goes-here
   ```
+  
   If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**vvv-school-bot**](https://github.com/vvv-school-bot) to be a collaborator of **vvv{yy}-{course}/vvv{yy}-{course}.github.io** with _write permission_.
 - Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to analyze responses from **GitHub API**:
+  
   ```sh
   $ sudo apt-get install jq
   ```
