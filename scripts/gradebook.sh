@@ -531,7 +531,6 @@ while true; do
             for tuto in $tutorials; do
                 if [ "${repo}" == "${tuto}-${stud}" ]; then                    
                     update_tutorial ${stud} ${tuto}
-                    proceed=true
                     break
                 fi
             done
