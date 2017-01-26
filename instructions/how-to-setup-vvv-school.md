@@ -146,25 +146,25 @@ We use a **Linux system** to run the script for the automatic grading.
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without keep prompting for login.
 
   >To store credentials for one hour:
-```sh
-$ git config [options] credential.helper 'cache --timeout=3600'
-```
-To flush the cache earlier:
-```sh
-$ git credential-cache exit
-```
-To store credentials forever (or until you erase):
-```sh
-$ git config [options] credential.helper store
-```
-To unset storing credentials:
-```sh
-$ git config [options] --unset-all credential.helper
-```
-`options` can be:
-  - `--local` affecting only the current git directory.
-  - `--global` affecting all git directories of the current user.
-  - `--system` affecting all git directories on the system.
+  >```sh
+  $ git config [options] credential.helper 'cache --timeout=3600'
+  ```
+  >To flush the cache earlier:
+  >```sh
+  $ git credential-cache exit
+  ```
+  >To store credentials forever (or until you erase):
+  >```sh
+  $ git config [options] credential.helper store
+  ```
+  >To unset storing credentials:
+  >```sh
+  $ git config [options] --unset-all credential.helper
+  ```
+  >`options` can be:
+    - `--local` affecting only the current git directory.
+    - `--global` affecting all git directories of the current user.
+    - `--system` affecting all git directories on the system.
 
 - Additionally, you have to be a **OAuth user** with `read:org` scope to retrieve from [GitHub API](https://developer.github.com/v3/orgs/teams/) reserved information regarding teams. To do so, after you created a [personal access token on GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use), save the token in the environment variable **GITHUB_TOKEN_ORG_READ**:
   
