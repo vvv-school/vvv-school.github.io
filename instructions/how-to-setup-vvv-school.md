@@ -173,7 +173,7 @@ We use a **Linux system** to run the script for the automatic grading.
   ```
   
   If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**vvv-school-bot**](https://github.com/vvv-school-bot) to be a collaborator of **vvv{yy}-{course}/vvv{yy}-{course}.github.io** with _write permission_.
-- Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to analyze responses from **GitHub API**:
+- Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to parse **GitHub API** responses:
 
   ```sh
   $ sudo apt-get install jq
