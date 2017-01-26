@@ -171,10 +171,16 @@ $ git config [options] --unset-all credential.helper
 ```sh
 $ export GITHUB_TOKEN_ORG_READ=token-hash-goes-here
 ```
-If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password).
+If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**vvv-school-bot**](https://github.com/vvv-school-bot) to be a collaborator of **vvv{yy}-{course}/vvv{yy}-{course}.github.io** with _write permission_.
 
 #### Launch the script
 
+Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to analyze responses from **GitHub API**:
+```sh
+$ sudo apt-get install jq
+```
+
+Finally:
 ```sh
 $ git clone https://github.com/vvv{yy}-{course}.git
 $ cd vvv{yy}-{course}
