@@ -97,7 +97,7 @@ We assume that you have the following directories available in your home path:
 You can then create the file `~/.bashrc-dev` containing the following instructions:
 ```sh
 # to enhance git experience in the console ;)
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[00;32m\]$(__git_ps1'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[00;32m\]$(__git_ps1 " (%s)")\[\033[00m\]\$ '
 
 export ROBOT_CODE=~/robot-code
 export ROBOT_INSTALL=~/robot-install
