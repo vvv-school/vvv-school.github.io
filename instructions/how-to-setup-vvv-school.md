@@ -175,7 +175,7 @@ $ git config [options] --unset-all credential.helper
   If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**vvv-school-bot**](https://github.com/vvv-school-bot) to be a collaborator of **vvv{yy}-{course}/vvv{yy}-{course}.github.io** with _write permission_.
 - Make sure that [**jq**](https://stedolan.github.io/jq) is installed. We use it to analyze responses from **GitHub API**:
   
-  ```sh
+  >```sh
   $ sudo apt-get install jq
   ```
 
