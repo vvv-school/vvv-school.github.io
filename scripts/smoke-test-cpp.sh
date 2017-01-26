@@ -83,7 +83,7 @@ fi
 if [ -f ${test_dir}/pre-test.sh ]; then
     tmp_dir=$(pwd)
     cd $test_dir
-    ./pre-test.sh
+    source pre-test.sh
     cd $tmp_dir
 fi
 
@@ -92,7 +92,7 @@ testrunner --verbose --suit $test_dir/test.xml
 if [ -f ${test_dir}/post-test.sh ]; then
     tmp_dir=$(pwd)
     cd $test_dir
-    ./post-test.sh
+    source post-test.sh
     cd $tmp_dir
 fi
 
