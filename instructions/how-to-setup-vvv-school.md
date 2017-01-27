@@ -101,7 +101,7 @@ The format is pretty much intuitive. Here's an example:
     "assignments": [
         {
             "name": "assignment_make-it-roll",
-            "url": "https://github.com/vvv-school/assignment_make-it-roll",
+            "url": "https://github.com/vvv-school/assignment_make-it-roll.git",
             "score": 5
         }    
     ]    
