@@ -251,5 +251,7 @@ $ yarp-config context --import himrep imagenet_val_cutfc6.prototxt
 $ cd $ROBOT_CODE
 $ mkdir datasets && cd datasets
 $ wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
+$ wget http://www.icub.org/download/software/datasetplayer-demo/dataDisparity.zip
 $ unzip testData_20120803_095402.zip
+$ unzip dataDisparity.zip
 ```
