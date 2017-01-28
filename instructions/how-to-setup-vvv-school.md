@@ -124,7 +124,7 @@ These are the settings we have to use:
 - **Your assignment repository prefix**: :warning: must be equal to the name of the **starter code** (e.g. _assignment_make-it-roll_) :warning:
 - Tick on **Public** :white_check_mark:
 - **Don't give students** _Admin permissions_ on their repository :x:
-- **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). :octocat: **Autocompletion** is available to help you out.
+- **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). **Autocompletion** is available to help you out :octocat:
 
 You'll be given an **invitation link** you must now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
 
