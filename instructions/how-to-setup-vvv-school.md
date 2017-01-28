@@ -121,10 +121,10 @@ Once you're all set, you can [create an **individual assignment**](https://educa
 
 These are the settings we have to use:
 - **Your assignment title**: make up a name; it's not that significant.
-- :warn: **Your assignment repository prefix**: must be equal to the name of the **starter code** (e.g. _assignment_make-it-roll_).
+- :warning: **Your assignment repository prefix**: must be equal to the name of the **starter code** (e.g. _assignment_make-it-roll_).
 - Tick on **Public** :white_check_mark:
 - **Don't give students** _Admin permissions_ on their repository :x:
-- **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). **Autocompletion** is available to help you out.
+- **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). :octocat: **Autocompletion** is available to help you out.
 
 You'll be given an **invitation link** you must now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system: https://github.com/vvv-school/vvv{yy}/issues.
 
