@@ -512,7 +512,7 @@ while true; do
     fi
 
     # retrieve names of public repositories in $org
-    ${abspathtoscript}/get-repositories $org repositories.txt
+    ${abspathtoscript}/get-repositories.rb $org repositories.txt
     repositories=$(eval "cat repositories.txt")
         
     echo ""
