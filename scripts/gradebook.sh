@@ -36,7 +36,8 @@ README=$path/README.md
 gradebook_cur=$path/gradebook.json
 gradebook_new=gradebook-new.json
 gradebook_tmp=gradebook-tmp.json
-max_num_repo=1000
+max_num_repositories=1000
+max_num_students=1000
 
 if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
@@ -60,7 +61,7 @@ token_header="-H \"Authorization: token $GITHUB_TOKEN_ORG_READ\""
 
 # get students from $team
 team_id=$(eval "curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name==\"$team\")) | .[0] | .id'")
-students=$(eval "curl -s $token_header -G https://api.github.com/teams/$team_id/members | jq '.[] | .login' | sed 's/\"//g'")
+students=$(eval "curl -s $token_header -G https://api.github.com/teams/$team_id/members?per_page=$max_num_students | jq '.[] | .login' | sed 's/\"//g'")
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
@@ -509,7 +510,7 @@ while true; do
     fi
 
     # retrieve names of public repositories in $org
-    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?per_page=$max_num_repo | jq '.[] | .name' | sed 's/\\\"//g'")
+    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?per_page=$max_num_repositories | jq '.[] | .name' | sed 's/\\\"//g'")
         
     echo ""
     echo -e "${cyan}============================================================================${nc}"
