@@ -508,7 +508,7 @@ while true; do
     fi
 
     # retrieve names of public repositories in $org
-    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?type=public | jq '.[] | .name' | sed 's/\\\"//g'")
+    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?per_page=100 | jq '.[] | .name' | sed 's/\\\"//g'")
         
     echo ""
     echo -e "${cyan}============================================================================${nc}"
