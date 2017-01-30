@@ -63,7 +63,7 @@ token_header="-H \"Authorization: token $GITHUB_TOKEN_ORG_READ\""
 
 # get students from $team
 team_id=$(eval "curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name==\"$team\")) | .[0] | .id'")
-students=$(eval "curl -s $token_header -G https://api.github.com/teams/$team_id/members?per_page=100 | jq '.[] | .login' | sed 's/\"//g'")
+students=$(${abspathtoscript}/get-members.rb $team_id)
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
@@ -512,8 +512,7 @@ while true; do
     fi
 
     # retrieve names of public repositories in $org
-    ${abspathtoscript}/get-repositories.rb $org repositories.txt
-    repositories=$(eval "cat repositories.txt")
+    repositories=$(${abspathtoscript}/get-repositories.rb $org)
         
     echo ""
     echo -e "${cyan}============================================================================${nc}"
