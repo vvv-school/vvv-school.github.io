@@ -7,7 +7,6 @@
 # Dependencies (through apt-get):
 # - curl
 # - jq
-# - octokit (ruby gem)
 #
 # The env variable GITHUB_TOKEN_ORG_READ should contain a valid GitHub
 # token with "org:read" permission to retrieve organization data
