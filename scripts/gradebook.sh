@@ -7,6 +7,7 @@
 # Dependencies (through apt-get):
 # - curl
 # - jq
+# - octokit (ruby gem)
 #
 # The env variable GITHUB_TOKEN_ORG_READ should contain a valid GitHub
 # token with "org:read" permission to retrieve organization data
@@ -22,6 +23,9 @@ if [ -z "$GITHUB_TOKEN_ORG_READ" ]; then
     exit 2
 fi
 
+script=$(realpath $0)
+abspathtoscript=$(dirname ${script})
+
 org=$1
 team=$2
 path=$3
@@ -36,8 +40,6 @@ README=$path/README.md
 gradebook_cur=$path/gradebook.json
 gradebook_new=gradebook-new.json
 gradebook_tmp=gradebook-tmp.json
-max_num_repositories=1000
-max_num_students=1000
 
 if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
@@ -61,7 +63,7 @@ token_header="-H \"Authorization: token $GITHUB_TOKEN_ORG_READ\""
 
 # get students from $team
 team_id=$(eval "curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams | jq 'map(select(.name==\"$team\")) | .[0] | .id'")
-students=$(eval "curl -s $token_header -G https://api.github.com/teams/$team_id/members?per_page=$max_num_students | jq '.[] | .login' | sed 's/\"//g'")
+students=$(eval "curl -s $token_header -G https://api.github.com/teams/$team_id/members?per_page=100 | jq '.[] | .login' | sed 's/\"//g'")
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
@@ -510,7 +512,8 @@ while true; do
     fi
 
     # retrieve names of public repositories in $org
-    repositories=$(eval "curl -s $token_header -G https://api.github.com/orgs/$org/repos?per_page=$max_num_repositories | jq '.[] | .name' | sed 's/\\\"//g'")
+    ${abspathtoscript}/get-repositories $org repositories.txt
+    repositories=$(eval "cat repositories.txt")
         
     echo ""
     echo -e "${cyan}============================================================================${nc}"
