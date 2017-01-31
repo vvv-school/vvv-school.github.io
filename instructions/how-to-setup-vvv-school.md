@@ -167,7 +167,7 @@ We use a **Linux system** to run the script for the automatic grading.
     >- `--global` affecting all git directories of the current user.
     >- `--system` affecting all git directories on the system.
 
-- Additionally, you have to be a **OAuth user** with `read:org` scope to retrieve from [GitHub API](https://developer.github.com/v3/orgs/teams/) reserved information regarding teams. To do so, after you created a [personal access token on GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use), save the token in the environment variable **GITHUB_TOKEN_ORG_READ**:
+- Additionally, you have to be a **OAuth user** with `read:org` scope to retrieve from [GitHub API](https://developer.github.com/v3/orgs/teams/) reserved information regarding teams as well as increase the _rate limit_ of our requests. To do so, after you created a [personal access token on GitHub](https://help.github.com/articles/creating-an-access-token-for-command-line-use), save the token in the environment variable **GITHUB_TOKEN_ORG_READ**:
   
   ```sh
   $ export GITHUB_TOKEN_ORG_READ=token-hash-goes-here
