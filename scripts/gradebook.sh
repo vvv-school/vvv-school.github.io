@@ -22,6 +22,8 @@ if [ -z "$GITHUB_TOKEN_ORG_READ" ]; then
     exit 2
 fi
 
+token_header="Authorization: token $GITHUB_TOKEN_ORG_READ"
+
 script=$(realpath $0)
 abspathtoscript=$(dirname ${script})
 
@@ -303,7 +305,7 @@ function update_assignment {
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
     
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date' | sed 's/\\\"//g'")
-    local repo_commit_date=$(eval "curl -s https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
+    local repo_commit_date=$(eval "curl -s -H $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
 
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
