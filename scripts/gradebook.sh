@@ -57,12 +57,8 @@ nc='\033[0m'
 status_passed=":white_check_mark:"
 status_failed=":x:"
 
-# GitHub token for authorized access
-token_header="-H \"Authorization: token $GITHUB_TOKEN_ORG_READ\""
-
 # get students from $team
-team_id=$(eval "curl -s $token_header -G https://api.github.com/orgs/vvv-school/teams?per_page=100 | jq 'map(select(.name==\"$team\")) | .[0] | .id'")
-students=$(${abspathtoscript}/get-members.rb $team_id)
+students=$(${abspathtoscript}/get-members.rb $org $team)
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
@@ -307,7 +303,7 @@ function update_assignment {
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
     
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date' | sed 's/\\\"//g'")
-    local repo_commit_date=$(eval "curl -s $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
+    local repo_commit_date=$(eval "curl -s https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
 
     if [ "${last_commit_date}" != "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
