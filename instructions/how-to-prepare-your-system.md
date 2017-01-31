@@ -122,7 +122,7 @@ export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gaz
 export GAZEBO_RESOURCE_PATH=${GAZEBO_RESOURCE_PATH}:${ROBOT_CODE}/codyco-superbuild/build/install/share/gazebo/worlds
 
 # matlab
-export MATLABPATH=${ROBOT_CODE}/codyco-superbuild/build/install/mex:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox/images
+export MATLABPATH=${ROBOT_CODE}/codyco-superbuild/build/install/mex:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox/images:${ROBOT_INSTALL}/simmodels
 
 export PATH=${PATH}:${ROBOT_INSTALL}/bin:${ROBOT_CODE}/codyco-superbuild/build/install/bin
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ROBOT_INSTALL}/lib:/opt/ros/kinetic/lib
