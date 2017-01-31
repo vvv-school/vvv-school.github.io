@@ -104,7 +104,7 @@ export ROBOT_INSTALL=~/robot-install
 
 # ros
 source /opt/ros/kinetic/setup.bash
-export ROS_MASTER_URI=https://localhost:11311
+export ROS_MASTER_URI=http://localhost:11311
 # instead, if you need to communicate with an external machine, use:
 # export ROS_MASTER_URI=http://[NAME_OF_MACHINE_RUNNING_ROSCORE_HERE]:11311"
 # and add in /etc/hosts name and ip of all the machines in the ros network
