@@ -116,8 +116,10 @@ export Caffe_ROOT=${ROBOT_CODE}/caffe
 export LIBSVMLIN_DIR=${ROBOT_CODE}/himrep/liblinear-1.91
 
 # gazebo plugins and model
+source /usr/share/gazebo/setup.sh
 export GAZEBO_PLUGIN_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/lib
 export GAZEBO_MODEL_PATH=${ROBOT_CODE}/codyco-superbuild/build/install/share/gazebo/models
+export GAZEBO_RESOURCE_PATH=${GAZEBO_RESOURCE_PATH}:${ROBOT_CODE}/codyco-superbuild/build/install/share/gazebo/worlds
 
 # matlab
 export MATLABPATH=${ROBOT_CODE}/codyco-superbuild/build/install/mex:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox:${ROBOT_CODE}/codyco-superbuild/build/install/share/WB-Toolbox/images
