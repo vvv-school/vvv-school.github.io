@@ -58,7 +58,7 @@ status_passed=":white_check_mark:"
 status_failed=":x:"
 
 # get students from $team
-students=$(${abspathtoscript}/get-members.rb $org $team)
+students=$(${abspathtoscript}/get-members.rb vvv-school $team)
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
