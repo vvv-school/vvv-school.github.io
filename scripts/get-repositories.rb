@@ -20,7 +20,7 @@ if ARGV.length < 1 then
   exit 1
 end
 
-client = Octokit::Client.new
+client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
 client.org_repos(ARGV[0],{:type => 'public'})
 
 last_response = client.last_response
