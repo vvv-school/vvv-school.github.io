@@ -307,9 +307,6 @@ function update_assignment {
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date' | sed 's/\\\"//g'")
     local repo_commit_date=$(eval "curl -s -H $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
 
-    echo "DBG 0: $last_commit_date"
-    echo "DBG 1: $repo_commit_date"
-
     if [ "${last_commit_date}" != "${repo_commit_date}" ] || [ -z "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         
