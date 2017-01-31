@@ -5,7 +5,6 @@
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
 #
 # Dependencies (through apt-get):
-# - curl
 # - jq
 #
 # The env variable GITHUB_TOKEN_ORG_READ should contain a valid GitHub
@@ -21,8 +20,6 @@ if [ -z "$GITHUB_TOKEN_ORG_READ" ]; then
     echo -e "${red}env variable GITHUB_TOKEN_ORG_READ is not set${data}${nc}\n"
     exit 2
 fi
-
-token_header="Authorization: token $GITHUB_TOKEN_ORG_READ"
 
 script=$(realpath $0)
 abspathtoscript=$(dirname ${script})
@@ -305,7 +302,7 @@ function update_assignment {
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
     
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date' | sed 's/\\\"//g'")
-    local repo_commit_date=$(eval "curl -s -H $token_header -G https://api.github.com/repos/$org/$repo/commits | jq '.[0].commit.committer.date' | sed 's/\\\"//g'")
+    local repo_commit_date=$(${abspathtoscript}/get-commit-date.rb $org/$repo)
 
     if [ "${last_commit_date}" != "${repo_commit_date}" ] || [ -z "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
