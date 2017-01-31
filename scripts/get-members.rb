@@ -20,6 +20,14 @@ if ARGV.length < 2 then
   exit 1
 end
 
+Signal.trap("INT") {
+  exit 2
+}
+
+Signal.trap("TERM") {
+  exit 2
+}
+
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
 loop do
   client.org_teams(ARGV[0])
