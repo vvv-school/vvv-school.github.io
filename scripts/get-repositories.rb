@@ -21,7 +21,14 @@ if ARGV.length < 1 then
 end
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
-client.org_repos(ARGV[0],{:type => 'public'})
+loop do
+  client.org_repos(ARGV[0],{:type => 'public'})
+  rate_limit = client.rate_limit
+  if rate_limit.remaining > 0 then
+    break
+  end
+  sleep(60)
+end
 
 last_response = client.last_response
 data=last_response.data

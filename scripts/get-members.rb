@@ -21,7 +21,14 @@ if ARGV.length < 2 then
 end
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
-client.org_teams(ARGV[0])
+loop do
+  client.org_teams(ARGV[0])
+  rate_limit = client.rate_limit
+  if rate_limit.remaining > 0 then
+    break
+  end
+  sleep(60)
+end
 
 last_response = client.last_response
 data=last_response.data
@@ -47,7 +54,14 @@ if team_id < 0 then
 end
 
 if team_id >= 0 then
-  client.team_members(team_id)
+  loop do
+    client.team_members(team_id)
+    rate_limit = client.rate_limit
+    if rate_limit.remaining > 0 then
+      break
+    end
+    sleep(60)
+  end
 
   last_response = client.last_response
   data=last_response.data
