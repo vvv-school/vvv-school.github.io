@@ -69,6 +69,7 @@ if [ -f ${test_dir}/pre-test.sh ]; then
     cd $tmp_dir
 fi
 
+local kill_yarp
 yarp where
 if [ $? -eq 0 ]; then
    kill_yarp="no"
@@ -78,6 +79,7 @@ else
    sleep 1
 fi
 
+local kill_testnode
 yarp exists /testnode
 if [ $? -eq 0 ]; then
    kill_testnode="no"
