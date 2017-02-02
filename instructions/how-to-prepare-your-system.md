@@ -146,6 +146,7 @@ $ git config --global user.name "[firstname lastname]"
 $ git config --global user.email "[valid email]"
 $ git config --global color.pager true
 $ git config --global color.ui auto
+$ git config --global push.default upstream
 ```
 
 ## Get the code
