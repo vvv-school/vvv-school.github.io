@@ -255,6 +255,8 @@ $ cd $ROBOT_CODE
 $ mkdir datasets && cd datasets
 $ wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
 $ wget http://www.icub.org/download/software/datasetplayer-demo/dataDisparity.zip
+$ wget http://www.icub.org/download/software/datasetplayer-demo/event_datasets.zip
 $ unzip testData_20120803_095402.zip
 $ unzip dataDisparity.zip
+$ unzip event_datasets.zip
 ```
