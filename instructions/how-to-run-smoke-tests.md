@@ -6,8 +6,10 @@ Go in the **smoke-test** subdirectory and run:
 $ ./test.sh
 ```
 
-### Exit Codes
+### Options
+- `--get-helpers` specifies to force downloading helper tools anew
 
+### Exit Codes
 - **`0`** test passed :white_check_mark:
 - **`1`** test failed :x:
 - **`2`** code under test doesn't compile :hammer:
