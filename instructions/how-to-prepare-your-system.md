@@ -256,7 +256,9 @@ $ mkdir datasets && cd datasets
 $ wget http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip
 $ wget http://www.icub.org/download/software/datasetplayer-demo/dataDisparity.zip
 $ wget http://www.icub.org/download/software/datasetplayer-demo/event_datasets.zip
+$ wget https://data.mendeley.com/datasets/g7vvyk6gds/1/files/ffe5bac4-1ded-4bfd-a595-ef5393e69304/iCW.tar.gz
 $ unzip testData_20120803_095402.zip
 $ unzip dataDisparity.zip
 $ unzip event_datasets.zip
+$ tar -zxvf iCW.tar.gz
 ```
