@@ -3,11 +3,11 @@
 ### Usage
 Go in the **smoke-test** subdirectory and run:
 ```sh
-$ ./test.sh
+$ ./test.sh [--get-helpers]
 ```
 
 ### Options
-- `--get-helpers` specifies to force downloading helper tools anew
+- `--get-helpers` specifies to force downloading helper tools anew.
 
 ### Exit Codes
 - **`0`** test passed :white_check_mark:
