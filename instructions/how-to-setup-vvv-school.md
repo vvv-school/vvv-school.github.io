@@ -191,3 +191,10 @@ $ ./gradebook.sh
 ```
 
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
+
+## VVV{YY} School wrap-up
+
+Once the school is over we can:
+
+- Replace teachers with [**vvv-school-bot**](https://github.com/vvv-school-bot) as single owner of **vvv{yy}-{course}** organizations. This way we spare teachers the burden of being subscribed to organizations that are no longer necessary, while retaining the same organization active on GitHub.
+- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up all public repositories of **vvv{yy}-{course}** organization.
