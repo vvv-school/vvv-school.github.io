@@ -147,22 +147,22 @@ We use a **Linux system** to run the script for the automatic grading.
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without keeping prompting for login.
 
   >To store credentials for one hour:
-  ```sh
-  $ git config [options] credential.helper 'cache --timeout=3600'
-  ```
-  To flush the cache earlier:
-  ```sh
-  $ git credential-cache exit
-  ```
-  To store credentials forever (or until you erase):
-  ```sh
-  $ git config [options] credential.helper store
-  ```
-  To unset storing credentials:
-  ```sh
-  $ git config [options] --unset-all credential.helper
-  ```
-  `options` can be:
+  >```sh
+  >$ git config [options] credential.helper 'cache --timeout=3600'
+  >```
+  >To flush the cache earlier:
+  >```sh
+  >$ git credential-cache exit
+  >```
+  >To store credentials forever (or until you erase):
+  >```sh
+  >$ git config [options] credential.helper store
+  >```
+  >To unset storing credentials:
+  >```sh
+  >$ git config [options] --unset-all credential.helper
+  >```
+  >`options` can be:
     >- `--local` affecting only the current git directory.
     >- `--global` affecting all git directories of the current user.
     >- `--system` affecting all git directories on the system.
