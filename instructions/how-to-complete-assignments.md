@@ -45,16 +45,8 @@ This is the method we adopt for students at **VVV School**.
 
 #### Collaborative Code Review
 
->1. Once the student has created the PR, you can then do [**code review**](https://help.github.com/articles/about-pull-request-reviews) with line-by-line feedback. In case the student **did not create a new branch**, go blame the lounger 🔨😏. If your mood is good instead 😒, then you can still launch a PR based review by doing:
-    1. Within the new repository **navigate to the last commit of the starter code**, which precedes the first commit the student pushed to `master`.
-    1. [Create a **new branch** off of that commit](https://github.com/blog/1377-create-and-delete-branches); call the branch `review-teacherusername`.
-    1. Start a **pull request** with `review-teacherusername` as _base branch_ and `master` as _compare branch_.
-    1. You can now proceed with **code review**.
->1. Also, provide within the PR a **brief summary** including, but not limited to, the following general remarks:
-    - Is the code sufficiently **commented**? What about **indentation** and **code style**?
-    - Is the code **cross-compilable**? Are there **warnings** still left?
-    - Is the **code architecture** well designed in terms of **components**, **operations**, **synchronism**?
-    - To which **extent** are the requirements accomplished?
+>1. Once the student has created the PR, you can then do [**code review**](https://help.github.com/articles/about-pull-request-reviews) with line-by-line feedback. In case the student **did not create a new branch**, go blame the lounger 🔨😏. If your mood is good instead 😒, then you can still launch a PR based review by doing: (a) within the new repository **navigate to the last commit of the starter code**, which precedes the first commit the student pushed to `master`; (b) [create a **new branch** off of that commit](https://github.com/blog/1377-create-and-delete-branches) and call the branch `review-teacherusername`; (c) start a **pull request** with `review-teacherusername` as _base branch_ and `master` as _compare branch_; (d) you can now proceed with **code review**.
+>1. Also, provide within the PR a **brief summary** including, but not limited to, the following general remarks: (a) Is the code sufficiently **commented**? (b) What about **indentation** and **code style**? (c) Is the code **cross-compilable**? (d) Are there **warnings** still left? (e) Is the **code architecture** well designed in terms of **components**, **operations**, **synchronism**? (f) To which **extent** are the requirements accomplished?
 >1. Once the student has positively addressed all the points 👍🎉, **merge the PR** only if `master` is the _base branch_, otherwise just **close the PR** 👈
 >1. Finally, to avoid overcrowding the organization, arrange to [transfer the **ownership**](https://help.github.com/articles/transferring-a-repository-owned-by-your-organization) of the repository to the student GitHub account 💰. You can use your account as intermediate step, since a direct transfer from the organization to other users is not allowed. Alternatively, you can ask students to [**import** the repository](https://help.github.com/articles/importing-a-repository-with-github-importer) into their own account. Importantly, either transferring the ownership or importing the repository will also enable students to **retain forever the outcome of their hard work** :muscle: making sure that deleting the assignment from the _GitHub Education_ dashboard won't cause any unwanted side effect.
 
