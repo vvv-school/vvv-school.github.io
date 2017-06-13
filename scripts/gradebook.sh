@@ -28,6 +28,13 @@ org=$1
 team=$2
 path=$3
 
+cur_dir=$(pwd)
+cd $path
+website=$(git remote show origin | grep -i -m 1 url)
+website=($website)
+website=${website[2]}
+cd ${cur_dir}
+
 if [ ! -d $4 ]; then
     mkdir $4
 fi
@@ -112,9 +119,6 @@ function publish_gradebook {
     cd $path
     git diff --quiet
     if [ $? -ne 0 ]; then
-        website=$(git remote show origin | grep -i -m 1 url)
-        website=($website)
-        website=${website[2]}
         echo -e "${green}Publishing the gradebook to $website${nc}\n" > /dev/stderr
         local keep_leading_lines=1
         cp $README $cur_dir/readme.tmp
@@ -307,7 +311,7 @@ function update_assignment {
     if [ "${last_commit_date}" != "${repo_commit_date}" ] || [ -z "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         
-        ${abspathtoscript}/set-commit-status.rb $org/$repo pending
+        ${abspathtoscript}/set-commit-status.rb $org/$repo pending "${website}#${stud}-grade"
         
         local status=$status_failed
         local commit_status="error"
@@ -317,10 +321,10 @@ function update_assignment {
             status=$status_passed
             commit_status="success"
         elif [ $? -eq 1 ]; then
-            commit_status="failure"            
+            commit_status="failure"
         fi
         
-        ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status
+        ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status "${website}#${stud}-grade"
 
         local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
         
