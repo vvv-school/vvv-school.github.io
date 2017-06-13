@@ -63,13 +63,12 @@ elsif status == "error" then
   description="Cannot build/check your solution"
 end
 
-if ARGV.length < 3 then  
-  client.create_status(repo,sha,status,
-                       :context => context,
-                       :description => description)
-else
-  client.create_status(repo,sha,status,
-                       :context => context,
-                       :description => description,
-                       :target_url => ARGV[2])
+target_url=""
+if ARGV.length > 2 then
+  target_url=ARGV[2]
 end                       
+
+client.create_status(repo,sha,status,
+                     :context => context,
+                     :description => description,
+                     :target_url => target_url)
