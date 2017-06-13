@@ -307,11 +307,20 @@ function update_assignment {
     if [ "${last_commit_date}" != "${repo_commit_date}" ] || [ -z "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
         
+        ${abspathtoscript}/set-commit-status.rb $org/$repo pending
+        
         local status=$status_failed
+        local commit_status="error"
+        
         smoke_test $repo https://github.com/${org}/${repo}.git $assi
         if [ $? -eq 0 ]; then
             status=$status_passed
+            commit_status="success"
+        elif [ $? -eq 1 ] then
+            commit_status="failure"            
         fi
+        
+        ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status
 
         local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
         
