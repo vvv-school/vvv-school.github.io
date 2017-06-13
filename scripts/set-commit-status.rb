@@ -55,11 +55,11 @@ sha=last_response.data[0].sha
 context="Robot Testing Framework"
 if status == "pending" then
   description="Your solution is being verified"
-else if status == "success" then
+elsif status == "success" then
   description="Your solution passed"
-else if status == "failure" then
+elsif status == "failure" then
   description="Your solution failed"
-else if status == "error" then
+elsif status == "error" then
   description="Cannot build/check your solution"
 end
 
