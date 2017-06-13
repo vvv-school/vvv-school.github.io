@@ -22,7 +22,7 @@ This is the method we adopt for students at **VVV School**.
 >1. [**Clone**](http://gitref.org/creating/#clone) the repository to your computer.
 >1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
 >1. If present, go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
->1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub and watch feedback appearing as statuses attached to your last commit.
+>1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub and watch feedback appearing as [**statuses** attached to your commits](https://github.com/blog/1227-commit-status-api).
 >1. Check out the **course gradebook** and boast of the result with your friends :triumph: :clap:
 
 #### Collaborative Code Review
