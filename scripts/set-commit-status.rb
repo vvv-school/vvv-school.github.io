@@ -60,7 +60,7 @@ else if status == "success" then
 else if status == "failure" then
   description="Your solution failed"
 else if status == "error" then
-  description="Cannot build your solution"
+  description="Cannot build/check your solution"
 end
 
 if ARGV.length < 3 then  
