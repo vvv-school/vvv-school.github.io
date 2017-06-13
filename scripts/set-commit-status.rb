@@ -60,7 +60,7 @@ elsif status == "success" then
 elsif status == "failure" then
   description="Your solution failed"
 elsif status == "error" then
-  description="Cannot build/check your solution"
+  description="Could not build/check your solution"
 end
 
 target_url=""
