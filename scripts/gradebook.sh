@@ -210,7 +210,7 @@ function smoke_test() {
         rm -Rf $repo
     fi
  
-    local ret=-1
+    local ret=252
     git clone --depth 1 -b master $url
     if [ $? -eq 0 ]; then
         if [ -d $repo/smoke-test ]; then
@@ -317,10 +317,12 @@ function update_assignment {
         local commit_status="error"
         
         smoke_test $repo https://github.com/${org}/${repo}.git $assi
-        if [ $? -eq 0 ]; then
+        ret=$?
+        
+        if [ $ret -eq 0 ]; then
             status=$status_passed
             commit_status="success"
-        elif [ $? -eq 255 ]; then
+        elif [ $ret -eq 255 ]; then
             commit_status="failure"
         fi
         
