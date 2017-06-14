@@ -320,7 +320,7 @@ function update_assignment {
         if [ $? -eq 0 ]; then
             status=$status_passed
             commit_status="success"
-        elif [ $? -eq -1 ]; then
+        elif [ $? -eq 255 ]; then
             commit_status="failure"
         fi
         
