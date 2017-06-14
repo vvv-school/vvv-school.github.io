@@ -6,7 +6,7 @@
 
 if [ $# -lt 3 ]; then
     echo "Usage: $0 <abspath-to-build> <abspath-to-code> <abspath-to-test>"
-    exit 4
+    exit -4
 fi
 
 build_dir=$1
@@ -22,12 +22,12 @@ mkdir build-code && cd build-code
 cmake -DCMAKE_BUILD_TYPE=Release $code_dir
 if [ $? -ne 0 ]; then
    cd $cur_dir
-   exit 2
+   exit -2
 fi
 make install
 if [ $? -ne 0 ]; then
    cd $cur_dir
-   exit 2
+   exit -2
 fi
 cd ../
 
@@ -39,12 +39,12 @@ mkdir build-test && cd build-test
 cmake -DCMAKE_BUILD_TYPE=Release $test_dir
 if [ $? -ne 0 ]; then
    cd $cur_dir
-   exit 3
+   exit -3
 fi
 make
 if [ $? -ne 0 ]; then
    cd $cur_dir
-   exit 3
+   exit -3
 fi
 cd ../
 
@@ -126,7 +126,7 @@ fi
 cd $cur_dir
 if [ $npassed -eq 0 ] || [ $nfailed -gt 0 ]; then
    echo -e "${red}xxxxx Test FAILED xxxxx${nc}\n"
-   exit 1
+   exit -1
 else
    echo -e "${green}===== Test PASSED =====${nc}\n"
    exit 0
