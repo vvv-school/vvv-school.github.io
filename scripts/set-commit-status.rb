@@ -54,11 +54,11 @@ sha=last_response.data[0].sha
 
 context="Robot Testing Framework"
 if status == "pending" then
-  description="Your solution is being verified"
+  description="Your solution is being checked"
 elsif status == "success" then
-  description="Your solution passed"
+  description="Your solution passed the test"
 elsif status == "failure" then
-  description="Your solution failed"
+  description="Your solution failed the test"
 elsif status == "error" then
   description="Could not build/check your solution"
 end
