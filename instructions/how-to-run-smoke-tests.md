@@ -11,7 +11,8 @@ $ ./test.sh [--get-helpers]
 
 ### Exit Codes
 - **`0`** test passed :white_check_mark:
-- **`1`** test failed :x:
-- **`2`** code under test doesn't compile :hammer:
-- **`3`** test itself doesn't compile :gun:
-- **`4`** generic error :scream:
+- **`>0`** test passed with assigned marks :ballot_box_with_check:
+- **`-1`** test failed :x:
+- **`-2`** code under test doesn't compile :hammer:
+- **`-3`** test itself doesn't compile :gun:
+- **`-4`** generic error :scream:
