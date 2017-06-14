@@ -27,6 +27,8 @@ This is the method we adopt for students at **VVV School**.
 
 #### Collaborative Code Review
 
+We adhere to the methodology well explained in this [post](https://github.com/blog/2376-how-to-grade-programming-assignments-on-github).
+
 >1. [Create a **new branch**](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) from `master`; you may call it as your `username`.
 >1. [**Clone**](http://gitref.org/creating/#clone) the repository to your computer.
 >1. Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
