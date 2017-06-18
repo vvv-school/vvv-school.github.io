@@ -25,7 +25,7 @@ org=org_team[0]
 team=org_team[1]
   
 if org.to_s.empty? or team.to_s.empty? then
-  puts "Invalid input"
+  puts "Invalid input <organization>/<team>"
   exit 1
 end
 
