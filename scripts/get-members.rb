@@ -24,13 +24,8 @@ org_team=ARGV[0].split('/')
 org=org_team[0]
 team=org_team[1]
   
-if org.to_s.empty? then
-  puts "Invalid organization"
-  exit 1
-end
-
-if team.to_s.empty? then
-  puts "Invalid team"
+if org.to_s.empty? or team.to_s.empty? then
+  puts "Invalid input"
   exit 1
 end
 
