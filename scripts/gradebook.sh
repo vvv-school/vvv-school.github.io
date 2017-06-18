@@ -64,7 +64,7 @@ status_passed=":white_check_mark:"
 status_failed=":x:"
 
 # get students from $team
-students=$(${abspathtoscript}/get-members.rb vvv-school $team)
+students=$(${abspathtoscript}/get-members.rb $team)
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
@@ -380,7 +380,7 @@ function update_assignment {
     publish_gradebook
 }
 
-# remove usernames not in ${team}
+# remove usernames not in $team
 function gc_usernames_no_students {
     local usernames=$(eval "cat $gradebook_new | jq 'map(.username) | .[]' | sed 's/\\\"//g'")
     local newline=false

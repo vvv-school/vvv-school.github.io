@@ -15,8 +15,8 @@
 
 require 'octokit'
 
-if ARGV.length < 2 then
-  puts "Usage: $0 <organization> <team>"
+if ARGV.length < 1 then
+  puts "Usage: $0 <organization>/<team>"
   exit 1
 end
 
@@ -28,9 +28,13 @@ Signal.trap("TERM") {
   exit 2
 }
 
+org_team=ARGV[0].split('/')
+org=org_team[0]
+team=org_team[1]
+
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
 loop do
-  client.org_teams(ARGV[0])
+  client.org_teams(org)
   rate_limit = client.rate_limit
   if rate_limit.remaining > 0 then
     break
@@ -43,7 +47,7 @@ data=last_response.data
 
 team_id = -1
 data.each { |x|
-if x.name == ARGV[1] then
+if x.name == team then
   team_id = x.id
 end
 }
@@ -53,7 +57,7 @@ if team_id < 0 then
     last_response = last_response.rels[:next].get
     data=last_response.data
     data.each { |x|
-    if x.name == ARGV[1] then
+    if x.name == team then
       team_id = x.id
       break
     end
