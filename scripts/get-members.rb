@@ -19,6 +19,20 @@ if ARGV.length < 1 then
   puts "Usage: $0 <organization>/<team>"
   exit 1
 end
+  
+org_team=ARGV[0].split('/')
+org=org_team[0]
+team=org_team[1]
+  
+if org.to_s.empty? then
+  puts "Invalid organization"
+  exit 1
+end
+
+if team.to_s.empty? then
+  puts "Invalid team"
+  exit 1
+end
 
 Signal.trap("INT") {
   exit 2
@@ -27,10 +41,6 @@ Signal.trap("INT") {
 Signal.trap("TERM") {
   exit 2
 }
-
-org_team=ARGV[0].split('/')
-org=org_team[0]
-team=org_team[1]
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
 loop do
