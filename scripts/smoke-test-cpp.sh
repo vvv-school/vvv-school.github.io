@@ -115,10 +115,12 @@ nc='\033[0m'
 
 npassed=0
 nfailed=0
+score=0
 if [ -f result.txt ]; then
     cat result.txt
     npassed=$(awk '/Number of passed test cases/{print $7}' result.txt)
     nfailed=$(awk '/Number of failed test cases/{print $7}' result.txt)
+    score=$(awk '/Total score/{print $7}' result.txt)
 else
     echo -e "${red}Unable to get test result${nc}\n"    
 fi
@@ -128,8 +130,7 @@ if [ $npassed -eq 0 ] || [ $nfailed -gt 0 ]; then
    echo -e "${red}xxxxx Test FAILED xxxxx${nc}\n"
    exit 255
 else
-   echo -e "${green}===== Test PASSED =====${nc}\n"
-   score=$(awk '/Total score/{print $7}' result.txt)
+   echo -e "${green}===== Test PASSED =====${nc}\n"   
    if [ -z "$score" ]; then
       exit 0;
    elif [ $score -ge 1 ] && [ $score -le 100 ]; then
