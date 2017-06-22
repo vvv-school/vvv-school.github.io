@@ -91,10 +91,10 @@ function update_score {
         for assi2 in $assignments; do
            if [ "${assi1}" == "${assi2}-${stud}" ]; then              
               local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$assi1\")'")
-              jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
+              local jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
               local status=$(eval "cat $gradebook_new | jq 'getpath(${jq_path_status})' | sed 's/\\\"//g'")
               if [ "${status}" == "${status_passed}" ]; then
-                 jq_path_score=$(echo "$jq_path" | jq -c '.+["score"]')
+                 local jq_path_score=$(echo "$jq_path" | jq -c '.+["score"]')
                  local sc=$(eval "cat $gradebook_new | jq 'getpath(${jq_path_score})'")
                  let "score = $score + $sc"
               fi
