@@ -7,7 +7,7 @@
 # Dependencies (through apt-get):
 # - jq
 #
-# The env variable GITHUB_TOKEN_ORG_READ should contain a valid GitHub
+# The env variable GITHUB_TOKEN_VVV_SCHOOL should contain a valid GitHub
 # token with "org:read" permission to retrieve organization data
 #
 
@@ -16,8 +16,8 @@ if [ $# -lt 4 ]; then
     exit 1
 fi
 
-if [ -z "$GITHUB_TOKEN_ORG_READ" ]; then
-    echo -e "${red}env variable GITHUB_TOKEN_ORG_READ is not set${data}${nc}\n"
+if [ -z "$GITHUB_TOKEN_VVV_SCHOOL" ]; then
+    echo -e "${red}env variable GITHUB_TOKEN_VVV_SCHOOL is not set${data}${nc}\n"
     exit 2
 fi
 
