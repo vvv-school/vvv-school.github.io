@@ -318,8 +318,9 @@ function update_assignment {
         
         smoke_test $repo https://github.com/${org}/${repo}.git $assi
         test_score=$?
+        echo "debug: test_score = $test_score"
         
-        if [ $test_score -ge 0 ] || [ $test_score -le 100 ]; then
+        if [ $test_score -ge 0 ] && [ $test_score -le 100 ]; then
             status=$status_passed
             commit_status="success"
         elif [ $test_score -eq 255 ]; then
@@ -329,9 +330,10 @@ function update_assignment {
         ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status "${website}#${stud}-grade"
 
         local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
-        if [ $test_score -ge 1 ] || [ $test_score -le 100 ]; then
+        if [ $test_score -ge 1 ] && [ $test_score -le 100 ]; then
             assignment_score=$test_score
         fi
+        echo "debug: assignment_score = $assignment_score"
         
         # we assume it exists only one $repo in the gradebook
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")        
