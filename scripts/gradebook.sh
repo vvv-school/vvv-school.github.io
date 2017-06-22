@@ -94,7 +94,7 @@ function update_score {
               jq_path=$(echo "$jq_path" | jq -c '.+["status"]')
               local status=$(eval "cat $gradebook_new | jq 'getpath(${jq_path})' | sed 's/\\\"//g'")
               if [ "${status}" == "${status_passed}" ]; then
-                 local sc=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi2\")) | .[0].score'")
+                 local sc=$(eval "cat $gradebook_new | jq '.assignments | map(select(.name==\"$assi2-$stud\")) | .[0].score'")
                  let "score = $score + $sc"
               fi
               break
@@ -318,7 +318,6 @@ function update_assignment {
         
         smoke_test $repo https://github.com/${org}/${repo}.git $assi
         test_score=$?
-        echo "debug: test_score = $test_score"
         
         if [ $test_score -ge 0 ] && [ $test_score -le 100 ]; then
             status=$status_passed
@@ -333,7 +332,6 @@ function update_assignment {
         if [ $test_score -ge 1 ] && [ $test_score -le 100 ]; then
             assignment_score=$test_score
         fi
-        echo "debug: assignment_score = $assignment_score"
         
         # we assume it exists only one $repo in the gradebook
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")        
