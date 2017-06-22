@@ -138,6 +138,18 @@ In case you, the teacher, decide to solve an assignment together with students, 
 - highlight the use of **smoke-test**;
 - your contribution won't be put on the bill during automatic grading, since you're not a member of **vvv{yy}-students** team.
 
+#### How to assign scores incrementally
+
+By default, each assignment comes with its own score ─ as specified in the file [**data.json**](#gear-up-for-automatic-grading) ─ that gets assigned to the student if his solution will pass the smoke-test. Nonetheless, assignments with a variable outcome in terms of score are also possible.
+
+It is sufficient to accumulate the score within the **smoke-test** according to some given performance criteria and finally output the following string using the directive [RTF_TEST_CHECK](http://robotology.github.io/robot-testing/documentation/index.html):
+```cpp
+RTF_TEST_CHECK(score>0,Asserter::format("Total score = %d",score));
+```
+Importantly, the score must be in the range **[1,100]**.
+
+An example is available in [assignment_control-pid](https://github.com/vvv-school/assignment_control-pid/blob/master/smoke-test/test.cpp).
+
 ### Update the gradebook
 
 We use a **Linux system** to run the script for the automatic grading.
