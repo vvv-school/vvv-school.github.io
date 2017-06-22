@@ -130,7 +130,9 @@ if [ $npassed -eq 0 ] || [ $nfailed -gt 0 ]; then
 else
    echo -e "${green}===== Test PASSED =====${nc}\n"
    score=$(awk '/Total score/{print $7}' result.txt)
-   if [ $score -ge 1 ] && [ $score -le 100 ]; then
+   if [ -z "$score" ]; then
+      exit 0;
+   elif [ $score -ge 1 ] && [ $score -le 100 ]; then
       exit $score
    else
       exit 0   
