@@ -30,7 +30,7 @@ Signal.trap("TERM") {
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
 loop do
-  client.org_repos(ARGV[0],{:type => 'public'})
+  client.org_repos(ARGV[0],{:type => 'all'})
   rate_limit = client.rate_limit
   if rate_limit.remaining > 0 then
     break
