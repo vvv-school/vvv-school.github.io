@@ -7,7 +7,7 @@
 # Dependencies (through gem):
 # - octokit
 #
-# The env variable GITHUB_TOKEN_ORG_READ should contain a valid GitHub
+# The env variable GITHUB_TOKEN_VVV_SCHOOL should contain a valid GitHub
 # token with "org:read" permission to retrieve organization data
 #
 # script for trasversing GitHub pagination
@@ -39,7 +39,7 @@ Signal.trap("TERM") {
   exit 2
 }
 
-client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_ORG_READ']
+client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
   client.commits(repo)
   rate_limit = client.rate_limit
