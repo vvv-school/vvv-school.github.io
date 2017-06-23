@@ -142,7 +142,7 @@ In case you, the teacher, decide to solve an assignment together with students, 
 
 By default, each assignment comes with its own score ─ as specified in the file [**data.json**](#gear-up-for-automatic-grading) ─ that gets assigned to the student if his solution has passed the smoke-test. Nonetheless, assignments with a variable outcome in terms of score are also possible.
 
-It is sufficient to accumulate the score within the **smoke-test** according to some given performance criteria and finally output the following string using the directive [RTF_TEST_CHECK](http://robotology.github.io/robot-testing/documentation/index.html):
+It is sufficient to accumulate the score within the **smoke-test** according to some given performance criteria and finally output the following string using the directive [`RTF_TEST_CHECK`](http://robotology.github.io/robot-testing/documentation/index.html):
 ```cpp
 RTF_TEST_CHECK(score>0,Asserter::format("Total score = %d",score));
 ```
