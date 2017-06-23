@@ -76,11 +76,18 @@ function update_score {
     local stud_tutorials=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0].tutorials | .[] | .name' | sed 's/\\\"//g'")
     local stud_assignments=$(eval "cat $gradebook_new | jq 'map(select(.username==\"$stud\")) | .[0].assignments | .[] | .name' | sed 's/\\\"//g'")
 
+    local jq_path    
+    local jq_path_status
+    local jq_path_score
+    local sc
     local score=0
+    
     for tuto1 in $stud_tutorials; do
         for tuto2 in $tutorials; do
            if [ "${tuto1}" == "${tuto2}-${stud}" ]; then
-              local sc=$(eval "cat $data | jq '.tutorials | map(select(.name==\"$tuto2\")) | .[0].score'")
+              jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$tuto1\")'")
+              jq_path_score=$(echo "$jq_path" | jq -c '.+["score"]')
+              sc=$(eval "cat $gradebook_new | jq 'getpath(${jq_path_score})'")
               let "score = $score + $sc"
               break
            fi 
@@ -90,12 +97,12 @@ function update_score {
     for assi1 in $stud_assignments; do
         for assi2 in $assignments; do
            if [ "${assi1}" == "${assi2}-${stud}" ]; then              
-              local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$assi1\")'")
-              local jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
+              jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$assi1\")'")
+              jq_path_status=$(echo "$jq_path" | jq -c '.+["status"]')
               local status=$(eval "cat $gradebook_new | jq 'getpath(${jq_path_status})' | sed 's/\\\"//g'")
               if [ "${status}" == "${status_passed}" ]; then
-                 local jq_path_score=$(echo "$jq_path" | jq -c '.+["score"]')
-                 local sc=$(eval "cat $gradebook_new | jq 'getpath(${jq_path_score})'")
+                 jq_path_score=$(echo "$jq_path" | jq -c '.+["score"]')
+                 sc=$(eval "cat $gradebook_new | jq 'getpath(${jq_path_score})'")
                  let "score = $score + $sc"
               fi
               break
