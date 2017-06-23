@@ -146,7 +146,7 @@ It is sufficient to accumulate the score within the **smoke-test** according to 
 ```cpp
 RTF_TEST_CHECK(score>0,Asserter::format("Total score = %d",score));
 ```
-Importantly, the score must be in the range **[1,100]**.
+This output score will override what is contained in **data.json**. Importantly, the output score must be in the range **[1,100]**.
 
 An example is available in [assignment_control-pid](https://github.com/vvv-school/assignment_control-pid/blob/master/smoke-test/test.cpp).
 
