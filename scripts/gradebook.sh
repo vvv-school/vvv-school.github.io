@@ -536,7 +536,7 @@ while true; do
         
     echo ""
     echo -e "${cyan}============================================================================${nc}"
-    echo -e "Working out the students:\n${green}${students}${nc}\n"
+    echo -e "Working out students of ${green}${team}${nc}:\n${green}${students}${nc}\n"
     echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
     
     # remove from the gradebook users who are not students,
