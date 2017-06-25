@@ -19,8 +19,8 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 This is the method we adopt for students at **VVV School**.
 
 >1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system. If you're using our VM, it is already installed :computer: :package:
->1. [**Clone**](http://gitref.org/creating/#clone) the repository to your computer.
->1. [only **assignments**] Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
+>1. [**Clone**](https://help.github.com/articles/cloning-a-repository) the repository to your computer.
+>1. [only **assignments**] Fill in the **gaps** and [**commit**](https://git-scm.com/docs/git-commit) changes to complete your solution ☕️☕️
 >1. If present, go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 >1. [only **assignments**] [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub and watch feedback appearing as [**statuses** attached to your commits](https://github.com/blog/1227-commit-status-api) :white_check_mark: :x:
 >1. Check out the **course gradebook** by clicking on the commit status and boast of the result with your friends :triumph: :clap:
@@ -30,10 +30,10 @@ This is the method we adopt for students at **VVV School**.
 We adhere to the methodology well explained in this [post](https://github.com/blog/2376-how-to-grade-programming-assignments-on-github).
 
 >1. [Create a **new branch**](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) from `master`; you may call it as your `username`.
->1. [**Clone**](http://gitref.org/creating/#clone) the repository to your computer.
->1. Fill in the **gaps** and [**commit**](http://gitref.org/basic/#commit) changes to complete your solution ☕️☕️
+>1. [**Clone**](https://help.github.com/articles/cloning-a-repository) the repository to your computer.
+>1. Fill in the **gaps** and [**commit**](https://git-scm.com/docs/git-commit) changes to complete your solution ☕️☕️
 >1. If there is a [**smoke test**](#smoke-testing), why don't you give it a try? :wink:
->1. [**Push**](http://gitref.org/remotes/#push)/sync the changes up to GitHub.
+>1. [**Push**](https://help.github.com/articles/pushing-to-a-remote)/sync the changes up to GitHub.
 >1. [Create a **pull request**](https://help.github.com/articles/creating-a-pull-request) (**PR**) with `master` as _base branch_ and `username` as _compare branch_.
 >1. [**Request** a teacher to review your PR](https://help.github.com/articles/requesting-a-pull-request-review/) :wave: to turn in the assignment.
 >1. Address the points the teacher highlighted during the review 📝 by **pushing your fixes** and **replying to the comments** directly within the PR 🎓
