@@ -111,7 +111,7 @@ function update_score {
     done
     
     echo -e "${green}${stud}${nc} has now score = ${cyan}${score}${nc}" > /dev/stderr
-    local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'") 
+    jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.username?==\"$stud\")'") 
     jq_path=$(echo "$jq_path" | jq -c '.+["score"]')
     
     cp $gradebook_new $gradebook_tmp
@@ -332,14 +332,14 @@ function update_assignment {
             commit_status="success"
         elif [ $test_score -eq 255 ]; then
             commit_status="failure"
-        fi
-        
-        ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status "${website}#${stud}-grade"
+        fi        
 
         local assignment_score=$(eval "cat $data | jq '.assignments | map(select(.name==\"$assi\")) | .[0].score'")
         if [ $test_score -ge 1 ] && [ $test_score -le 100 ]; then
             assignment_score=$test_score
         fi
+        
+        ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status "${website}#${stud}-grade" $assignment_score
         
         # we assume it exists only one $repo in the gradebook
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")        
