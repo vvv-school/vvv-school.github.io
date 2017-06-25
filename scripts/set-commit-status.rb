@@ -16,7 +16,7 @@
 require 'octokit'
 
 if ARGV.length < 2 then
-  puts "Usage: $0 <repository> <status> [<target_url>]"
+  puts "Usage: $0 <repository> <status> [<target_url>] [<success_score>]"
   puts ""
   puts "<status> can be pending,success,failure,error"
   exit 1
@@ -66,7 +66,11 @@ end
 target_url=""
 if ARGV.length > 2 then
   target_url=ARGV[2]
-end                       
+end
+  
+if (status == "success") and (ARGV.length > 3) then
+  description << " with score " << ARGV[3].to_s
+end
 
 client.create_status(repo,sha,status,
                      :context => context,
