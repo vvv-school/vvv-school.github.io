@@ -29,7 +29,7 @@ This is the method we adopt for students at **VVV School**.
 
 We adhere to the methodology well explained in this [post](https://github.com/blog/2376-how-to-grade-programming-assignments-on-github).
 
->1. [Create a **new branch**](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) from `master`; you may call it as your `username`.
+>1. [Create a **new branch**](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) off of `master`; you may call it as your `username`.
 >1. [**Clone**](https://help.github.com/articles/cloning-a-repository) the repository to your computer.
 >1. Fill in the **gaps** and [**commit**](https://git-scm.com/docs/git-commit) changes to complete your solution ☕️☕️
 >1. If there is a [**smoke test**](#smoke-testing), why don't you give it a try? :wink:
