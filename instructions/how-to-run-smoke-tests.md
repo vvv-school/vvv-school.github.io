@@ -7,7 +7,7 @@ $ ./test.sh [--get-helpers]
 ```
 
 ### Options
-- `--get-helpers` specifies to force downloading helper tools anew.
+- `--get-helpers` specifies to download helper tools anew.
 
 ### Exit Codes
 - **`0`** test passed :white_check_mark:
