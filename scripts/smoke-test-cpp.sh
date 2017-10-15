@@ -87,7 +87,7 @@ else
    sleep 1
 fi
 
-testrunner --verbose --suit $test_dir/test.xml
+testrunner --verbose --suite $test_dir/test.xml
 
 if [ -f ${test_dir}/post-test.sh ]; then
     tmp_dir=$(pwd)
