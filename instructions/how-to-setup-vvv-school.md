@@ -185,7 +185,7 @@ We use a **Linux system** to run the script for the automatic grading.
   $ export GITHUB_TOKEN_VVV_SCHOOL=token-hash-goes-here
   ```
   
-  If you don't want to mess up with your user account credentials, you might consider being the [**vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**vvv-school-bot**](https://github.com/vvv-school-bot) to be owner of **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+  If you don't want to mess up with your user account credentials, you might consider being the [**@vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**@vvv-school-bot**](https://github.com/vvv-school-bot) to be owner of **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
 - Make sure that [**jq**](https://stedolan.github.io/jq) and [**octokit**](https://github.com/octokit/octokit.rb) are installed:
 
   ```sh
@@ -206,8 +206,8 @@ The gradebook will be published online at the course webpage: _https://vvv{yy}-{
 
 ## VVV{YY} School wrap-up
 
-Once the school is over, we can:
+Once the school is over, we have to:
 
-- Replace teachers with [**vvv-school-bot**](https://github.com/vvv-school-bot) as single owner of **vvv{yy}-{course}** organizations. This way we spare teachers the burden of being subscribed to organizations that are no longer necessary, while retaining the same organizations active on GitHub.
-- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization. Make a zip of the final archive protected by password (use the same password of [**vvv-school-bot**](https://github.com/vvv-school-bot)) and then upload the result to **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
-- Delete all the students repositories in each **vvv{yy}-{course}** organization. To do so, it is sufficient to delete the **GitHub Classroom** associated to the organization. This is to prevent students of **VVV{YY+1} School** from cheating by inspecting solutions contained in **vvv{yy}-course** :wink:
+- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization. Then, make a zip of the final archive protected by password (use the same password of [**@vvv-school-bot**](https://github.com/vvv-school-bot)) and upload it to **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+- Delete all the students repositories in each **vvv{yy}-{course}** organization. To do so, it is sufficient to delete the **GitHub Classroom** associated to the organization. This is to prevent students of **VVV{YY+1} School** from inspecting solutions contained in **vvv{yy}-course** :wink:
+- Replace teachers with [**@vvv-school-bot**](https://github.com/vvv-school-bot) as single owner of **vvv{yy}-{course}** organizations. This way, we spare teachers the burden of being subscribed to organizations that are no longer necessary, while retaining the same organizations active on GitHub.
