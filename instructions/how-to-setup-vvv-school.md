@@ -209,5 +209,5 @@ The gradebook will be published online at the course webpage: _https://vvv{yy}-{
 Once the school is over, we can:
 
 - Replace teachers with [**vvv-school-bot**](https://github.com/vvv-school-bot) as single owner of **vvv{yy}-{course}** organizations. This way we spare teachers the burden of being subscribed to organizations that are no longer necessary, while retaining the same organizations active on GitHub.
-- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization.
-- Delete all the students repositories in each **vvv{yy}-{course}** organization, leaving only **vvv{yy}-{course}/vvv{yy}-{course}.github.io**. To do so, it is sufficient to delete the **GitHub Classroom** associated to the organization.
+- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization. Make a zip of the final archive protected by password (use the same password of [**vvv-school-bot**](https://github.com/vvv-school-bot)) and then upload the result to **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+- Delete all the students repositories in each **vvv{yy}-{course}** organization. To do so, it is sufficient to delete the **GitHub Classroom** associated to the organization. This is to prevent students of **VVV{YY+1} School** from cheating by inspecting solutions contained in **vvv{yy}-course** :wink:
