@@ -210,4 +210,4 @@ Once the school is over, we can:
 
 - Replace teachers with [**vvv-school-bot**](https://github.com/vvv-school-bot) as single owner of **vvv{yy}-{course}** organizations. This way we spare teachers the burden of being subscribed to organizations that are no longer necessary, while retaining the same organizations active on GitHub.
 - Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization.
-- Delete all the students repositories in each **vvv{yy}-{course}** organization, leaving only **vvv{yy}-{course}/vvv{yy}-{course}.github.io**. To do so, it is sufficient to delete the GitHub classroom associated to the organization.
+- Delete all the students repositories in each **vvv{yy}-{course}** organization, leaving only **vvv{yy}-{course}/vvv{yy}-{course}.github.io**. To do so, it is sufficient to delete the **GitHub Classroom** associated to the organization.
