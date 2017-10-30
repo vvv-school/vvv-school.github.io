@@ -7,8 +7,8 @@
 # Dependencies (through gem):
 # - octokit
 #
-# The env variable GITHUB_TOKEN_VVV_SCHOOL should contain a valid GitHub
-# token with "org:read" permission to retrieve organization data
+# The env variable GITHUB_TOKEN_VVV_SCHOOL shall contain a valid GitHub token
+# (refer to instruction to find out more)
 #
 # script for trasversing GitHub pagination
 #
