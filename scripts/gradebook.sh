@@ -534,7 +534,7 @@ while true; do
         echo "[]" > $gradebook_new
     fi
 
-    # retrieve names of public repositories in $org
+    # retrieve names of all repositories in $org
     repositories=$(${abspathtoscript}/get-repositories.rb $org)
 
     echo ""
