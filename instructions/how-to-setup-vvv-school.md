@@ -197,7 +197,7 @@ We use a **Linux system** to run the script for the automatic grading.
 #### Launch the script
 
 ```sh
-$ git clone https://github.com/vvv{yy}-{course}.github.io.git
+$ git clone https://github.com/vvv{yy}-{course}/vvv{yy}-{course}.github.io.git
 $ cd vvv{yy}-{course}.github.io
 $ ./gradebook.sh
 ```
