@@ -185,7 +185,7 @@ We use a **Linux system** to run the script for the automatic grading.
   $ export GITHUB_TOKEN_VVV_SCHOOL=token-hash-goes-here
   ```
   
-  If you don't want to mess up with your user account credentials, you might consider being the [**@vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**@vvv-school-bot**](https://github.com/vvv-school-bot) as owner of **vvv{yy}-{course}** organizations.
+  If you don't want to mess up with your user account credentials, you might consider being the [**@vvv-school-bot**](https://github.com/vvv-school-bot) instead :wink: (ask [**@pattacini**](https://github.com/pattacini) to get the password). To this aim, invite [**@vvv-school-bot**](https://github.com/vvv-school-bot) as owner of **vvv{yy}-{course}** organization.
 - Make sure that [**jq**](https://stedolan.github.io/jq) and [**octokit**](https://github.com/octokit/octokit.rb) are installed:
 
   ```sh
@@ -197,8 +197,8 @@ We use a **Linux system** to run the script for the automatic grading.
 #### Launch the script
 
 ```sh
-$ git clone https://github.com/vvv{yy}-{course}.git
-$ cd vvv{yy}-{course}
+$ git clone https://github.com/vvv{yy}-{course}.github.io.git
+$ cd vvv{yy}-{course}.github.io
 $ ./gradebook.sh
 ```
 
