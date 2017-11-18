@@ -8,7 +8,7 @@ Two methods are given to accomplish the assignment:
 
 ## Instructions for **Students**
 
-To start, click on the **invitation link** 🔘 the teachers gave you and **accept the assignment**. A **new repository** will be spawned from the repository containing the _starter code_. You'll be notified via email.
+To start, click on the **invitation link** 🔘 the teachers gave you and **accept the assignment**. A **new repository** will be spawned from the repository containing the _starter code_. You'll receive an email when the repository is ready.
 
 If you're dealing with a **tutorial** (i.e. the repository name starts with the prefix _tutorial_), then the starter code is already in its final version and you can use it to train yourself.
 
