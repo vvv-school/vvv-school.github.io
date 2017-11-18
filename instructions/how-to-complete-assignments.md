@@ -21,7 +21,7 @@ This is the method we adopt for students during the courses.
 >1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system. If you're using our VM, it is already installed :computer: :package:
 >1. [**Clone**](https://help.github.com/articles/cloning-a-repository) the repository to your computer.
 >1. [only **assignments**] Fill in the **gaps** and [**commit**](https://git-scm.com/docs/git-commit) changes to complete your solution ☕️☕️
->1. If present, go in the **smoke-test** subdirectory :smoking: and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
+>1. If present, go in the :smoking: **smoke-test** subdirectory and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
 >1. [only **assignments**] [**Push**](https://help.github.com/articles/pushing-to-a-remote)/sync the changes up to GitHub and watch feedback appearing as :white_check_mark: :x: [**statuses** attached to your commits](https://github.com/blog/1227-commit-status-api) :warning: Note that the statuses are handled by a remote server that needs to be online then.
 >1. Check out the **course gradebook** by clicking on the commit status and boast of the result with your friends :triumph: :clap:
 
