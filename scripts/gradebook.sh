@@ -224,7 +224,7 @@ function smoke_test() {
         if [ -d $repo/smoke-test ]; then
             if [ -f $repo/smoke-test/test-type ]; then
                 # run the original helper script and test anyway,
-                # not the one in $repo, to avoid any possible hacking ;)
+                # not the one in $repo, to avoid any possible cheating ;)
                 local orig_url=$(eval "cat $data | jq '.assignments | map(select(.name==\"$orig_repo\")) | .[0].url' | sed 's/\\\"//g'")
 
                 if [ -d $orig_repo ]; then
