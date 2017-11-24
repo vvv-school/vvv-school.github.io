@@ -34,7 +34,6 @@ cd ../
 if [ -d build-test ]; then 
     rm -Rf build-test
 fi
-rm -Rf build-test
 mkdir build-test && cd build-test
 cmake -DCMAKE_BUILD_TYPE=Release $test_dir
 if [ $? -ne 0 ]; then
