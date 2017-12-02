@@ -117,7 +117,7 @@ We have to go through two steps:
 
 ### Challenge students
 
-Once you're all set, you can [create an **individual assignment**](https://education.github.community/t/video-setting-up-individual-assignments/2150) from the dashboard of your **GitHub Classrom**.
+Once you're all set, you can [create an **individual assignment**](https://education.github.community/t/video-setting-up-individual-assignments/2150) from the dashboard of your **GitHub Classroom**.
 
 These are the settings we have to use:
 - **Your assignment title**: make up a name; it's not that significant.
