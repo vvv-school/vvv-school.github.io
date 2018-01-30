@@ -73,7 +73,7 @@ if [ $? -eq 0 ]; then
    kill_yarp="no"
 else
    kill_yarp="yes"   
-   yarpserver --write &
+   yarpserver --write --silent &
    sleep 1
 fi
 
