@@ -82,7 +82,7 @@ if [ $? -eq 0 ]; then
    kill_testnode="no"
 else
    kill_testnode="yes"
-   yarprun --server /testnode --log &
+   yarprun --server /testnode --log > /dev/null 2>&1 &
    sleep 1
 fi
 
