@@ -14,65 +14,65 @@ code_dir=$2
 test_dir=$3
 cur_dir=$(pwd)
 
-cd $build_dir
-if [ -d build-code ]; then 
+cd "$build_dir"
+if [ -d build-code ]; then
     rm -Rf build-code
 fi
 mkdir build-code && cd build-code
-cmake -DCMAKE_BUILD_TYPE=Release $code_dir
+cmake -DCMAKE_BUILD_TYPE=Release "$code_dir"
 if [ $? -ne 0 ]; then
-   cd $cur_dir
+   cd "$cur_dir"
    exit 254
 fi
 make install
 if [ $? -ne 0 ]; then
-   cd $cur_dir
+   cd "$cur_dir"
    exit 254
 fi
 cd ../
 
-if [ -d build-test ]; then 
+if [ -d build-test ]; then
     rm -Rf build-test
 fi
 mkdir build-test && cd build-test
-cmake -DCMAKE_BUILD_TYPE=Release $test_dir
+cmake -DCMAKE_BUILD_TYPE=Release "$test_dir"
 if [ $? -ne 0 ]; then
-   cd $cur_dir
+   cd "$cur_dir"
    exit 253
 fi
 make
 if [ $? -ne 0 ]; then
-   cd $cur_dir
+   cd "$cur_dir"
    exit 253
 fi
 cd ../
 
 # to let yarpmanager access the fixture
 if [ -z "$YARP_DATA_DIRS" ]; then
-   export YARP_DATA_DIRS=$test_dir
+   export YARP_DATA_DIRS="$test_dir"
 else
-   export YARP_DATA_DIRS=${YARP_DATA_DIRS}:$test_dir
+   export YARP_DATA_DIRS=${YARP_DATA_DIRS}:"$test_dir"
 fi
 
 # to make the test library retrievable
 if [ -z "$LD_LIBRARY_PATH" ]; then
-   export LD_LIBRARY_PATH=$build_dir/build-test/plugins
+   export LD_LIBRARY_PATH="$build_dir"/build-test/plugins
 else
-   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$build_dir/build-test/plugins
+   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:"$build_dir"/build-test/plugins
 fi
 
-if [ -f ${test_dir}/pre-test.sh ]; then
+if [ -f "${test_dir}"/pre-test.sh ]; then
     tmp_dir=$(pwd)
-    cd $test_dir
+    cd "$test_dir"
     source pre-test.sh
-    cd $tmp_dir
+    cd "$tmp_dir"
 fi
 
 yarp where
 if [ $? -eq 0 ]; then
    kill_yarp="no"
 else
-   kill_yarp="yes"   
+   kill_yarp="yes"
    yarpserver --write --silent &
    sleep 1
 fi
@@ -86,13 +86,13 @@ else
    sleep 1
 fi
 
-testrunner --verbose --suite $test_dir/test.xml
+testrunner --verbose --suite "$test_dir"/test.xml
 
-if [ -f ${test_dir}/post-test.sh ]; then
+if [ -f "${test_dir}"/post-test.sh ]; then
     tmp_dir=$(pwd)
-    cd $test_dir
+    cd "$test_dir"
     source post-test.sh
-    cd $tmp_dir
+    cd "$tmp_dir"
 fi
 
 if [ "$kill_testnode" == "yes" ]; then
@@ -121,21 +121,20 @@ if [ -f result.txt ]; then
     nfailed=$(awk '/Number of failed test cases/{print $7}' result.txt)
     score=$(awk '/Total score/{print $7}' result.txt)
 else
-    echo -e "${red}Unable to get test result${nc}\n"    
+    echo -e "${red}Unable to get test result${nc}\n"
 fi
 
-cd $cur_dir
+cd "$cur_dir"
 if [ $npassed -eq 0 ] || [ $nfailed -gt 0 ]; then
    echo -e "${red}xxxxx Test FAILED xxxxx${nc}\n"
    exit 255
 else
-   echo -e "${green}===== Test PASSED =====${nc}\n"   
+   echo -e "${green}===== Test PASSED =====${nc}\n"
    if [ -z "$score" ]; then
       exit 0;
    elif [ $score -ge 1 ] && [ $score -le 100 ]; then
       exit $score
    else
-      exit 0   
+      exit 0
    fi
 fi
-
