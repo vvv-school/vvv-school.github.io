@@ -22,14 +22,14 @@ if [ -z "$GITHUB_TOKEN_VVV_SCHOOL" ]; then
 fi
 
 script=$(realpath $0)
-abspathtoscript=$(dirname ${script})
+abspathtoscript=$(dirname "${script}")
 
 org=$1
 team=$2
 path=$3
 
 cur_dir=$(pwd)
-cd $path
+cd "$path"
 website=$(git remote show origin | grep -i -m 1 url)
 website=($website)
 website=${website[2]}
@@ -40,9 +40,9 @@ if [ ! -d $4 ]; then
 fi
 cd "$4"
 
-data=$path/data.json
-README=$path/README.md
-gradebook_cur=$path/gradebook.json
+data="$path"/data.json
+README="$path"/README.md
+gradebook_cur="$path"/gradebook.json
 gradebook_new=gradebook-new.json
 gradebook_tmp=gradebook-tmp.json
 
@@ -64,7 +64,7 @@ status_passed=":white_check_mark:"
 status_failed=":x:"
 
 # get students from $team
-students=$(${abspathtoscript}/get-members.rb $team)
+students=$("${abspathtoscript}"/get-members.rb $team)
 
 tutorials=$(eval "cat $data | jq '.tutorials | .[] | .name' | sed 's/\\\"//g'")
 assignments=$(eval "cat $data | jq '.assignments | .[] | .name' | sed 's/\\\"//g'")
@@ -124,7 +124,7 @@ function publish_gradebook {
     cp $gradebook_new $gradebook_cur
     cur_dir=$(pwd)
 
-    cd $path
+    cd "$path"
     git diff --quiet
     if [ $? -ne 0 ]; then
         echo -e "${green}Publishing the gradebook to $website${nc}\n" > /dev/stderr
@@ -314,15 +314,15 @@ function update_assignment {
     echo -e "${cyan}${repo} is an assignment${nc}" > /dev/stderr
 
     local last_commit_date=$(eval "cat $gradebook_new | jq 'map(select(.username == \"$stud\")) | .[0].assignments | map(select(.name==\"$repo\")) | .[0].last_commit_date' | sed 's/\\\"//g'")
-    local repo_commit_date=$(${abspathtoscript}/get-commit-date.rb $org/$repo)
+    local repo_commit_date=$("${abspathtoscript}"/get-commit-date.rb $org/$repo)
 
     if [ "${last_commit_date}" != "${repo_commit_date}" ] || [ -z "${repo_commit_date}" ]; then
         echo -e "${yellow}detected activity${nc} on ${cyan}${repo}${nc} => start off testing" > /dev/stderr
 
         local url=$(echo "${stud}-grade" | tr '[:upper:]' '[:lower:]')
         url="${website}#${url}"
-        
-        ${abspathtoscript}/set-commit-status.rb $org/$repo pending $url
+
+        "${abspathtoscript}"/set-commit-status.rb $org/$repo pending $url
 
         local status=$status_failed
         local commit_status="error"
@@ -342,7 +342,7 @@ function update_assignment {
             assignment_score=$test_score
         fi
 
-        ${abspathtoscript}/set-commit-status.rb $org/$repo $commit_status $url $assignment_score
+        "${abspathtoscript}"/set-commit-status.rb $org/$repo $commit_status $url $assignment_score
 
         # we assume it exists only one $repo in the gradebook
         local jq_path=$(eval "cat $gradebook_new | jq -c 'paths(.name?==\"$repo\")'")
@@ -535,7 +535,7 @@ while true; do
     fi
 
     # retrieve names of all repositories in $org
-    repositories=$(${abspathtoscript}/get-repositories.rb $org)
+    repositories=$("${abspathtoscript}"/get-repositories.rb $org)
 
     echo ""
     echo -e "${cyan}============================================================================${nc}"
