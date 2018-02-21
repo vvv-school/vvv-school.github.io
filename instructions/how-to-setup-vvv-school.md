@@ -2,7 +2,6 @@
 
 ## Table of contents
 - [Introduction](#introduction)
-  - [Basic concepts](#basic-concepts)
 - [Set up VVV{YY} School repository](#set-up-vvvyy-school-repository)
 - [Set up VVV{YY} School courses organizations](#set-up-vvvyy-school-courses-organizations)
   - [Hands-on](#hands-on)
@@ -19,9 +18,6 @@
 - [VVV{YY} School wrap-up](#vvvyy-school-wrap-up)
   
 ## Introduction
-
-### Basic concepts
-
 1. **YY** is the school year (e.g. **17**, **18**...).
 1. The repository [**vvv-school/vvv{yy}**](#set-up-vvvyy-school-repository) represents the "hall" of the school, that is the school entry point. It's where we handle the Wiki, the Q&A system, school material (e.g. links to slides) and, generally, all the resources we need. With [GitHub Pages](https://pages.github.com) we can render the hall quite nicely.
 1. Each day we'll run a **course** (e.g. kinematics, dynamics, vision...) that consists in teaching theories during **frontal lessons** so as giving [**hands-on**](#hands-on) sessions.
@@ -31,7 +27,6 @@
 1. Material specific to _VVV{YY} School_ can be conveniently put inside **vvv{yy}** repository. Instead, for collecting **courses material** that can be _recycled yearly_, we can either rely on **individual repositories** hosted at [**vvv-school** organization](https://github.com/vvv-school) (call it **material_**_something_), or on external resources we can link to. Please, don't use [vvv-school.github.io](https://github.com/vvv-school/vvv-school.github.io) for such kind of storage, since slides can be easily very unwieldy. Remarkably, teachers may consider resorting to [**GitPitch**](https://gitpitch.com) to publish their presentations in markdown as repositories.
 
 ## Set up VVV{YY} School repository
-
 The repository will be named **vvv-school/vvv{yy}** (e.g. [vvv-school/vvv17](https://github.com/vvv-school/vvv17)).
 
 Everything is already mostly done, since we can [**import** the repository](https://help.github.com/articles/importing-a-repository-with-github-importer) **vvv{yy-1}** into **vvv{yy}**. Note that **importing** seems a better choice than **forking**: we break up any _subtle relationship_ between the two repositories.
@@ -47,7 +42,6 @@ Then, do the following steps:
 - Fill in the file **gradebook.md** with proper links to the GitHub page of the [courses repositories](#vvvyy-school-courses-repositories).
 
 ## Set up VVV{YY} School courses organizations
-
 During **vvv{yy}** school, teachers will be giving **frontal lessons** and **hands-on sessions** regarding diverse courses, e.g. **kinematics**, **dynamics**, **vision** and so on.
 
 ### Hands-on
@@ -79,7 +73,6 @@ Therefore, for each course, do:
 - [Create a brand new **classroom**](https://classroom.github.com/classrooms/new) on top of **vvv{yy}-{course}**. You should see **vvv{yy}-{course}** within the list of available organizations; if not, grant GitHub access first (click on the link at the bottom of the page).
 
 ### VVV{YY} School courses repositories
-
 Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** and aims to automatically handle the **course gradebook**.
 
 Then, let's create this last repository! Also here, everything is already mostly done: you can [**import** the template repository](https://help.github.com/articles/importing-a-repository-with-github-importer) [**vvv-school/template_vvvyy-course.github.io**](https://github.com/vvv-school/template_vvvyy-course.github.io) into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
@@ -94,7 +87,6 @@ To start with, you need to apply the following changes:
 - Remember to put a link to _https://vvv{yy}-{course}.github.io_ inside **vvv-school/vvv{yy}/gradebook.md**.
 
 #### Gear up for automatic grading
-
 Finally, you have to fill in the **data.json** file containing info on **tutorials** and **assignments** regarding this particular **{course}**.
 
 The format is pretty much intuitive. Here's an example:
@@ -131,7 +123,6 @@ Be careful, a repository can be **listed only once**.
 We have to go through two steps:
 
 ### Challenge students
-
 Once you're all set, you can [create an **individual assignment**](https://education.github.community/t/video-setting-up-individual-assignments/2150) from the dashboard of your **GitHub Classroom**.
 
 These are the settings we have to use:
@@ -154,7 +145,6 @@ In case you, the teacher, decide to solve an assignment together with students, 
 - your contribution won't be put on the bill during automatic grading, since you're not a member of **vvv{yy}-students** team.
 
 #### How to assign scores incrementally
-
 By default, each assignment comes with its own score ─ as specified in the file [**data.json**](#gear-up-for-automatic-grading) ─ that gets assigned to the student if his solution has passed the smoke-test. Nonetheless, assignments with a variable outcome in terms of score are also possible.
 
 It is sufficient to accumulate the score within the **smoke-test** (for example in the variable `score`) according to some given performance criteria of e.g. increasing difficulty and, finally, output the **exact string** here below using the directive [`RTF_TEST_CHECK`](http://robotology.github.io/robot-testing/documentation/index.html):
@@ -166,11 +156,9 @@ This output score will override what is contained in **data.json**. Importantly,
 An example is available in [assignment_control-pid](https://github.com/vvv-school/assignment_control-pid/blob/master/smoke-test/test.cpp).
 
 ### Update the gradebook
-
 We use a **Linux system** to run the script for the automatic grading.
 
-#### Prerequisites 
-
+#### Prerequisites
 - you have to [store **git credentials**](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage) locally, to let git push without keeping prompting for login.
 
   >To store credentials for one hour:
@@ -210,7 +198,6 @@ We use a **Linux system** to run the script for the automatic grading.
   ```
 
 #### Launch the script
-
 ```sh
 $ git clone https://github.com/vvv{yy}-{course}/vvv{yy}-{course}.github.io.git
 $ cd vvv{yy}-{course}.github.io
@@ -220,7 +207,6 @@ $ ./gradebook.sh
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
 
 ## VVV{YY} School wrap-up
-
 Once the school is over, we have to:
 
 - Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization.
