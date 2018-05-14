@@ -43,7 +43,7 @@ We adhere to the methodology well explained in this [post](https://github.com/bl
 
 #### Smoke Testing
 
->You don't have to do anything, since we rely on **automatic grading** :relaxed:
+>You don't have to do anything since we rely on **automatic grading** :relaxed:
 
 #### Collaborative Code Review
 
