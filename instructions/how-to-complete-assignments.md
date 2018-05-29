@@ -27,7 +27,7 @@ This is the method we adopt for students during the courses.
 
 #### Collaborative Code Review
 
-We adhere to the methodology well explained in this [post](https://github.com/blog/2376-how-to-grade-programming-assignments-on-github).
+We adhere to the methodology well explained in this [post](https://blog.github.com/2018-05-29-pull-requests-in-the-classroom).
 
 >1. [Create a **new branch**](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) off of `master`; you may call it as your `username`.
 >1. [**Clone**](https://help.github.com/articles/cloning-a-repository) the repository to your computer.
