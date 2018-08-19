@@ -9,8 +9,8 @@
 # - json
 
 at_exit {
-  ENV['GITHUB_WEBHOOK_VVV_SCHOOL'] = nil
   puts "cleaning up..."
+  ENV['GITHUB_WEBHOOK_VVV_SCHOOL'] = nil
 }
 
 require 'sinatra'
