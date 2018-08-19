@@ -206,6 +206,22 @@ $ ./gradebook.sh
 
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
 
+#### Use GitHub webooks to catch push events
+Optionally, one may set up a GitHub **webhook** at the organization level in order to prevent the grading server from polling GitHub continuosly. The procedure is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
+
+In short, we need to:
+1. Create the webhook for the push event within the **vvv{yy}-course** organization.
+1. Make sure that the grading server has [**sinatra**](https://rubygems.org/gems/sinatra) and [**json**](https://rubygems.org/gems/json) gems. To this end, if they are not listed by doing `gem list`, then install them:
+    ```sh
+    $ sudo gem install sinatra
+    $ sudo gem install json
+    ```
+1. On the grading machine, launch the Sinatra server prior to launching the gradebook script:
+    ```sh
+    $ git clone https://github.com/vvv-school/vvv-school.github.io.git
+    $ ./vvv-school.github.io/scripts/on-push.rb
+    ```
+
 ## VVV{YY} School wrap-up
 Once the school is over, we have to:
 
