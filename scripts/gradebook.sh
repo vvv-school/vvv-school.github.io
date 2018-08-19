@@ -121,12 +121,14 @@ function update_score {
 
 # push the new gradebook to GitHub
 function publish_gradebook {
+    local ret=false
     cp $gradebook_new $gradebook_cur
     cur_dir=$(pwd)
 
     cd "$path"
     git diff --quiet
     if [ $? -ne 0 ]; then
+        ret=true
         echo -e "${green}Publishing the gradebook to $website${nc}\n" > /dev/stderr
         local keep_leading_lines=1
         cp $README $cur_dir/readme.tmp
@@ -208,6 +210,7 @@ function publish_gradebook {
     fi
 
     cd $cur_dir
+    return $ret
 }
 
 function smoke_test() {
@@ -304,6 +307,7 @@ function update_tutorial {
 
     update_score ${stud}
     publish_gradebook
+    return $?
 }
 
 function update_assignment {
@@ -392,6 +396,7 @@ function update_assignment {
 
     update_score ${stud}
     publish_gradebook
+    return $?
 }
 
 # remove usernames not in $team
@@ -517,69 +522,85 @@ function ctrl_c() {
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c SIGINT
 
+do_loop=true
+webhook_requests=$GITHUB_WEBHOOK_VVV_SCHOOL
 while true; do
-    if [ -f $gradebook_new ]; then
-        rm $gradebook_new
+    if [ "$do_loop" == true ]; then
+        if [ -n "$GITHUB_WEBHOOK_VVV_SCHOOL" ]; then
+			do_loop=false
+		fi
+        
+		if [ -f $gradebook_new ]; then
+			rm $gradebook_new
+		fi
+
+		# generate new gradebook from old one, if exists
+		if [ -f $gradebook_cur ]; then
+			if [ -s $gradebook_cur ]; then
+				cp $gradebook_cur $gradebook_new
+			fi
+		fi
+
+		# otherwise produce an empy gradebook
+		if [ ! -f $gradebook_new ]; then
+			echo "[]" > $gradebook_new
+		fi
+
+		# retrieve names of all repositories in $org
+		repositories=$("${abspathtoscript}"/get-repositories.rb $org)
+
+		echo ""
+		echo -e "${cyan}============================================================================${nc}"
+		echo -e "Working out students of ${green}${team}${nc}:\n${green}${students}${nc}\n"
+		echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
+
+		# remove from the gradebook users who are not students,
+		# since they can be potentially in the original gradebook
+		gc_usernames_no_students
+
+		# add up missing students to the current gradebook
+		add_missing_students
+
+		# publish if a change has occurred
+		publish_gradebook
+
+		# for each student in the list
+		for stud in $students; do
+			echo -e "${cyan}==== Grading ${green}${stud}${nc}"
+
+			# remove student's repositories that are not in $org
+			gc_student_repositories $stud ${repositories[@]}
+
+			# for each repository found in $org
+			for repo in $repositories; do
+
+				# for tutorials, simply give them for granted
+				for tuto in $tutorials; do
+					if [ "${repo}" == "${tuto}-${stud}" ]; then
+						update_tutorial ${stud} ${tuto}
+						if [ "$?" == true ]; then
+							do_loop=true
+						fi
+						break
+					fi
+				done
+
+				# for assignments, run the smoke test
+				for assi in $assignments; do
+					if [ "${repo}" == "${assi}-${stud}" ]; then
+						update_assignment ${stud} ${assi}
+						if [ "$?" == true ]; then
+							do_loop=true
+						fi
+						break
+					fi
+				done
+			done
+
+			# newline
+			echo ""
+	    done
+    elif [ "$GITHUB_WEBHOOK_VVV_SCHOOL" -ne "$webhook_requests" ]; then
+	    do_loop=true
     fi
-
-    # generate new gradebook from old one, if exists
-    if [ -f $gradebook_cur ]; then
-        if [ -s $gradebook_cur ]; then
-            cp $gradebook_cur $gradebook_new
-        fi
-    fi
-
-    # otherwise produce an empy gradebook
-    if [ ! -f $gradebook_new ]; then
-        echo "[]" > $gradebook_new
-    fi
-
-    # retrieve names of all repositories in $org
-    repositories=$("${abspathtoscript}"/get-repositories.rb $org)
-
-    echo ""
-    echo -e "${cyan}============================================================================${nc}"
-    echo -e "Working out students of ${green}${team}${nc}:\n${green}${students}${nc}\n"
-    echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
-
-    # remove from the gradebook users who are not students,
-    # since they can be potentially in the original gradebook
-    gc_usernames_no_students
-
-    # add up missing students to the current gradebook
-    add_missing_students
-
-    # publish if a change has occurred
-    publish_gradebook
-
-    # for each student in the list
-    for stud in $students; do
-        echo -e "${cyan}==== Grading ${green}${stud}${nc}"
-
-        # remove student's repositories that are not in $org
-        gc_student_repositories $stud ${repositories[@]}
-
-        # for each repository found in $org
-        for repo in $repositories; do
-
-            # for tutorials, simply give them for granted
-            for tuto in $tutorials; do
-                if [ "${repo}" == "${tuto}-${stud}" ]; then
-                    update_tutorial ${stud} ${tuto}
-                    break
-                fi
-            done
-
-            # for assignments, run the smoke test
-            for assi in $assignments; do
-                if [ "${repo}" == "${assi}-${stud}" ]; then
-                    update_assignment ${stud} ${assi}
-                    break
-                fi
-            done
-        done
-
-        # newline
-        echo ""
-    done
 done
