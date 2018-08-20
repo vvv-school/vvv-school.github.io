@@ -15,6 +15,7 @@
   - [Update the gradebook](#update-the-gradebook)
     - [Prerequisites](#prerequisites)
     - [Launch the script](#launch-the-script)
+    - [GitHub Webooks](#github-webooks)
 - [VVV{YY} School wrap-up](#vvvyy-school-wrap-up)
   
 ## Introduction
@@ -206,7 +207,7 @@ $ ./gradebook.sh
 
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
 
-#### Use GitHub webooks to catch push events
+#### GitHub Webooks
 Optionally, one may set up a **webhook** that will trigger grading only upon a push event detected on any _assignment_ repository hosted at the organization. This procedure will prevent from polling GitHub continuosly as it is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
 
 In short, we need to:
