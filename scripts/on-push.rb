@@ -32,10 +32,12 @@ post '/push' do
   push = JSON.parse(request.body.read)
   if push.key?("repository") then
     repository = push["repository"]["full_name"]
-    puts "Detected activity on #{repository}"
-    webhook_requests = webhook_requests + 1
-    webhook_file.puts webhook_requests
-    webhook_file.flush
+    if repository.downcase.include?("assignment") then
+      puts "Detected activity on #{repository}"
+      webhook_requests = webhook_requests + 1
+      webhook_file.puts webhook_requests
+      webhook_file.flush
+    end  
   end
   "Request served!\n"
 end
