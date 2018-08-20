@@ -522,14 +522,16 @@ function ctrl_c() {
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c SIGINT
 
+webhook_file_name="/tmp/github-webhook-vvv-school"
+webhook_requests="0"
+
 do_loop=true
-webhook_requests=$GITHUB_WEBHOOK_VVV_SCHOOL
 while true; do
     if [ "$do_loop" == true ]; then
-        if [ -n "$GITHUB_WEBHOOK_VVV_SCHOOL" ]; then
+                if [ -f $webhook_file_name ]; then
 			do_loop=false
 		fi
-        
+
 		if [ -f $gradebook_new ]; then
 			rm $gradebook_new
 		fi
@@ -600,7 +602,11 @@ while true; do
 			# newline
 			echo ""
 	    done
-    elif [ "$GITHUB_WEBHOOK_VVV_SCHOOL" -ne "$webhook_requests" ]; then
-	    do_loop=true
+    else
+            new_req=$(tail -1 "${webhook_file_name}")
+            if [ "${new_req}" != "${webhook_requests}" ]; then
+                        webhook_requests="${new_req}"
+                        do_loop=true
+            fi
     fi
 done

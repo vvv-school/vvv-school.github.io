@@ -8,25 +8,38 @@
 # - sinatra
 # - json
 
+webhook_file_name = "/tmp/github-webhook-vvv-school"
+webhook_file = open(webhook_file_name,"w+")
+
 at_exit {
   puts "cleaning up..."
-  ENV['GITHUB_WEBHOOK_VVV_SCHOOL'] = nil
+  webhook_file.close
+  File.delete(webhook_file_name)
 }
 
 require 'sinatra'
 require 'json'
 
+set :bind, '0.0.0.0'
 if ARGV.length > 0 then
   set :port, ARGV[0]
 end
 
 puts "starting..."
-ENV['GITHUB_WEBHOOK_VVV_SCHOOL'] = "0"
+webhook_requests = 0
 
 post '/payload' do
   push = JSON.parse(request.body.read)
-  repository = push["repository"]["full_name"]
-  puts "Detected activity on #{repository}"
-  ENV['GITHUB_WEBHOOK_VVV_SCHOOL'] = (ENV['GITHUB_WEBHOOK_VVV_SCHOOL'].to_i + 1).to_s
+  if push.key?("repository") then
+    repository = push["repository"]["full_name"]
+    puts "Detected activity on #{repository}"
+    webhook_requests = webhook_requests + 1
+    webhook_file.puts webhook_requests
+    webhook_file.flush
+  end
+  "Request served!\n"
 end
 
+get '/' do
+  "Hi there!\n"
+end
