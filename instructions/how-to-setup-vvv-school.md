@@ -207,11 +207,11 @@ $ ./gradebook.sh
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
 
 #### Use GitHub webooks to catch push events
-Optionally, one may set up a GitHub **webhook** at the organization level in order to prevent the grading server from polling GitHub continuosly. The procedure is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
+Optionally, one may set up a **webhook** that will trigger grading only upon a push event detected on any _assignment_ repository hosted at the organization. This procedure will prevent from polling GitHub continuosly as it is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
 
 In short, we need to:
 1. Create the webhook for the push event within the **vvv{yy}-course** organization. Use the following options to fill in the configuration fields:
-    - payload URL: `http://[host-name|host-ip]:4567/push` (or any valid port in place of `4567` as specified when launching the Sinatra server)
+    - payload URL: `http://[host-name|host-ip]:4567/push` (or any valid port in place of `4567` as specified when launching the Sinatra server - see below)
     - content type: `application/json`
     - secret: leave it empty
     - event type: `push` event
