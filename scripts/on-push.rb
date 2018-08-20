@@ -28,7 +28,7 @@ end
 puts "starting..."
 webhook_requests = 0
 
-post '/payload' do
+post '/push' do
   push = JSON.parse(request.body.read)
   if push.key?("repository") then
     repository = push["repository"]["full_name"]
