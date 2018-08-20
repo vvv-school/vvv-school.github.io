@@ -121,14 +121,14 @@ function update_score {
 
 # push the new gradebook to GitHub
 function publish_gradebook {
-    local ret=false
+    local ret=0
     cp $gradebook_new $gradebook_cur
     cur_dir=$(pwd)
 
     cd "$path"
     git diff --quiet
     if [ $? -ne 0 ]; then
-        ret=true
+        ret=1
         echo -e "${green}Publishing the gradebook to $website${nc}\n" > /dev/stderr
         local keep_leading_lines=1
         cp $README $cur_dir/readme.tmp
@@ -580,7 +580,7 @@ while true; do
 				for tuto in $tutorials; do
 					if [ "${repo}" == "${tuto}-${stud}" ]; then
 						update_tutorial ${stud} ${tuto}
-						if [ "$?" == true ]; then
+						if [ "$?" -eq 1 ]; then
 							do_loop=true
 						fi
 						break
@@ -591,7 +591,7 @@ while true; do
 				for assi in $assignments; do
 					if [ "${repo}" == "${assi}-${stud}" ]; then
 						update_assignment ${stud} ${assi}
-						if [ "$?" == true ]; then
+						if [ "$?" -eq 1 ]; then
 							do_loop=true
 						fi
 						break
