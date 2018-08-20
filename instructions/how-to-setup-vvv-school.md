@@ -70,7 +70,7 @@ Thereby, to deal with students hands-on for each course, we have to create the d
 Therefore, for each course, do:
 - [Create the **organization**](https://help.github.com/articles/creating-a-new-organization-from-scratch) **vvv{yy}-course**.
 - It's not strictly necessary to give all teachers read/write permissions to the organization: one maintainer per course is enough :wink:
-- [Create a brand new **classroom**](https://classroom.github.com/classrooms/new) on top of **vvv{yy}-{course}**. You should see **vvv{yy}-{course}** within the list of available organizations; if not, grant GitHub access first (click on the link at the bottom of the page).
+- [Create a brand new **classroom**](https://classroom.github.com/classrooms/new) on top of **vvv{yy}-{course}**. First, grant GitHub access to **vvv{yy}-{course}**.
 
 ### VVV{YY} School courses repositories
 Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** and aims to automatically handle the **course gradebook**.
