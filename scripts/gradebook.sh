@@ -11,6 +11,14 @@
 # (refer to instructions to find out more)
 #
 
+# color codes
+red='\033[1;31m'
+green='\033[1;32m'
+yellow='\033[1;33m'
+blue='\033[1;34m'
+cyan='\033[1;36m'
+nc='\033[0m'
+
 if [ $# -lt 4 ]; then
     echo "Usage: $0 <organization> <team> <abspath-to-gradebook> <abspath-to-build>"
     exit 1
@@ -50,14 +58,6 @@ if [ ! -f "$data" ]; then
     echo -e "${red}Unable to find ${data}${nc}\n"
     exit 3
 fi
-
-# color codes
-red='\033[1;31m'
-green='\033[1;32m'
-yellow='\033[1;33m'
-blue='\033[1;34m'
-cyan='\033[1;36m'
-nc='\033[0m'
 
 # GitHub symbols
 status_passed=":white_check_mark:"
@@ -607,6 +607,9 @@ while true; do
             if [ "${new_req}" != "${webhook_requests}" ]; then
                         webhook_requests="${new_req}"
                         do_loop=true
+            else
+                        echo "."
+                        sleep 10
             fi
     fi
 done
