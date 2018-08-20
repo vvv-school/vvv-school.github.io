@@ -115,7 +115,7 @@ The format is pretty much intuitive. Here's an example:
     ]    
 }
 ```
-Be careful, a repository can be **listed only once**.
+:point_right: Be careful, a repository can be **listed only once**.
 
 ## Automatic grading
 
