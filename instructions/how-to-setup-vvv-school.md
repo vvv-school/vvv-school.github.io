@@ -211,7 +211,7 @@ Optionally, one may set up a GitHub **webhook** at the organization level in ord
 
 In short, we need to:
 1. Create the webhook for the push event within the **vvv{yy}-course** organization. Use the following configuration options:
-    - payload URL: `http://[host-ip]:4567/payload` (or any valid port as specified below)
+    - payload URL: `http://[host-name|host-ip]:4567/payload` (or any valid port in place of `4567` as specified when launching the Sinatra server)
     - content type: `application/json`
 1. Make sure that the grading server has [**sinatra**](https://rubygems.org/gems/sinatra) and [**json**](https://rubygems.org/gems/json) gems. To this end, if they are not listed by doing `gem list`, then install them:
     ```sh
