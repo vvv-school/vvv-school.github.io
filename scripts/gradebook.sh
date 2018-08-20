@@ -25,7 +25,7 @@ if [ $# -lt 4 ]; then
 fi
 
 if [ -z "$GITHUB_TOKEN_VVV_SCHOOL" ]; then
-    echo -e "${red}env variable GITHUB_TOKEN_VVV_SCHOOL is not set${data}${nc}\n"
+    echo -e "${red}env variable GITHUB_TOKEN_VVV_SCHOOL is not set${nc}\n"
     exit 2
 fi
 
@@ -602,14 +602,14 @@ while true; do
 			# newline
 			echo ""
 	    done
+	    if [ "$do_loop" == false ]; then
+	        echo -e "${yellow}Waiting for new activity...${nc}\n"
+	    fi
     else
             new_req=$(tail -1 "${webhook_file_name}")
             if [ "${new_req}" != "${webhook_requests}" ]; then
                         webhook_requests="${new_req}"
                         do_loop=true
-            else
-                        echo "."
-                        sleep 10
             fi
     fi
 done
