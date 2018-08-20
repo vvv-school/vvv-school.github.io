@@ -522,94 +522,96 @@ function ctrl_c() {
 # trap ctrl-c and call ctrl_c()
 trap ctrl_c SIGINT
 
+# push webhook handling
 webhook_file_name="/tmp/github-webhook-vvv-school"
 webhook_requests="0"
 
 do_loop=true
 while true; do
     if [ "$do_loop" == true ]; then
-                if [ -f $webhook_file_name ]; then
-			do_loop=false
-		fi
+        if [ -f $webhook_file_name ]; then
+            do_loop=false
+        fi
 
-		if [ -f $gradebook_new ]; then
-			rm $gradebook_new
-		fi
+        if [ -f $gradebook_new ]; then
+            rm $gradebook_new
+        fi
 
-		# generate new gradebook from old one, if exists
-		if [ -f $gradebook_cur ]; then
-			if [ -s $gradebook_cur ]; then
-				cp $gradebook_cur $gradebook_new
-			fi
-		fi
+        # generate new gradebook from old one, if exists
+        if [ -f $gradebook_cur ]; then
+           if [ -s $gradebook_cur ]; then
+                cp $gradebook_cur $gradebook_new
+           fi
+        fi
 
-		# otherwise produce an empy gradebook
-		if [ ! -f $gradebook_new ]; then
-			echo "[]" > $gradebook_new
-		fi
+        # otherwise produce an empy gradebook
+        if [ ! -f $gradebook_new ]; then
+            echo "[]" > $gradebook_new
+        fi
 
-		# retrieve names of all repositories in $org
-		repositories=$("${abspathtoscript}"/get-repositories.rb $org)
+        # retrieve names of all repositories in $org
+        repositories=$("${abspathtoscript}"/get-repositories.rb $org)
 
-		echo ""
-		echo -e "${cyan}============================================================================${nc}"
-		echo -e "Working out students of ${green}${team}${nc}:\n${green}${students}${nc}\n"
-		echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
+        echo ""
+        echo -e "${cyan}============================================================================${nc}"
+        echo -e "Working out students of ${green}${team}${nc}:\n${green}${students}${nc}\n"
+        echo -e "Against repositories in ${cyan}https://github.com/${org}:\n${blue}${repositories}${nc}\n"
 
-		# remove from the gradebook users who are not students,
-		# since they can be potentially in the original gradebook
-		gc_usernames_no_students
+        # remove from the gradebook users who are not students,
+        # since they can be potentially in the original gradebook
+        gc_usernames_no_students
 
-		# add up missing students to the current gradebook
-		add_missing_students
+        # add up missing students to the current gradebook
+        add_missing_students
 
-		# publish if a change has occurred
-		publish_gradebook
+        # publish if a change has occurred
+        publish_gradebook
 
-		# for each student in the list
-		for stud in $students; do
-			echo -e "${cyan}==== Grading ${green}${stud}${nc}"
+        # for each student in the list
+        for stud in $students; do
+            echo -e "${cyan}==== Grading ${green}${stud}${nc}"
 
-			# remove student's repositories that are not in $org
-			gc_student_repositories $stud ${repositories[@]}
+            # remove student's repositories that are not in $org
+            gc_student_repositories $stud ${repositories[@]}
 
-			# for each repository found in $org
-			for repo in $repositories; do
+            # for each repository found in $org
+            for repo in $repositories; do
+                # for tutorials, simply give them for granted
+                for tuto in $tutorials; do
+                    if [ "${repo}" == "${tuto}-${stud}" ]; then
+                        update_tutorial ${stud} ${tuto}
+                        if [ "$?" -eq 1 ]; then
+                            do_loop=true
+                        fi
+                        break
+                    fi
+                done
 
-				# for tutorials, simply give them for granted
-				for tuto in $tutorials; do
-					if [ "${repo}" == "${tuto}-${stud}" ]; then
-						update_tutorial ${stud} ${tuto}
-						if [ "$?" -eq 1 ]; then
-							do_loop=true
-						fi
-						break
-					fi
-				done
+                # for assignments, run the smoke test
+                for assi in $assignments; do
+                    if [ "${repo}" == "${assi}-${stud}" ]; then
+                        update_assignment ${stud} ${assi}
+                        if [ "$?" -eq 1 ]; then
+                            do_loop=true
+                        fi
+                        break
+                    fi
+                done
+            done
 
-				# for assignments, run the smoke test
-				for assi in $assignments; do
-					if [ "${repo}" == "${assi}-${stud}" ]; then
-						update_assignment ${stud} ${assi}
-						if [ "$?" -eq 1 ]; then
-							do_loop=true
-						fi
-						break
-					fi
-				done
-			done
+            # newline
+            echo ""
+        done
 
-			# newline
-			echo ""
-	    done
-	    if [ "$do_loop" == false ]; then
-	        echo -e "${yellow}Waiting for new activity...${nc}\n"
-	    fi
+        if [ "$do_loop" == false ]; then
+            echo -e "${yellow}Waiting for new activity...${nc}\n"
+        fi
     else
-            new_req=$(tail -1 "${webhook_file_name}")
-            if [ "${new_req}" != "${webhook_requests}" ]; then
-                        webhook_requests="${new_req}"
-                        do_loop=true
-            fi
+        # the push webhook triggers a new request asynchronously
+        new_req=$(tail -1 "${webhook_file_name}")
+        if [ "${new_req}" != "${webhook_requests}" ]; then
+            webhook_requests="${new_req}"
+            do_loop=true
+        fi
     fi
 done
