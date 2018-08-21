@@ -208,14 +208,14 @@ $ ./gradebook.sh
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
 
 #### GitHub Webooks
-Optionally, one may set up a **webhook** that will trigger grading only upon a push event detected on any _assignment_ repository hosted at the organization. This procedure will prevent from polling GitHub continuosly as it is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
+Optionally, one may set up a **webhook** that will trigger grading only upon detection of specific events involving any hands-on repository (i.e. containing _tutorial_ or _assignment_ keywords) hosted at the organization. This procedure will prevent from polling GitHub continuosly as it is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
 
 In short, we need to:
 1. Create the webhook for the push event within the **vvv{yy}-course** organization. Use the following options to fill in the configuration fields:
-    - payload URL: `http://[host-name|host-ip]:4567/push` (or any valid port in place of `4567` as specified when launching the Sinatra server - see below)
+    - payload URL: `http://[host-name|host-ip]:4567/payload` (or any valid port in place of `4567` as specified when launching the Sinatra server - see below)
     - content type: `application/json`
     - secret: leave it empty
-    - event type: `push` event
+    - triggering events: select individual events `Pushes` and `Repositories`
 1. Make sure that the grading server has [**sinatra**](https://rubygems.org/gems/sinatra) and [**json**](https://rubygems.org/gems/json) gems. To this end, if they are not listed by doing `gem list`, then install them:
     ```sh
     $ sudo gem install sinatra
