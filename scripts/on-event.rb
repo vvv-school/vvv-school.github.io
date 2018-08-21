@@ -29,19 +29,32 @@ puts "starting..."
 webhook_requests = 0
 
 post '/payload' do
+  ok = false
   payload = JSON.parse(request.body.read)
-  if payload.key?("repository") then
-    repository = payload["repository"]["full_name"].downcase
-    if repository.include?("assignment") or repository.include?("tutorial") then
-      puts "Detected activity on #{repository}"
-      webhook_requests = webhook_requests + 1
-      webhook_file.puts webhook_requests
-      webhook_file.flush
-    end  
+  repo = payload["repository"]
+  if !repo.nil? then
+    repo = repo["full_name"]
+    if !repo.nil? then
+      repo = repo.downcase
+      if repo.include?("assignment") or repo.include?("tutorial") then
+        puts "Detected activity on #{repo}"
+        webhook_requests = webhook_requests + 1
+        webhook_file.puts webhook_requests
+        webhook_file.flush
+        ok = true
+      end
+    end
   end
-  "Request served!\n"
+  if ok then
+    status 200
+    "Request served correctly!\n"
+  else
+    status 400
+    "Unrecognized request!\n"
+  end
 end
 
 get '/' do
-  "Hi there!\n"
+  status 200
+  "Greetings!\n"
 end
