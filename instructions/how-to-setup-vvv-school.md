@@ -208,10 +208,10 @@ $ ./gradebook.sh
 The gradebook will be published online at the course webpage: _https://vvv{yy}-{course}.github.io_.
 
 #### GitHub Webooks
-Optionally, one may set up a **webhook** that will trigger grading only upon detection of specific events involving any hands-on repository (i.e. containing _tutorial_ or _assignment_ keywords) hosted at the organization. This procedure will prevent from polling GitHub continuosly as it is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
+**Optionally**, one may set up a **webhook** that will trigger grading only upon detection of specific events involving any hands-on repository (i.e. containing _tutorial_ or _assignment_ keywords) hosted at the organization. This procedure will prevent from polling GitHub continuosly as it is well described in the [GitHub Developer Guide](https://developer.github.com/webhooks).
 
 In short, we need to:
-1. Create the webhook for the push event within the **vvv{yy}-course** organization. Use the following options to fill in the configuration fields:
+1. Create the webhook within the **vvv{yy}-course** organization. Use the following options to fill in the configuration fields:
     - payload URL: `http://[host-name|host-ip]:4567/payload` (or any valid port in place of `4567` as specified when launching the Sinatra server - see below);
     - content type: `application/json`;
     - secret: leave it empty;
@@ -227,7 +227,7 @@ In short, we need to:
 1. On the grading machine, launch the Sinatra server prior to launching the gradebook script:
     ```sh
     $ git clone https://github.com/vvv-school/vvv-school.github.io.git
-    $ ./vvv-school.github.io/scripts/on-push.rb [port]
+    $ ./vvv-school.github.io/scripts/on-event.rb [port]
     ```
     The parameter `port` is optional (equal to `4567` if not given).
     
