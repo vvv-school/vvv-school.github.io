@@ -215,7 +215,10 @@ In short, we need to:
     - payload URL: `http://[host-name|host-ip]:4567/payload` (or any valid port in place of `4567` as specified when launching the Sinatra server - see below);
     - content type: `application/json`;
     - secret: leave it empty;
-    - triggering events: select individual events `Pushes` and `Repositories`.
+    - select individual triggering events:
+        - [x] `Pushes`
+        - [x] `Repositories`
+        - [x] `Repository imports`
 1. Make sure that the grading server has [**sinatra**](https://rubygems.org/gems/sinatra) and [**json**](https://rubygems.org/gems/json) gems. To this end, if they are not listed by doing `gem list`, then install them:
     ```sh
     $ sudo gem install sinatra
