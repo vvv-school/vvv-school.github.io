@@ -28,11 +28,11 @@ end
 puts "starting..."
 webhook_requests = 0
 
-post '/push' do
-  push = JSON.parse(request.body.read)
-  if push.key?("repository") then
-    repository = push["repository"]["full_name"]
-    if repository.downcase.include?("assignment") then
+post '/payload' do
+  payload = JSON.parse(request.body.read)
+  if payload.key?("repository") then
+    repository = payload["repository"]["full_name"].downcase
+    if repository.include?("assignment") or repository.include?("tutorial") then
       puts "Detected activity on #{repository}"
       webhook_requests = webhook_requests + 1
       webhook_file.puts webhook_requests
