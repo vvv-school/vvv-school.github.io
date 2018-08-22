@@ -32,9 +32,9 @@ post '/payload' do
   ok = false
   payload = JSON.parse(request.body.read)
   repo = payload["repository"]
-  if !repo.nil? then
+  if repo then
     repo = repo["full_name"]
-    if !repo.nil? then
+    if repo then
       repo = repo.downcase
       if repo.include?("assignment") or repo.include?("tutorial") then
         puts "Detected activity on #{repo}"
