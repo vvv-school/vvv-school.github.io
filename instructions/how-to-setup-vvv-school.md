@@ -234,7 +234,7 @@ In short, we need to:
 ## VVV{YY} School wrap-up
 Once the school is over, we have to:
 
-- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) to back up the students repositories of **vvv{yy}-{course}** organization. Alternatively, you may want to explore the tools offered by the [GitHub Migration API](https://developer.github.com/v3/migrations).
+- Use [GitHub Records Archiver](https://github.com/benbalter/github-records-archiver) or rely on the [GitHub Classroom Assistant](https://classroom.github.com/assistant) to back up the students repositories of **vvv{yy}-{course}** organization. Alternatively, you may want to explore the tools offered by the [GitHub Migration API](https://developer.github.com/v3/migrations).
 - Make a zip of the output archive and protect it with a password (use the same password of [**@vvv-school-bot**](https://github.com/vvv-school-bot)). Consider splitting the zip in several archives, given that GitHub has [limitations for large files](https://help.github.com/articles/working-with-large-files/#conditions-for-large-files).
 - Push the resulting bunch of archives to **vvv{yy}-{course}/vvv{yy}-{course}.github.io/archives** directory and insert the following note in the _README.md_: `As VVV{YY} is now over, the students repositories have been archived.`
 - [Archive](https://help.github.com/articles/archiving-a-github-repository) **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
