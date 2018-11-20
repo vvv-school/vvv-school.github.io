@@ -129,7 +129,7 @@ Once you're all set, you can [create an **individual assignment**](https://educa
 These are the settings we have to use:
 - **Your assignment title**: make up a name; it's not that significant.
 - **Your assignment repository prefix**: :warning: must be equal to the name of the **starter code** (e.g. _assignment_make-it-roll_) :warning:
-- Tick on **Public** :white_check_mark: Choose _Private_ only if you really aim to prevent students from inspiring each other :wink:
+- Tick on **Public** :heavy_check_mark: Choose _Private_ only if you really aim to prevent students from inspiring each other :wink:
 - **Don't give students** _Admin permissions_ on their repository :x:
 - **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). **Autocompletion** is available to help you out :octocat:
 
