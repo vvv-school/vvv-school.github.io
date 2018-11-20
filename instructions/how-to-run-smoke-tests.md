@@ -10,7 +10,7 @@ $ ./test.sh [--get-helpers]
 - `--get-helpers` specifies to download helper tools anew.
 
 ### Exit Codes
-- **`0`** test passed :white_check_mark:
+- **`0`** test passed :heavy_check_mark:
 - **`>=1 && <=100`** test passed with assigned marks :ballot_box_with_check:
 - **`-1`**(=255) test failed :x:
 - **`-2`**(=254) code under test doesn't compile :hammer:
