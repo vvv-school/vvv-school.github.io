@@ -60,7 +60,7 @@ if [ ! -f "$data" ]; then
 fi
 
 # GitHub symbols
-status_passed=":white_check_mark:"
+status_passed=":heavy_check_mark:"
 status_failed=":x:"
 
 # get students from $team
