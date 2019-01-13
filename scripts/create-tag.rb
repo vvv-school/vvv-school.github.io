@@ -67,10 +67,14 @@ repos.each { |repo|
     if data.any?
       commit=data[0].sha
       tagger_date=Time.now.strftime("%Y-%m-%dT%H:%M:%S%:z")
-      client.create_tag(repo_full,tag,message,commit,"commit",tagger_name,tagger_email,tagger_date)
-      ref=client.last_response.data.sha
-      client.create_ref(repo_full,"refs/tags/"+tag,ref)
-      puts "#{repo_full}@#{commit}: tagged as #{tag}"
+      begin
+        client.create_tag(repo_full,tag,message,commit,"commit",tagger_name,tagger_email,tagger_date)
+        ref=client.last_response.data.sha
+        client.create_ref(repo_full,"refs/tags/"+tag,ref)
+        puts "#{repo_full}@#{commit}: tagged as #{tag}"
+      rescue
+        puts "#{repo_full}@#{commit}: remained untagged --> #{tag} already exists"
+      end  
     else
       puts "#{repo_full}: no corresponding commit found"
     end
