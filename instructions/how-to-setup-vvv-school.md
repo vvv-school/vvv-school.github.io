@@ -219,6 +219,7 @@ In short, we need to:
         - [x] `Pushes`
         - [x] `Repositories`
         - [x] `Repository imports`
+    - mark the webhook active.
 1. Make sure that the grading server has [**sinatra**](https://rubygems.org/gems/sinatra) and [**json**](https://rubygems.org/gems/json) gems. To this end, if they are not listed by doing `gem list`, then install them:
     ```sh
     $ sudo gem install sinatra
