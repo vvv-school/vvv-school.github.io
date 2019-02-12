@@ -49,8 +49,8 @@ post '/payload' do
     status 200
     "Request served correctly!\n"
   else
-    status 400
-    "Unrecognized request!\n"
+    status 204
+    "Request unrelated to tutorial/assignment verification!\n"
   end
 end
 
