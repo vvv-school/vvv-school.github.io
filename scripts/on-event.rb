@@ -45,12 +45,11 @@ post '/payload' do
       end
     end
   end
+  status 200
   if ok then
-    status 200
     "Request served correctly!\n"
   else
-    status 204
-    "Request unrelated to tutorial/assignment verification!\n"
+    "Nothing to do with this request!\n"
   end
 end
 
