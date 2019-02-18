@@ -133,7 +133,7 @@ These are the settings we have to use:
 - **Don't give students** _Admin permissions_ on their repository :x:
 - **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). **Autocompletion** is available to help you out :octocat:
 
-You'll be given an **invitation link** you shall now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system https://github.com/vvv-school/vvv{yy}/issues or as a new [team discussion](https://github.com/blog/2471-introducing-team-discussions). The latter wsy allows keeping invitation links visible only to team members
+You'll be given an **invitation link** you shall now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system https://github.com/vvv-school/vvv{yy}/issues or as a new [team discussion](https://github.com/blog/2471-introducing-team-discussions). The latter way allows keeping invitation links visible only to team members.
 
 Repeat the process for all the hands-on you have in your course. It can be done all at once, or progressively, depending on the pace that suits you best.
 
