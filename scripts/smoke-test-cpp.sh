@@ -86,7 +86,7 @@ else
    sleep 1
 fi
 
-testrunner --verbose --suite "$test_dir"/test.xml
+robottestingframework-testrunner --verbose --suite "$test_dir"/test.xml
 
 if [ -f "${test_dir}"/post-test.sh ]; then
     tmp_dir=$(pwd)
