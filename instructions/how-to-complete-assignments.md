@@ -18,7 +18,7 @@ Instead, if you're dealing with an **assignment** (i.e. the repository name star
 
 This is the method we adopt for students during the courses.
 
->1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing/index.html) is installed on your system. If you're using our VM, it is already installed :computer: :package:
+>1. Make sure that the [**Robot Testing Framework**](https://robotology.github.io/robot-testing-framework/index.html) is installed on your system. If you're using our VM, it is already installed :computer: :package:
 >1. [**Clone**](https://help.github.com/articles/cloning-a-repository) the repository to your computer.
 >1. [only **assignments**] Fill in the **gaps** and [**commit**](https://git-scm.com/docs/git-commit) changes to complete your solution ☕️☕️
 >1. If present, go in the :smoking: **smoke-test** subdirectory and [run **`test.sh`**](../instructions/how-to-run-smoke-tests.md) to verify that the code complies with the requirements. 
