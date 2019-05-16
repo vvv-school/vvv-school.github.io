@@ -148,7 +148,7 @@ In case you, the teacher, decide to solve an assignment together with students, 
 #### How to assign scores incrementally
 By default, each assignment comes with its own score ─ as specified in the file [**data.json**](#gear-up-for-automatic-grading) ─ that gets assigned to the student if his solution has passed the smoke-test. Nonetheless, assignments with a variable outcome in terms of score are also possible.
 
-It is sufficient to accumulate the score within the **smoke-test** (for example in the variable `score`) according to some given performance criteria of e.g. increasing difficulty and, finally, output the **exact string** here below using the directive [`ROBOTTESTINGFRAMEWORK_TEST_CHECK`](http://robotology.github.io/robot-testing/documentation/index.html):
+It is sufficient to accumulate the score within the **smoke-test** (for example in the variable `score`) according to some given performance criteria of e.g. increasing difficulty and, finally, output the **exact string** here below using the directive [`ROBOTTESTINGFRAMEWORK_TEST_CHECK`](http://robotology.github.io/robot-testing-framework/documentation/index.html):
 ```cpp
 ROBOTTESTINGFRAMEWORK_TEST_CHECK(score>0,Asserter::format("Total score = %d",score));
 ```
