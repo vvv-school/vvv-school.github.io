@@ -76,7 +76,7 @@ Therefore, for each course, do:
 ### VVV{YY} School courses repositories
 Each course is managed through a **course repository**, which is thus named **vvv{yy}-{course}/vvv{yy}-{course}.github.io** and aims to automatically handle the **course gradebook**.
 
-Then, let's create this last repository! Also here, everything is already mostly done: you can [**import** the template repository](https://help.github.com/articles/importing-a-repository-with-github-importer) [**vvv-school/template_vvvyy-course.github.io**](https://github.com/vvv-school/template_vvvyy-course.github.io) into **vvv{yy}-{course}/vvv{yy}-{course}.github.io**.
+Then, let's create this last repository! Also here, everything is already mostly done: you can [**create the repository**](https://help.github.com/en/articles/creating-a-repository-from-a-template) **vvv{yy}-{course}/vvv{yy}-{course}.github.io** from the template [**vvv-school/template_vvvyy-course.github.io**](https://github.com/vvv-school/template_vvvyy-course.github.io).
 
 To start with, you need to apply the following changes:
 
