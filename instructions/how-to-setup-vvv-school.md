@@ -132,7 +132,7 @@ These are the settings we have to use:
 - Tick on **Public** :heavy_check_mark: Choose _Private_ only if you really aim to prevent students from inspiring each other :wink:
 - **Don't give students** _Admin permissions_ on their repository :x:
 - **Add your starter code from GitHub**: pick up your tutorial or assignment from [**vvv-school**](https://github.com/vvv-school). **Autocompletion** is available to help you out :octocat:
-- Tick on **Import starter code using a template repository** :heavy_check_mark: to get [reliability and performance boost](https://github.blog/2019-08-27-github-classroom-gets-a-reliability-and-performance-boost) :zap: Before that, make sure that the starter code is a [template repository](https://help.github.com/en/articles/creating-a-template-repository), actually.
+- Tick on **Import starter code using a template repository** :heavy_check_mark: to get [reliability and performance boost](https://github.blog/2019-08-27-github-classroom-gets-a-reliability-and-performance-boost) :zap: Make sure beforehand that the starter code is a [template repository](https://help.github.com/en/articles/creating-a-template-repository), actually.
 
 You'll be given an **invitation link** :link: you shall now share with students. The easiest and the most collaborative way is to post it on the **Q&A** system https://github.com/vvv-school/vvv{yy}/issues or as a new [team discussion](https://github.com/blog/2471-introducing-team-discussions). The latter way allows keeping invitation links :lock: visible only to team members.
 
