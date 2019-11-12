@@ -60,7 +60,7 @@ end
 
 repos.each { |repo|
   repo_full=org+"/"+repo
-  if repo.start_with?("tutorial_","assignment_","solution_")  
+  if repo.start_with?("vvv-school","tutorial_","assignment_","solution_")  
     client.commits_before(repo_full,date)
     last_response = client.last_response
     data=last_response.data
