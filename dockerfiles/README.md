@@ -9,11 +9,9 @@ To run the container using Docker, go through the following steps:
     ```sh
     $ docker run -it --rm -p 6080:6080 pattacini/vvv-school
     ```
-1. From within the container shell, launch the noVNC service:
+1. From within the container shell, launch the **`noVNC`** service:
     ```sh
     $ start-vnc-session.sh
     ```
-1. Open up the browser and connect to `localhost:6080`.
-1. Once done, from the container shell press CTRL+D.
-
-
+1. Open up the browser and connect to **`localhost:6080`**.
+1. Once done, from the container shell press **CTRL+D**.
