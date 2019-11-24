@@ -10,7 +10,7 @@ RUN apt update
 # Install essentials
 RUN apt install -y apt-utils software-properties-common sudo psmisc lsb-release \
                    tmux nano wget curl build-essential git gitk \
-                   libedit-dev libxml2-dev autoconf terminator
+                   libedit-dev libxml2-dev autoconf terminator gedit
 
 # Install the most recent cmake
 RUN apt install -y apt-transport-https ca-certificates gnupg && \
