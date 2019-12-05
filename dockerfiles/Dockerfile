@@ -63,7 +63,7 @@ ARG BRANCH=devel
 ARG BUILD_TYPE=Release
 
 # Build ycm
-RUN git clone https://github.com/robotology/ycm.git -b $BRANCH
+RUN git clone https://github.com/robotology/ycm.git
 RUN cd ycm && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
@@ -79,7 +79,7 @@ RUN cd robot-testing-framework && mkdir build && cd build && \
 RUN rm -Rf robot-testing-framework
 
 # Build yarp
-RUN git clone https://github.com/robotology/yarp.git -b $BRANCH
+RUN git clone https://github.com/robotology/yarp.git
 RUN cd yarp && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
