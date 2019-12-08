@@ -12,6 +12,9 @@ RUN apt install -y apt-utils software-properties-common sudo psmisc lsb-release 
                    tmux nano wget curl build-essential git gitk \
                    libedit-dev libxml2-dev autoconf terminator gedit
 
+# Install clang
+RUN apt install -y clang-format clang-tidy clang-tools clang clangd gdb lld
+
 # Install the most recent cmake
 RUN apt install -y apt-transport-https ca-certificates gnupg && \
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add - && \
