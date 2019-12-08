@@ -8,17 +8,28 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 
 # Install essentials
-RUN apt install -y apt-utils software-properties-common sudo psmisc lsb-release \
-                   tmux nano wget curl build-essential git gitk \
-                   libedit-dev libxml2-dev autoconf terminator gedit
+RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
+                   psmisc lsb-release tmux nano wget curl build-essential git gitk \
+                   libedit-dev libxml2-dev autoconf gdebi
+
+# Install Hyper terminal
+RUN wget -O hyper.deb https://releases.hyper.is/download/deb && \
+    gdebi -n hyper.deb && \
+    rm hyper.deb
+
+# Install VSCode
+RUN wget -O - https://packages.microsoft.com/keys/microsoft.asc 2>/dev/null | apt-key add - && \
+    add-apt-repository 'deb https://packages.microsoft.com/repos/vscode stable main' && \
+    apt update && \
+    apt install -y code
 
 # Install clang
-RUN apt install -y clang-format clang-tidy clang-tools clang clangd gdb lld
+RUN apt install -y clang-format clang-tidy clang-tools clang gdb lld
 
 # Install the most recent cmake
 RUN apt install -y apt-transport-https ca-certificates gnupg && \
-    wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add - && \
-    apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' && \
+    wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - && \
+    apt-add-repository 'deb https://apt.kitware.com/ubuntu/ stable main' && \
     apt update && \
     apt install -y kitware-archive-keyring && \
     apt-key --keyring /etc/apt/trusted.gpg del C1F34CDD40CD72DA && \
