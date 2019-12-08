@@ -19,7 +19,7 @@ RUN wget -O hyper.deb https://releases.hyper.is/download/deb && \
 
 # Install VSCode
 RUN wget -O - https://packages.microsoft.com/keys/microsoft.asc 2>/dev/null | apt-key add - && \
-    add-apt-repository 'deb https://packages.microsoft.com/repos/vscode stable main' && \
+    apt-add-repository 'deb https://packages.microsoft.com/repos/vscode stable main' && \
     apt update && \
     apt install -y code
 
