@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Hyper
+Comment=A terminal built on web technologies
+Exec="/opt/Hyper/hyper" %U
+Icon=hyper
+Path=
+Terminal=false
+StartupNotify=false

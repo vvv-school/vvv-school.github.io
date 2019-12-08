@@ -9,7 +9,7 @@ RUN apt update
 
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
-    psmisc lsb-release tmux nano wget curl build-essential git gitk \
+    psmisc lsb-release tmux nano wget curl build-essential gdb git gitk \
     libedit-dev libxml2-dev autoconf gdebi
 
 # Install Hyper terminal
@@ -22,9 +22,6 @@ RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add 
     apt-add-repository "deb https://packages.microsoft.com/repos/vscode stable main" && \
     apt update && \
     apt install -y code
-
-# Install clang
-RUN apt install -y clang-format clang-tidy clang-tools clang gdb lld
 
 # Install the most recent cmake
 RUN apt install -y ca-certificates gnupg && \
@@ -133,10 +130,6 @@ RUN cd icub-contrib-common && mkdir build && cd build && \
 RUN rm -Rf icub-contrib-common
 ENV ICUBcontrib_DIR=/home/gitpod/iCubContrib
 
-# Set up .bashrc
-RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc
-RUN echo "export PATH=$PATH:/home/gitpod/iCubContrib/bin" >> ~/.bashrc
-
 # Switch back to root
 USER root
 
@@ -145,9 +138,24 @@ ENV DISPLAY=:1
 ENV YARP_DATA_DIRS=/usr/local/share/yarp:/usr/local/share/iCub:/home/gitpod/iCubContrib/share/ICUBcontrib
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/yarp:/usr/local/lib/robottestingframework
 
+# Set up .bashrc
+RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc
+RUN echo "export PATH=$PATH:/home/gitpod/iCubContrib/bin" >> ~/.bashrc
+
 # Set up script to launch graphics and vnc
 COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
 RUN chmod +x /usr/bin/start-vnc-session.sh
+
+# Set up Hyper launcher
+COPY Hyper.desktop /home/gitpod/Desktop/Hyper.desktop
+RUN chmod +x /home/gitpod/Desktop/Hyper.desktop
+
+# Set up VSCode launcher
+COPY ["Visual Studio Code.desktop", "/home/gitpod/Desktop/Visual Studio Code.desktop"]
+RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
+
+# Make sure Desktop is owned by gitpod user
+RUN chown -R gitpod.gitpod /home/gitpod/Desktop
 
 # Manage x11vnc port
 EXPOSE 5901
