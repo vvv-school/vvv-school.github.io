@@ -113,34 +113,38 @@ RUN cd icub-main && mkdir build && cd build && \
     make install
 RUN rm -Rf icub-main
 
-# Switch to gitpod user
-RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod && \
-    # passwordless sudo for users in the 'sudo' group
-    sed -i.bkp -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
-USER gitpod
+# Install in /workspace/iCubContrib as it is backed up
+RUN mkdir -p /workspace/iCubContrib
 
 # Build icub-contrib-common
-WORKDIR /home/gitpod
-RUN mkdir iCubContrib
 RUN git clone https://github.com/robotology/icub-contrib-common.git
 RUN cd icub-contrib-common && mkdir build && cd build && \
     cmake .. \
-    -DCMAKE_INSTALL_PREFIX=/home/gitpod/iCubContrib && \
+    -DCMAKE_INSTALL_PREFIX=/workspace/iCubContrib && \
     make install
 RUN rm -Rf icub-contrib-common
-ENV ICUBcontrib_DIR=/home/gitpod/iCubContrib
+ENV ICUBcontrib_DIR=/workspace/iCubContrib
+
+# Create user gitpod
+RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod && \
+    # passwordless sudo for users in the 'sudo' group
+    sed -i.bkp -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
+
+# Switch to gitpod user
+USER gitpod
+
+# Set up .bashrc
+WORKDIR /home/gitpod
+RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc
+RUN echo "export PATH=$PATH:/workspace/iCubContrib/bin" >> ~/.bashrc
 
 # Switch back to root
 USER root
 
 # Set environmental variables
 ENV DISPLAY=:1
-ENV YARP_DATA_DIRS=/usr/local/share/yarp:/usr/local/share/iCub:/home/gitpod/iCubContrib/share/ICUBcontrib
+ENV YARP_DATA_DIRS=/usr/local/share/yarp:/usr/local/share/iCub:/workspace/iCubContrib/share/ICUBcontrib
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/yarp:/usr/local/lib/robottestingframework
-
-# Set up .bashrc
-RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc
-RUN echo "export PATH=$PATH:/home/gitpod/iCubContrib/bin" >> ~/.bashrc
 
 # Set up script to launch graphics and vnc
 COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
@@ -154,8 +158,9 @@ RUN chmod +x /home/gitpod/Desktop/Hyper.desktop
 COPY ["Visual Studio Code.desktop", "/home/gitpod/Desktop/Visual Studio Code.desktop"]
 RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
 
-# Make sure Desktop is owned by gitpod user
-RUN chown -R gitpod.gitpod /home/gitpod/Desktop
+# Make sure specific dirs are owned by gitpod user
+RUN chown -R gitpod.gitpod /home/gitpod/Desktop && \
+    chown -R gitpod.gitpod /workspace/iCubContrib
 
 # Manage x11vnc port
 EXPOSE 5901
