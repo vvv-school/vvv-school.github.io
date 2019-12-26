@@ -39,7 +39,7 @@ loop do
 end
 
 last_response = client.last_response
-data=last_response.data
+data = last_response.data
 puts "#{data[0].commit.committer.date}"
 
 

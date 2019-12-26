@@ -39,13 +39,13 @@ loop do
 end
 
 last_response = client.last_response
-data=last_response.data
-data.each { |x| puts "#{x.name}" }
+data = last_response.data
+data.each { |repo| puts "#{repo.name}" }
 
 until last_response.rels[:next].nil?
   last_response = last_response.rels[:next].get
-  data=last_response.data
-  data.each { |x| puts "#{x.name}" }
+  data = last_response.data
+  data.each { |repo| puts "#{repo.name}" }
 end
 
 

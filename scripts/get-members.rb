@@ -48,7 +48,7 @@ loop do
 end
 
 last_response = client.last_response
-data=last_response.data
+data = last_response.data
 
 team_id = -1
 data.each { |x|
@@ -60,7 +60,7 @@ end
 if team_id < 0 then
   until last_response.rels[:next].nil?
     last_response = last_response.rels[:next].get
-    data=last_response.data
+    data = last_response.data
     data.each { |x|
     if x.name == team then
       team_id = x.id
@@ -81,12 +81,12 @@ if team_id >= 0 then
   end
 
   last_response = client.last_response
-  data=last_response.data
+  data = last_response.data
   data.each { |x| puts "#{x.login}" }
 
   until last_response.rels[:next].nil?
     last_response = last_response.rels[:next].get
-    data=last_response.data
+    data = last_response.data
     data.each { |x| puts "#{x.login}" }
   end
 end

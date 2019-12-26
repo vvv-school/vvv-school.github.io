@@ -50,9 +50,9 @@ loop do
 end
 
 last_response = client.last_response
-sha=last_response.data[0].sha
+sha = last_response.data[0].sha
 
-context="Robot Testing Framework"
+context = "Robot Testing Framework"
 if status == "pending" then
   description="Your solution is being checked"
 elsif status == "success" then
@@ -60,10 +60,10 @@ elsif status == "success" then
 elsif status == "failure" then
   description="Your solution failed the test"
 elsif status == "error" then
-  description="Could not build/check your solution"
+  description = "Could not build/check your solution"
 end
 
-target_url=""
+target_url = ""
 if ARGV.length > 2 then
   target_url=ARGV[2]
 end

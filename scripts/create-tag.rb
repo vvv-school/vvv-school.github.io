@@ -49,12 +49,12 @@ end
 repos = []
 
 last_response = client.last_response
-data=last_response.data
+data = last_response.data
 data.each { |x| repos << x.name }
 
 until last_response.rels[:next].nil?
   last_response = last_response.rels[:next].get
-  data=last_response.data
+  data = last_response.data
   data.each { |x| repos << x.name }
 end
 
@@ -63,13 +63,13 @@ repos.each { |repo|
   if repo.start_with?("vvv-school","tutorial_","assignment_","solution_")  
     client.commits_before(repo_full,date)
     last_response = client.last_response
-    data=last_response.data
+    data = last_response.data
     if data.any?
-      commit=data[0].sha
-      tagger_date=Time.now.strftime("%Y-%m-%dT%H:%M:%S%:z")
+      commit = data[0].sha
+      tagger_date = Time.now.strftime("%Y-%m-%dT%H:%M:%S%:z")
       begin
         client.create_tag(repo_full,tag,message,commit,"commit",tagger_name,tagger_email,tagger_date)
-        ref=client.last_response.data.sha
+        ref = client.last_response.data.sha
         client.create_ref(repo_full,"refs/tags/"+tag,ref)
         puts "#{repo_full}@#{commit}: tagged as #{tag}"
       rescue

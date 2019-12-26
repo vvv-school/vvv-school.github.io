@@ -44,17 +44,17 @@ end
 repos = []
 
 last_response = client.last_response
-data=last_response.data
+data = last_response.data
 data.each { |x| repos << x.full_name }
 
 until last_response.rels[:next].nil?
   last_response = last_response.rels[:next].get
-  data=last_response.data
+  data = last_response.data
   data.each { |x| repos << x.full_name }
 end
 
 repos.each { |repo|
-  ref="tags/"+tag
+  ref = "tags/"+tag
   begin
     client.delete_ref(repo,ref)
     puts "#{repo}: #{ref} deleted"
