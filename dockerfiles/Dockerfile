@@ -9,7 +9,7 @@ RUN apt update
 
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
-    psmisc lsb-release tmux nano wget curl build-essential gdb git gitk \
+    psmisc lsb-release tmux nano wget curl telnet build-essential gdb git gitk \
     libedit-dev libxml2-dev autoconf gdebi
 
 # Install Hyper terminal
