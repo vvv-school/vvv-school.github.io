@@ -73,8 +73,17 @@ RUN apt install -y qml-module-qt-labs-folderlistmodel qml-module-qt-labs-setting
 ARG BRANCH=devel
 ARG BUILD_TYPE=Release
 
+# Install VTK
+RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v8.1.0
+RUN cd VTK && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+    -DBUILD_TESTING=OFF && \
+    make install
+RUN rm -Rf VTK
+
 # Build ycm
-RUN git clone https://github.com/robotology/ycm.git
+RUN git clone https://github.com/robotology/ycm.git --depth 1
 RUN cd ycm && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
@@ -82,7 +91,7 @@ RUN cd ycm && mkdir build && cd build && \
 RUN rm -Rf ycm
 
 # Build robot-testing-framework
-RUN git clone https://github.com/robotology/robot-testing-framework.git -b $BRANCH
+RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 1 --branch $BRANCH
 RUN cd robot-testing-framework && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
@@ -90,7 +99,7 @@ RUN cd robot-testing-framework && mkdir build && cd build && \
 RUN rm -Rf robot-testing-framework
 
 # Build yarp
-RUN git clone https://github.com/robotology/yarp.git
+RUN git clone https://github.com/robotology/yarp.git --depth 1
 RUN cd yarp && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
@@ -103,7 +112,7 @@ RUN cp yarp/scripts/yarp_completion /etc/bash_completion.d/.
 RUN rm -Rf yarp
 
 # Build icub-main
-RUN git clone https://github.com/robotology/icub-main.git -b $BRANCH
+RUN git clone https://github.com/robotology/icub-main.git --depth 1 --branch $BRANCH
 RUN cd icub-main && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
