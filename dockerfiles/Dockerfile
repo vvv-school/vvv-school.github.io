@@ -48,6 +48,9 @@ RUN git clone https://github.com/LibVNC/x11vnc.git /opt/x11vnc && \
     make && make install && \
     rm /opt/x11vnc -Rf
 
+# Install Octave
+RUN apt install -y octave epstool transfig
+
 # Install python
 RUN apt install -y python3 python3-dev python3-pip python3-setuptools
 
