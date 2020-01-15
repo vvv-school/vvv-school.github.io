@@ -10,7 +10,10 @@ RUN apt update
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
     psmisc lsb-release tmux nano wget curl telnet build-essential gdb git gitk \
-    libedit-dev libxml2-dev autoconf gdebi
+    libedit-dev libxml2-dev autoconf locales gdebi
+
+# Set the locale
+RUN locale-gen en_US.UTF-8
 
 # Install Hyper terminal
 RUN wget -O hyper.deb https://releases.hyper.is/download/deb && \
@@ -138,6 +141,13 @@ RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod &
 
 # Switch to gitpod user
 USER gitpod
+
+# Install Homebrew
+RUN mkdir ~/.cache && sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/"
+ENV MANPATH="$MANPATH:/home/linuxbrew/.linuxbrew/share/man"
+ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
+ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 # Set up .bashrc
 WORKDIR /home/gitpod
