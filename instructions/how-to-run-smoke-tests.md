@@ -3,11 +3,11 @@
 ### Usage
 Go in the **smoke-test** subdirectory and run:
 ```sh
-$ ./test.sh [--get-helpers]
+$ ./test.sh [--get-helpers [branch|tag]]
 ```
 
 ### Options
-- `--get-helpers` specifies to download helper tools anew.
+- `--get-helpers [branch|tag]` forces downloading helper tools anew on specified branch or tag (default = master).
 
 ### Exit Codes
 - **`0`** test passed :heavy_check_mark:
