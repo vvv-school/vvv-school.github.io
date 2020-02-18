@@ -544,10 +544,13 @@ while true; do
            fi
         fi
 
-        # otherwise produce an empy gradebook
+        # otherwise produce an empty gradebook
         if [ ! -f $gradebook_new ]; then
             echo "[]" > $gradebook_new
         fi
+        
+        # keep students up-to-date from $team
+        students=$("${abspathtoscript}"/get-members.rb $team)
 
         # retrieve names of all repositories in $org
         repositories=$("${abspathtoscript}"/get-repositories.rb $org)
