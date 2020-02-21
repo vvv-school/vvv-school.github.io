@@ -1,29 +1,31 @@
 # How to set up a VVV{YY} School
 
 ## Table of contents
-- [Introduction](#introduction)
-- [Set up VVV{YY} School repository](#set-up-vvvyy-school-repository)
-- [Set up VVV{YY} School courses organizations](#set-up-vvvyy-school-courses-organizations)
-  - [Hands-on](#hands-on)
-    - [Tutorials](#tutorials)
-    - [Assignments](#assignments)
-  - [VVV{YY} School courses repositories](#vvvyy-school-courses-repositories)
-    - [Gear up for automatic grading](#gear-up-for-automatic-grading)
-- [Automatic grading](#automatic-grading)
-  - [Challenge students](#challenge-students)
-    - [How to assign scores incrementally](#how-to-assign-scores-incrementally)
-  - [Update the gradebook](#update-the-gradebook)
-    - [Prerequisites](#prerequisites)
-    - [Launch the script](#launch-the-script)
-    - [GitHub Webooks](#github-webooks)
-- [VVV{YY} School wrap-up](#vvvyy-school-wrap-up)
+- [How to set up a VVV{YY} School](#how-to-set-up-a-vvvyy-school)
+  - [Table of contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Set up VVV{YY} School repository](#set-up-vvvyy-school-repository)
+  - [Set up VVV{YY} School courses organizations](#set-up-vvvyy-school-courses-organizations)
+    - [Hands-on](#hands-on)
+      - [Tutorials](#tutorials)
+      - [Assignments](#assignments)
+    - [VVV{YY} School courses repositories](#vvvyy-school-courses-repositories)
+      - [Gear up for automatic grading](#gear-up-for-automatic-grading)
+  - [Automatic grading](#automatic-grading)
+    - [Challenge students](#challenge-students)
+      - [How to assign scores incrementally](#how-to-assign-scores-incrementally)
+    - [Update the gradebook](#update-the-gradebook)
+      - [Prerequisites](#prerequisites)
+      - [Launch the script](#launch-the-script)
+      - [GitHub Webooks](#github-webooks)
+  - [VVV{YY} School wrap-up](#vvvyy-school-wrap-up)
   
 ## Introduction
 1. **YY** is the school year (e.g. **17**, **18**...).
 1. The repository [**vvv-school/vvv{yy}**](#set-up-vvvyy-school-repository) represents the "hall" of the school, that is the school entry point. It's where we handle the Wiki, the Q&A system, school material (e.g. links to slides) and, generally, all the resources we need. With [GitHub Pages](https://pages.github.com) we can render the hall quite nicely.
 1. Each day we'll run a **course** (e.g. kinematics, dynamics, vision...) that consists in teaching theories during **frontal lessons** so as giving [**hands-on**](#hands-on) sessions.
 1. Teachers have two instruments during hands-on and/or lessons: [**tutorials**](#tutorials) and [**assignments**](#assignments). They correspond to single repositories stored in [**vvv-school** organization](https://github.com/vvv-school).
-1. Teachers make use of [GitHub Education](https://education.github.com) to invite students to follow tutorials and solve assignments. To this end, each teacher is required to set up a new organization where students' assignments will be created by means of _automatic sandboxing_ through [**GitHub Classrooms**](https://classroom.github.com).
+1. Teachers make use of [GitHub Education](https://education.github.com) to invite students to follow tutorials and solve assignments. To this end, each teacher is required to set up a new organization where students' assignments will be created by means of _automatic sandboxing_ through [**GitHub Classrooms**](https://classroom.github.com/help).
 1. Provided that there are many attendees, we cannot afford to do [**code review**](../instructions/how-to-complete-assignments.md#collaborative-code-review-1) on a student basis. Alternatively, we can resort to [**automatic grading**](#automatic-grading) to challenge students and let teachers understand which of them falls behind, thus needing help.
 1. Material specific to _VVV{YY} School_ can be conveniently put inside **vvv{yy}** repository. Instead, for collecting **courses material** that can be _recycled yearly_, we can either rely on **individual repositories** hosted at [**vvv-school** organization](https://github.com/vvv-school) (call it **material_**_something_), or on external resources we can link to. Please, don't use [vvv-school.github.io](https://github.com/vvv-school/vvv-school.github.io) for such kind of storage, since slides can be easily very unwieldy.
 
