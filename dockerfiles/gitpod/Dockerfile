@@ -114,7 +114,7 @@ RUN cd yarp && mkdir build && cd build && \
     -DYARP_COMPILE_DEVICE_PLUGINS=ON \
     -DYARP_COMPILE_GUIS=ON && \
     make install
-RUN cp yarp/scripts/yarp_completion /etc/bash_completion.d/.
+RUN cp yarp/data/bash-completion/yarp /etc/bash_completion.d/.
 RUN rm -Rf yarp
 
 # Build icub-main
