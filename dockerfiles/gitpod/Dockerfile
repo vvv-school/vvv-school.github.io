@@ -10,7 +10,7 @@ RUN apt update
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
     psmisc lsb-release tmux nano wget curl telnet build-essential gdb git gitk \
-    libedit-dev libxml2-dev autoconf locales gdebi
+    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -25,15 +25,6 @@ RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add 
     apt-add-repository "deb https://packages.microsoft.com/repos/vscode stable main" && \
     apt update && \
     apt install -y code
-
-# Install the most recent cmake
-RUN apt install -y ca-certificates gnupg && \
-    wget -q https://apt.kitware.com/keys/kitware-archive-latest.asc -O- | apt-key add - && \
-    apt-add-repository "deb https://apt.kitware.com/ubuntu/ `lsb_release -cs` main" && \
-    apt update && \
-    apt install -y kitware-archive-keyring && \
-    apt-key --keyring /etc/apt/trusted.gpg del C1F34CDD40CD72DA && \
-    apt install -y cmake cmake-curses-gui
 
 # Install graphics
 RUN apt install -y xfce4 xfce4-goodies xserver-xorg-video-dummy xserver-xorg-legacy firefox
@@ -114,7 +105,6 @@ RUN cd yarp && mkdir build && cd build && \
     -DYARP_COMPILE_DEVICE_PLUGINS=ON \
     -DYARP_COMPILE_GUIS=ON && \
     make install
-RUN cp yarp/data/bash-completion/yarp /etc/bash_completion.d/.
 RUN rm -Rf yarp
 
 # Build icub-main
