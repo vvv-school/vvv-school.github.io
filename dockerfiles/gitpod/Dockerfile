@@ -57,14 +57,13 @@ RUN git clone https://github.com/novnc/websockify.git /opt/websockify && \
 RUN git clone https://github.com/novnc/noVNC.git /opt/novnc
 RUN echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; url=vnc.html\"></head></html>" > /opt/novnc/index.html
 
-# Install yarp dependencies
-RUN echo "deb http://www.icub.org/ubuntu `lsb_release -cs` contrib/science" > /etc/apt/sources.list.d/icub.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 57A5ACB6110576A6
-RUN apt update
-RUN apt install -y icub-common
-
-# Install Qt patch for Xfce
-RUN apt install -y qml-module-qt-labs-folderlistmodel qml-module-qt-labs-settings
+# Install dependencies
+RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-libipopt-dev freeglut3-dev \
+    libboost-system-dev libboost-filesystem-dev libboost-thread-dev libtinyxml-dev libace-dev libedit-dev \
+    libgsl0-dev libopencv-dev libode-dev liblua5.1-dev lua5.1 git swig qtbase5-dev qtdeclarative5-dev \
+    qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
+    qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
+    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev
 
 # Select branch + build type
 ARG BRANCH=devel
@@ -98,13 +97,7 @@ RUN rm -Rf robot-testing-framework
 # Build yarp
 RUN git clone https://github.com/robotology/yarp.git --depth 1
 RUN cd yarp && mkdir build && cd build && \
-    cmake .. \
-    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-    -DYARP_COMPILE_libYARP_math=ON \
-    -DYARP_COMPILE_CARRIER_PLUGINS=ON \
-    -DYARP_COMPILE_DEVICE_PLUGINS=ON \
-    -DYARP_COMPILE_GUIS=ON && \
-    make install
+    cmake .. && make install
 RUN rm -Rf yarp
 
 # Build icub-main
