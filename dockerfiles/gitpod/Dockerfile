@@ -9,8 +9,8 @@ RUN apt update
 
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
-    psmisc lsb-release tmux nano wget curl telnet build-essential gdb git gitk \
-    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi
+    psmisc lsb-release tmux nano wget curl telnet gnupg build-essential gdb git gitk \
+    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi 
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -21,20 +21,21 @@ RUN wget -O hyper.deb https://releases.hyper.is/download/deb && \
     rm hyper.deb
 
 # Install VSCode
-RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
-    apt-add-repository "deb https://packages.microsoft.com/repos/vscode stable main" && \
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
+    install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ && \
+    sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list' && \
     apt update && \
     apt install -y code
 
 # Install graphics
-RUN apt install -y xfce4 xfce4-goodies xserver-xorg-video-dummy xserver-xorg-legacy firefox
-RUN sed -i 's/allowed_users=console/allowed_users=anybody/' /etc/X11/Xwrapper.config
+RUN apt install -y xfce4 xfce4-goodies xserver-xorg-video-dummy xserver-xorg-legacy firefox && \
+    sed -i 's/allowed_users=console/allowed_users=anybody/' /etc/X11/Xwrapper.config
 COPY xorg.conf /etc/X11/xorg.conf
 
 # We need the most recent x11vnc
 RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
-    apt update
-RUN git clone https://github.com/LibVNC/x11vnc.git /opt/x11vnc && \
+    apt update && \
+    git clone https://github.com/LibVNC/x11vnc.git /opt/x11vnc && \
     cd /opt/x11vnc && \
     apt build-dep -y x11vnc && \
     autoreconf -fiv && \
@@ -54,8 +55,8 @@ RUN git clone https://github.com/novnc/websockify.git /opt/websockify && \
     python3 setup.py install
 
 # Clone noVNC
-RUN git clone https://github.com/novnc/noVNC.git /opt/novnc
-RUN echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; url=vnc.html\"></head></html>" > /opt/novnc/index.html
+RUN git clone https://github.com/novnc/noVNC.git /opt/novnc && \
+    echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; url=vnc.html\"></head></html>" > /opt/novnc/index.html
 
 # Install dependencies
 RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-libipopt-dev freeglut3-dev \
@@ -64,52 +65,82 @@ RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-l
     qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
     qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
     qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev
+    
+# Install gazebo
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
+    wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
+    apt update && \
+    apt install -y gazebo11 libgazebo11-dev
 
 # Select branch + build type
 ARG BRANCH=devel
 ARG BUILD_TYPE=Release
 
 # Install VTK
-RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v8.1.0
-RUN cd VTK && mkdir build && cd build && \
+RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v8.1.0 && \
+    cd VTK && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
     -DBUILD_TESTING=OFF && \
-    make install
-RUN rm -Rf VTK
+    make install && \
+    rm -Rf VTK
 
 # Build ycm
-RUN git clone https://github.com/robotology/ycm.git --depth 1
-RUN cd ycm && mkdir build && cd build && \
+RUN git clone https://github.com/robotology/ycm.git --depth 1 && \
+    cd ycm && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
-    make install
-RUN rm -Rf ycm
+    make install && \
+    rm -Rf ycm
 
 # Build robot-testing-framework
-RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 1 --branch $BRANCH
-RUN cd robot-testing-framework && mkdir build && cd build && \
+RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 1 --branch $BRANCH && \
+    cd robot-testing-framework && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
-    make install
-RUN rm -Rf robot-testing-framework
+    make install && \
+    rm -Rf robot-testing-framework
 
 # Build yarp
-RUN git clone https://github.com/robotology/yarp.git --depth 1
-RUN cd yarp && mkdir build && cd build && \
-    cmake .. && make install
-RUN rm -Rf yarp
+RUN git clone https://github.com/robotology/yarp.git --depth 1 && \
+    cd yarp && mkdir build && cd build && \
+    cmake .. && make install && \
+    rm -Rf yarp
 
 # Build icub-main
-RUN git clone https://github.com/robotology/icub-main.git --depth 1 --branch $BRANCH
-RUN cd icub-main && mkdir build && cd build && \
+RUN git clone https://github.com/robotology/icub-main.git --depth 1 --branch $BRANCH && \
+    cd icub-main && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
     -DENABLE_icubmod_cartesiancontrollerserver=ON \
     -DENABLE_icubmod_cartesiancontrollerclient=ON \
     -DENABLE_icubmod_gazecontrollerclient=ON && \
-    make install
-RUN rm -Rf icub-main
+    make install && \
+    rm -Rf icub-main
+
+# Build idyntree
+RUN git clone https://github.com/robotology/idyntree.git --depth 1 --branch $BRANCH && \
+    cd idyntree && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install && \
+    rm -Rf idyntree
+
+# Build gazebo-yarp-plugins
+RUN git clone https://github.com/robotology/gazebo-yarp-plugins.git --depth 1 --branch $BRANCH && \
+    cd gazebo-yarp-plugins && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install && \
+    rm -Rf gazebo-yarp-plugins
+
+# Clone icub-models
+RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $BRANCH && \
+    cd icub-models && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install && \
+    rm -Rf icub-models
 
 # Set environmental variables
 ENV DISPLAY=:1
@@ -134,8 +165,10 @@ ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 # Set up .bashrc
 WORKDIR /home/gitpod
-RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc
-RUN echo "export PATH=$PATH:$ICUBcontrib_DIR/bin" >> ~/.bashrc
+RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc && \
+    echo "export PATH=${PATH}:$ICUBcontrib_DIR/bin" >> ~/.bashrc && \
+    echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc && \
+    echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share/iCub/robots" >> ~/.bashrc
 
 # Switch back to root
 USER root
