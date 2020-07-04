@@ -64,6 +64,12 @@ RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-l
     qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
     qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
     qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev
+    
+# Install gazebo
+RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list &&
+    wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - &&
+    apt-get update &&
+    apt-get install gazebo11 libgazebo11-dev
 
 # Select branch + build type
 ARG BRANCH=devel
@@ -111,6 +117,30 @@ RUN cd icub-main && mkdir build && cd build && \
     make install
 RUN rm -Rf icub-main
 
+# Build idyntree
+RUN git clone https://github.com/robotology/idyntree.git --depth 1 --branch $BRANCH
+RUN cd idyntree && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install
+RUN rm -Rf idyntree
+
+# Build yarp-gazebo-plugins
+RUN git clone https://github.com/robotology/yarp-gazebo-plugins.git --depth 1 --branch $BRANCH
+RUN cd yarp-gazebo-plugins && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install
+RUN rm -Rf yarp-gazebo-plugins
+
+# Clone icub-models
+RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $BRANCH
+RUN cd icub-models && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install
+RUN rm -Rf icub-models
+
 # Set environmental variables
 ENV DISPLAY=:1
 ENV ICUBcontrib_DIR=/workspace/iCubContrib
@@ -134,8 +164,9 @@ ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 # Set up .bashrc
 WORKDIR /home/gitpod
-RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc
-RUN echo "export PATH=$PATH:$ICUBcontrib_DIR/bin" >> ~/.bashrc
+RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc && \
+    echo "export PATH=$PATH:$ICUBcontrib_DIR/bin" >> ~/.bashrc && \
+    echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc
 
 # Switch back to root
 USER root
