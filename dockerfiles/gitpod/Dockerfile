@@ -66,9 +66,9 @@ RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-l
     qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev
     
 # Install gazebo
-RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list &&
-    wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - &&
-    apt-get update &&
+RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list && \
+    wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
+    apt-get update && \
     apt-get install gazebo11 libgazebo11-dev
 
 # Select branch + build type
