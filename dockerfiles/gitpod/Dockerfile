@@ -9,8 +9,8 @@ RUN apt update
 
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
-    psmisc lsb-release tmux nano wget curl telnet build-essential gdb git gitk \
-    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi
+    psmisc lsb-release tmux nano wget curl telnet gnupg build-essential gdb git gitk \
+    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi 
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -21,8 +21,9 @@ RUN wget -O hyper.deb https://releases.hyper.is/download/deb && \
     rm hyper.deb
 
 # Install VSCode
-RUN wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add - && \
-    apt-add-repository "deb https://packages.microsoft.com/repos/vscode stable main" && \
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
+    install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ && \
+    sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list' && \
     apt update && \
     apt install -y code
 
