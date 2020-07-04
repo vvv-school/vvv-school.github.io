@@ -126,13 +126,13 @@ RUN cd idyntree && mkdir build && cd build && \
     make install
 RUN rm -Rf idyntree
 
-# Build yarp-gazebo-plugins
-RUN git clone https://github.com/robotology/yarp-gazebo-plugins.git --depth 1 --branch $BRANCH
-RUN cd yarp-gazebo-plugins && mkdir build && cd build && \
+# Build gazebo-yarp-plugins
+RUN git clone https://github.com/robotology/gazebo-yarp-plugins.git --depth 1 --branch $BRANCH
+RUN cd gazebo-yarp-plugins && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install
-RUN rm -Rf yarp-gazebo-plugins
+RUN rm -Rf gazebo-yarp-plugins
 
 # Clone icub-models
 RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $BRANCH
