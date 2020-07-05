@@ -158,17 +158,17 @@ USER gitpod
 
 # Install Homebrew
 RUN mkdir ~/.cache && sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-ENV PATH="$PATH:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/"
-ENV MANPATH="$MANPATH:/home/linuxbrew/.linuxbrew/share/man"
-ENV INFOPATH="$INFOPATH:/home/linuxbrew/.linuxbrew/share/info"
+ENV PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/"
+ENV MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
+ENV INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc && \
-    echo "export PATH=${PATH}:$ICUBcontrib_DIR/bin" >> ~/.bashrc && \
+    echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc && \
     echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc && \
-    echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share/iCub/robots" >> ~/.bashrc
+    echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc
 
 # Switch back to root
 USER root
