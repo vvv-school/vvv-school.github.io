@@ -42,7 +42,7 @@ RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
     autoreconf -fiv && \
     ./configure && \
     make && make install && \
-    rm /opt/x11vnc -Rf
+    rm -Rf /opt/x11vnc
 
 # Install Octave
 RUN apt install -y octave epstool transfig
