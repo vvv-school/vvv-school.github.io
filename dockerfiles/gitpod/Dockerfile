@@ -166,7 +166,7 @@ ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 # Set up .bashrc
 WORKDIR /home/gitpod
-RUN echo "unalias code" >> ~/.bashrc && \
+RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
     echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc && \
     echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc && \
     echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc && \
@@ -184,12 +184,16 @@ COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
 RUN chmod +x /usr/bin/start-vnc-session.sh
 
 # Set up Hyper launcher
+COPY Hyper.desktop /root/Desktop/Hyper.desktop
 COPY Hyper.desktop /home/gitpod/Desktop/Hyper.desktop
-RUN chmod +x /home/gitpod/Desktop/Hyper.desktop
+RUN chmod +x /root/Desktop/Hyper.desktop && \
+    chmod +x /home/gitpod/Desktop/Hyper.desktop
 
 # Set up VSCode launcher
+COPY ["Visual Studio Code.desktop", "/root/Desktop/Visual Studio Code.desktop"]
 COPY ["Visual Studio Code.desktop", "/home/gitpod/Desktop/Visual Studio Code.desktop"]
-RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
+RUN chmod +x "/root/Desktop/Visual Studio Code.desktop" && \
+    chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
 
 # Make sure specific dirs are owned by gitpod user
 RUN chown -R gitpod.gitpod /home/gitpod/Desktop
