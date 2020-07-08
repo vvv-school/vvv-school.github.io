@@ -5,7 +5,7 @@ To run the container using Docker, go through the following steps:
     ```sh
     $ docker pull docker.pkg.github.com/vvv-school/vvv-school.github.io/gitpod:{tag}
     ```
-    ⚠ you may need to [authenticate to GitHub Packages][1].
+    ⚠ You may need to [authenticate to GitHub Packages][1] beforehand.
 1. Launch the container:
     ```sh
     $ docker run -it --rm -p 6080:6080 --user 33333 docker.pkg.github.com/vvv-school/vvv-school.github.io/gitpod:{tag}
