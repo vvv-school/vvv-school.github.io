@@ -69,7 +69,7 @@ RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-l
     
 # Install gazebo
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
-    wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && \
+    wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
     apt update && \
     apt install -y gazebo11 libgazebo11-dev
 
