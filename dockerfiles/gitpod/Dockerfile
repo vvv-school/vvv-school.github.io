@@ -60,25 +60,37 @@ RUN git clone https://github.com/novnc/noVNC.git /opt/novnc && \
     echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; url=vnc.html\"></head></html>" > /opt/novnc/index.html
 
 # Install dependencies
-RUN apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-libipopt-dev freeglut3-dev \
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
+    wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
+    apt-add-repository -y ppa:dartsim/ppa && \
+    apt update && \
+    apt install -y libeigen3-dev build-essential cmake cmake-curses-gui coinor-libipopt-dev freeglut3-dev \
     libboost-system-dev libboost-filesystem-dev libboost-thread-dev libtinyxml-dev libace-dev libedit-dev \
     libgsl0-dev libopencv-dev libode-dev liblua5.1-dev lua5.1 git swig qtbase5-dev qtdeclarative5-dev \
     qtmultimedia5-dev qml-module-qtquick2 qml-module-qtquick-window2 qml-module-qtmultimedia \
     qml-module-qtquick-dialogs qml-module-qtquick-controls qml-module-qt-labs-folderlistmodel \
-    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev
-    
-# Install gazebo
-RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
-    wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add - && \
-    apt update && \
-    apt install -y gazebo11 libgazebo11-dev
+    qml-module-qt-labs-settings libsdl1.2-dev libxml2-dev libv4l-dev \
+    debhelper mesa-utils x11-utils cppcheck xsltproc python3-lxml python3-psutil bc netcat-openbsd gnupg2 \
+    net-tools libfreeimage-dev libprotoc-dev libprotobuf-dev protobuf-compiler libcurl4-openssl-dev libtar-dev \
+    libtbb-dev libogre-1.9-dev pkg-config libqwt-qt5-dev libltdl-dev libgts-dev libboost-program-options-dev \
+    libboost-regex-dev libboost-iostreams-dev libignition-common3-dev libignition-fuel-tools4-dev \
+    libignition-transport8-dev libignition-math6-dev libignition-msgs5-dev libtinyxml2-dev libsdformat9-dev \
+    libbullet-dev libsimbody-dev libdart6-all-dev
 
-# Select branch + build type
+# Select options
 ARG BRANCH=devel
 ARG BUILD_TYPE=Release
+    
+# Build gazebo
+RUN git clone https://github.com/osrf/gazebo.git --depth 1 --branch gazebo11 && \
+    cd gazebo && mkdir build && cd build && \
+    cmake .. \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    make install && \
+    rm -Rf gazebo
 
 # Install VTK
-RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v8.1.0 && \
+RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.0 && \
     cd VTK && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
@@ -169,7 +181,7 @@ WORKDIR /home/gitpod
 RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
     echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '" >> ~/.bashrc && \
     echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc && \
-    echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc && \
+    echo "source /usr/local/share/gazebo/setup.sh" >> ~/.bashrc && \
     echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc
 
 # Switch back to root
