@@ -10,8 +10,9 @@ To run the container using Docker, go through the following steps:
     ```sh
     $ docker run -it --rm -p 6080:6080 --user 33333 docker.pkg.github.com/vvv-school/vvv-school.github.io/gitpod:{tag}
     ```
-1. From within the container shell, launch the **`noVNC`** service:
+1. From within the container shell, launch the following:
     ```sh
+    $ init-icubcontrib.sh
     $ start-vnc-session-local.sh
     ```
 1. Open up the browser and connect to **`localhost:6080`**.
