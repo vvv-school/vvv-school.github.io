@@ -88,7 +88,7 @@ RUN git clone https://github.com/osrf/gazebo.git --depth 1 --branch gazebo11_11.
     rm -Rf gazebo
 
 # Install VTK
-RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.0 && \
+RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v8.1.0 && \
     cd VTK && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
