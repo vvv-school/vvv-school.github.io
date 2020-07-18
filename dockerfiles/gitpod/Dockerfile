@@ -187,7 +187,8 @@ USER root
 
 # Set up script to prepare /workspace/iCubContrib
 COPY init-icubcontrib.sh /usr/bin/init-icubcontrib.sh
-RUN chmod +x /usr/bin/init-icubcontrib.sh
+COPY init-icubcontrib-local.sh /usr/bin/init-icubcontrib-local.sh
+RUN chmod +x /usr/bin/init-icubcontrib.sh /usr/bin/init-icubcontrib-local.sh
 
 # Set up script to launch graphics and vnc
 COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
