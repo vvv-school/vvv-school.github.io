@@ -82,7 +82,7 @@ ARG BRANCH=devel
 ARG BUILD_TYPE=Release
     
 # Build gazebo
-RUN git clone https://github.com/osrf/gazebo.git --depth 1 --branch gazebo11 && \
+RUN git clone https://github.com/osrf/gazebo.git --depth 1 --branch gazebo11_11.0.0 && \
     cd gazebo && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
