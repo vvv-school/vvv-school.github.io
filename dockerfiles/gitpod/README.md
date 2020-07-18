@@ -8,11 +8,11 @@ To run the container using Docker, go through the following steps:
     ⚠ You may need to [authenticate to GitHub Packages][1] beforehand.
 1. Launch the container:
     ```sh
-    $ docker run -it --rm -p 6080:6080 docker.pkg.github.com/vvv-school/vvv-school.github.io/gitpod:{tag}
+    $ docker run -it --rm -p 6080:6080 --user 33333 docker.pkg.github.com/vvv-school/vvv-school.github.io/gitpod:{tag}
     ```
 1. From within the container shell, launch the **`noVNC`** service:
     ```sh
-    $ start-vnc-session.sh
+    $ start-vnc-session-local.sh
     ```
 1. Open up the browser and connect to **`localhost:6080`**.
 1. Once done, from the container shell press **CTRL+D**.
