@@ -192,8 +192,7 @@ RUN chmod +x /usr/bin/init-icubcontrib.sh
 # Set up script to launch graphics and vnc
 COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
 COPY start-vnc-session-local.sh /usr/bin/start-vnc-session-local.sh
-RUN chmod +x /usr/bin/start-vnc-session.sh && \
-    chmod +x /usr/bin/start-vnc-session-local.sh
+RUN chmod +x /usr/bin/start-vnc-session.sh /usr/bin/start-vnc-session-local.sh
 
 # Set up Hyper launcher
 COPY Hyper.desktop /root/Desktop/Hyper.desktop
