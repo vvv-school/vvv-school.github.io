@@ -15,11 +15,6 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
 # Set the locale
 RUN locale-gen en_US.UTF-8
 
-# Install Hyper terminal
-RUN wget -O hyper.deb https://releases.hyper.is/download/deb && \
-    gdebi -n hyper.deb && \
-    rm hyper.deb
-
 # Install VSCode
 # better off downling the deb file than relying on packages.microsoft.com sources that are often broken
 RUN wget -O code.deb https://go.microsoft.com/fwlink/?LinkID=760868 && \
@@ -194,12 +189,6 @@ RUN chmod +x /usr/bin/init-icubcontrib.sh /usr/bin/init-icubcontrib-local.sh
 COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
 COPY start-vnc-session-local.sh /usr/bin/start-vnc-session-local.sh
 RUN chmod +x /usr/bin/start-vnc-session.sh /usr/bin/start-vnc-session-local.sh
-
-# Set up Hyper launcher
-COPY Hyper.desktop /root/Desktop/Hyper.desktop
-COPY Hyper.desktop /home/gitpod/Desktop/Hyper.desktop
-RUN chmod +x /root/Desktop/Hyper.desktop && \
-    chmod +x /home/gitpod/Desktop/Hyper.desktop
 
 # Set up VSCode launcher
 COPY ["Visual Studio Code.desktop", "/root/Desktop/Visual Studio Code.desktop"]
