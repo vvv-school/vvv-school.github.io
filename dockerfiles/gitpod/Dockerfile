@@ -191,10 +191,8 @@ COPY start-vnc-session-local.sh /usr/bin/start-vnc-session-local.sh
 RUN chmod +x /usr/bin/start-vnc-session.sh /usr/bin/start-vnc-session-local.sh
 
 # Set up VSCode launcher
-COPY ["Visual Studio Code.desktop", "/root/Desktop/Visual Studio Code.desktop"]
 COPY ["Visual Studio Code.desktop", "/home/gitpod/Desktop/Visual Studio Code.desktop"]
-RUN chmod +x "/root/Desktop/Visual Studio Code.desktop" && \
-    chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
+RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
 
 # Make sure specific dirs are owned by gitpod user
 RUN chown -R gitpod.gitpod /home/gitpod/Desktop
