@@ -80,7 +80,7 @@ RUN git clone https://github.com/osrf/gazebo.git --depth 1 --branch gazebo11_11.
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
-    rm -Rf gazebo
+    cd ../.. && rm -Rf gazebo
 
 # Install VTK
 RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.1 && \
@@ -89,7 +89,7 @@ RUN git clone https://github.com/Kitware/VTK.git --depth 1 --branch v9.0.1 && \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
     -DBUILD_TESTING=OFF && \
     make install && \
-    rm -Rf VTK
+    cd ../.. && rm -Rf VTK
 
 # Build ycm
 RUN git clone https://github.com/robotology/ycm.git --depth 1 && \
@@ -97,7 +97,7 @@ RUN git clone https://github.com/robotology/ycm.git --depth 1 && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
-    rm -Rf ycm
+    cd ../.. && rm -Rf ycm
 
 # Build robot-testing-framework
 RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 1 --branch $BRANCH && \
@@ -105,13 +105,14 @@ RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
-    rm -Rf robot-testing-framework
+    cd ../.. && rm -Rf robot-testing-framework
 
 # Build yarp
 RUN git clone https://github.com/robotology/yarp.git --depth 1 && \
+    cp ./yarp/data/bash-completion/yarp /etc/bash_completion.d && \
     cd yarp && mkdir build && cd build && \
     cmake .. && make install && \
-    rm -Rf yarp
+    cd ../.. && rm -Rf yarp
 
 # Build icub-main
 RUN git clone https://github.com/robotology/icub-main.git --depth 1 --branch $BRANCH && \
@@ -122,7 +123,7 @@ RUN git clone https://github.com/robotology/icub-main.git --depth 1 --branch $BR
     -DENABLE_icubmod_cartesiancontrollerclient=ON \
     -DENABLE_icubmod_gazecontrollerclient=ON && \
     make install && \
-    rm -Rf icub-main
+    cd ../.. && rm -Rf icub-main
 
 # Build idyntree
 RUN git clone https://github.com/robotology/idyntree.git --depth 1 --branch $BRANCH && \
@@ -130,7 +131,7 @@ RUN git clone https://github.com/robotology/idyntree.git --depth 1 --branch $BRA
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
-    rm -Rf idyntree
+    cd ../.. && rm -Rf idyntree
 
 # Build gazebo-yarp-plugins
 RUN git clone https://github.com/robotology/gazebo-yarp-plugins.git --depth 1 --branch $BRANCH && \
@@ -138,7 +139,7 @@ RUN git clone https://github.com/robotology/gazebo-yarp-plugins.git --depth 1 --
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
-    rm -Rf gazebo-yarp-plugins
+    cd ../.. && rm -Rf gazebo-yarp-plugins
 
 # Clone icub-models
 RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $BRANCH && \
@@ -146,7 +147,7 @@ RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
     make install && \
-    rm -Rf icub-models
+    cd ../.. && rm -Rf icub-models
 
 # Set environmental variables
 ENV DISPLAY=:1
@@ -169,10 +170,15 @@ ENV MANPATH="${MANPATH}:/home/linuxbrew/.linuxbrew/share/man"
 ENV INFOPATH="${INFOPATH}:/home/linuxbrew/.linuxbrew/share/info"
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 
+# Install informative git for bash
+RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
+
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
     echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc && \
+    echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
+    echo "source ${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "source /usr/local/share/gazebo/setup.sh" >> ~/.bashrc && \
     echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc
 
