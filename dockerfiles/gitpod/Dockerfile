@@ -176,7 +176,6 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
-    echo "xset r rate 500 30" >> ~/.bashrc && \
     echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source ${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "source /usr/local/share/gazebo/setup.sh" >> ~/.bashrc && \
