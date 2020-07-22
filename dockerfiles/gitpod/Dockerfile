@@ -176,11 +176,12 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
-    echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc && \
+    echo "xset r rate 500 30" >> ~/.bashrc && \
     echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source ${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "source /usr/local/share/gazebo/setup.sh" >> ~/.bashrc && \
-    echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc
+    echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc && \
+    echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc
 
 # Switch back to root
 USER root
