@@ -163,6 +163,9 @@ RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod &
 # Switch to gitpod user
 USER gitpod
 
+# Set keyboard rate
+COPY keyboard.xml /home/gitpod/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard.xml
+
 # Install Homebrew
 RUN mkdir ~/.cache && sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 ENV PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/"
