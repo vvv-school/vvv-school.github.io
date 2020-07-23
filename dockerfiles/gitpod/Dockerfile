@@ -152,7 +152,7 @@ RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $
 # Set environmental variables
 ENV DISPLAY=:1
 ENV ICUBcontrib_DIR=/workspace/iCubContrib
-ENV YARP_DATA_DIRS=/usr/local/share/yarp:/usr/local/share/iCub:$ICUBcontrib_DIR/share/ICUBcontrib:/usr/local/share/iCub
+ENV YARP_DATA_DIRS=/usr/local/share/yarp:/usr/local/share/iCub:${ICUBcontrib_DIR}/share/ICUBcontrib:/usr/local/share/iCub
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/yarp:/usr/local/lib/robottestingframework
 
 # Create user gitpod
@@ -164,6 +164,7 @@ RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod &
 USER gitpod
 
 # Set keyboard rate
+RUN mkdir -p /home/gitpod/.config/xfce4/xfconf/xfce-perchannel-xml
 COPY keyboard.xml /home/gitpod/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard.xml
 
 # Install Homebrew
@@ -182,6 +183,7 @@ RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
     echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source ${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "source /usr/local/share/gazebo/setup.sh" >> ~/.bashrc && \
+    echo "export GAZEBO_RESOURCE_PATH=${GAZEBO_RESOURCE_PATH}:${ICUBcontrib_DIR}/share/gazebo/worlds" >> ~/.bashrc && \
     echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc && \
     echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc
 
