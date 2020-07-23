@@ -163,10 +163,6 @@ RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod &
 # Switch to gitpod user
 USER gitpod
 
-# Set keyboard rate
-RUN mkdir -p /home/gitpod/.config/xfce4/xfconf/xfce-perchannel-xml
-COPY keyboard.xml /home/gitpod/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard.xml
-
 # Install Homebrew
 RUN mkdir ~/.cache && sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 ENV PATH="${PATH}:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin/"
@@ -186,6 +182,9 @@ RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
     echo "export GAZEBO_RESOURCE_PATH=${GAZEBO_RESOURCE_PATH}:${ICUBcontrib_DIR}/share/gazebo/worlds" >> ~/.bashrc && \
     echo "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots" >> ~/.bashrc && \
     echo "export PATH=${PATH}:${ICUBcontrib_DIR}/bin" >> ~/.bashrc
+
+# Set keyboard rate
+COPY --chown=gitpod:gitpod keyboards.xml .config/xfce4/xfconf/xfce-perchannel-xml/keyboards.xml
 
 # Switch back to root
 USER root
