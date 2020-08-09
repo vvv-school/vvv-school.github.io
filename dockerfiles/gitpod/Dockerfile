@@ -10,7 +10,8 @@ RUN apt update
 # Install essentials
 RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
     psmisc lsb-release tmux nano wget curl telnet gnupg build-essential gdb git gitk \
-    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi terminator meld
+    cmake cmake-curses-gui libedit-dev libxml2-dev autoconf locales gdebi terminator meld \
+    dos2unix
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -25,6 +26,7 @@ RUN wget -O code.deb https://go.microsoft.com/fwlink/?LinkID=760868 && \
 RUN apt install -y xfce4 xfce4-goodies xserver-xorg-video-dummy xserver-xorg-legacy firefox && \
     sed -i 's/allowed_users=console/allowed_users=anybody/' /etc/X11/Xwrapper.config
 COPY xorg.conf /etc/X11/xorg.conf
+RUN dos2unix /etc/X11/xorg.conf
 
 # We need the most recent x11vnc
 RUN sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list && \
@@ -189,16 +191,19 @@ USER root
 # Set up script to prepare /workspace/iCubContrib
 COPY init-icubcontrib.sh /usr/bin/init-icubcontrib.sh
 COPY init-icubcontrib-local.sh /usr/bin/init-icubcontrib-local.sh
-RUN chmod +x /usr/bin/init-icubcontrib.sh /usr/bin/init-icubcontrib-local.sh
+RUN chmod +x /usr/bin/init-icubcontrib.sh /usr/bin/init-icubcontrib-local.sh && \
+    dos2unix /usr/bin/init-icubcontrib.sh /usr/bin/init-icubcontrib-local.sh
 
 # Set up script to launch graphics and vnc
 COPY start-vnc-session.sh /usr/bin/start-vnc-session.sh
 COPY start-vnc-session-local.sh /usr/bin/start-vnc-session-local.sh
-RUN chmod +x /usr/bin/start-vnc-session.sh /usr/bin/start-vnc-session-local.sh
+RUN chmod +x /usr/bin/start-vnc-session.sh /usr/bin/start-vnc-session-local.sh && \
+    dos2unix /usr/bin/start-vnc-session.sh /usr/bin/start-vnc-session-local.sh
 
 # Set up VSCode launcher
 COPY ["Visual Studio Code.desktop", "/home/gitpod/Desktop/Visual Studio Code.desktop"]
-RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop"
+RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop" && \
+    dos2unix "/home/gitpod/Desktop/Visual Studio Code.desktop"
 
 # Make sure specific dirs are owned by gitpod user
 RUN chown -R gitpod.gitpod /home/gitpod/Desktop
