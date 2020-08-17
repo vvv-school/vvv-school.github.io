@@ -17,7 +17,7 @@ To run the container using Docker, go through the following steps:
     $ init-icubcontrib-local.sh
     $ start-vnc-session-local.sh
     ```
-1. Open up the browser and connect to **`localhost:6080`**.
+1. Open up the browser and connect to **`localhost:6080`** to get to the workspace desktop GUI.
 1. Once done, from the container shell press **CTRL+D**.
 
 [1]: https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-docker-for-use-with-github-packages#authenticating-to-github-packages
