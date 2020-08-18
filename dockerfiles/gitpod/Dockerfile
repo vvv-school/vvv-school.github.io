@@ -34,6 +34,9 @@ RUN apt install -y octave epstool transfig
 # Install python
 RUN apt install -y python3 python3-dev python3-pip python3-setuptools && \
     ln -s /usr/bin/python3 /usr/bin/python
+    
+# Install magic-wormwhole to get things from one computer to another safely
+RUN apt install -y magic-wormhole
 
 # Install noVNC
 RUN git clone https://github.com/novnc/noVNC.git /opt/novnc && \
