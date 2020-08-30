@@ -4,9 +4,6 @@
 # Authors: Ugo Pattacini <ugo.pattacini@iit.it>
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
 #
-# Dependencies (through gem):
-# - sinatra
-# - json
 
 webhook_file_name = "/tmp/github-webhook-vvv-school"
 webhook_file = open(webhook_file_name,"w+")

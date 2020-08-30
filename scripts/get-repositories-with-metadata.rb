@@ -4,9 +4,6 @@
 # Authors: Ugo Pattacini <ugo.pattacini@iit.it>
 # CopyPolicy: Released under the terms of the GNU GPL v3.0.
 #
-# Dependencies (through gem):
-# - octokit
-#
 # The env variable GITHUB_TOKEN_VVV_SCHOOL shall contain a valid GitHub token
 # (refer to instructions to find out more)
 #
