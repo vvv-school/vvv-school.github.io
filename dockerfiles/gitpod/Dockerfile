@@ -1,8 +1,7 @@
 FROM ubuntu:latest
 LABEL org.opencontainers.image.title="VVV School Gitpod Docker Image"
 LABEL org.opencontainers.image.description="Stack of components required to run VVV School assignments on Gitpod"
-LABEL org.opencontainers.image.url="https://github.com/vvv-school/vvv-school.github.io"
-LABEL org.opencontainers.image.source="https://github.com/vvv-school/vvv-school.github.io/blob/master/dockerfiles/gitpod/Dockerfile"
+LABEL org.opencontainers.image.source="https://github.com/vvv-school/vvv-school.github.io"
 LABEL org.opencontainers.image.authors="Ugo Pattacini <ugo.pattacini@iit.it>"
 
 # Non-interactive installation mode
