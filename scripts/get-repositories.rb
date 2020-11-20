@@ -11,6 +11,7 @@
 #
 
 require 'octokit'
+require './helpers'
 
 if ARGV.length < 1 then
   puts "Usage: $0 <organization>"
@@ -27,12 +28,12 @@ Signal.trap("TERM") {
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
+  check_and_wait_until_reset(client)
   client.org_repos(ARGV[0],{:type => 'all'})
   rate_limit = client.rate_limit
   if rate_limit.remaining > 0 then
     break
   end
-  sleep(60)
 end
 
 last_response = client.last_response

@@ -11,6 +11,7 @@
 #
 
 require 'octokit'
+require './helpers'
 
 if ARGV.length < 2 then
   puts "Usage: $0 <org> <tag>"
@@ -30,12 +31,12 @@ tag = ARGV[1]
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
+  check_and_wait_until_reset(client)
   client.org_repos(org,{:type => 'all'})
   rate_limit = client.rate_limit
   if rate_limit.remaining > 0 then
     break
   end
-  sleep(60)
 end
 
 repos = []
@@ -52,6 +53,7 @@ end
 
 repos.each { |repo|
   ref = "tags/"+tag
+  check_and_wait_until_reset(client)
   begin
     client.delete_ref(repo,ref)
     puts "#{repo}: #{ref} deleted"
