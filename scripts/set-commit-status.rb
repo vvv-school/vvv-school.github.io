@@ -11,6 +11,7 @@
 #
 
 require 'octokit'
+require './helpers'
 
 if ARGV.length < 2 then
   puts "Usage: $0 <repository> <status> [<target_url>] [<success_score>]"
@@ -38,12 +39,12 @@ Signal.trap("TERM") {
 
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
+  check_and_wait_until_reset(client)
   client.commits(repo)
   rate_limit = client.rate_limit
   if rate_limit.remaining > 0 then
     break
   end
-  sleep(60)
 end
 
 last_response = client.last_response
@@ -69,6 +70,7 @@ if (status == "success") and (ARGV.length > 3) then
   description << " with score " << ARGV[3].to_s
 end
 
+check_and_wait_until_reset(client)
 client.create_status(repo,sha,status,
                      :context => context,
                      :description => description,
