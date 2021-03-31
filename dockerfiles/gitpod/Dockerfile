@@ -155,7 +155,7 @@ ENV HOMEBREW_NO_AUTO_UPDATE=1
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
 # Set up .bashrc
-# "/usr/bin" comes ahead in PATH to shadow /ide/bin/code
+# "/usr/bin" needs to come in the first place within PATH to shadow "/ide/bin/code"
 WORKDIR /home/gitpod
 RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
