@@ -155,14 +155,14 @@ ENV HOMEBREW_NO_AUTO_UPDATE=1
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
 # Set up .bashrc
+# "/usr/bin" comes ahead in PATH to shadow /ide/bin/code
 WORKDIR /home/gitpod
-RUN echo "unalias code 2>/dev/null" >> ~/.bashrc && \
-    echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
+RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc && \
     echo "export GAZEBO_RESOURCE_PATH=\${GAZEBO_RESOURCE_PATH}:\${ICUBcontrib_DIR}/share/gazebo/worlds" >> ~/.bashrc && \
     echo "export GAZEBO_MODEL_PATH=\${GAZEBO_MODEL_PATH}:/usr/local/share:/usr/local/share/iCub/robots:\${ICUBcontrib_DIR}/share/gazebo/models" >> ~/.bashrc && \
-    echo "export PATH=\${PATH}:\${ICUBcontrib_DIR}/bin" >> ~/.bashrc
+    echo "export PATH=/usr/bin:\${PATH}:\${ICUBcontrib_DIR}/bin" >> ~/.bashrc
 
 # Switch back to root
 USER root
