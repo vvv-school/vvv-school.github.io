@@ -14,8 +14,8 @@ To run the container using Docker, go through the following steps:
     ```
 1. From within the container shell, launch the following scripts:
     ```sh
-    $ init-icubcontrib-local.sh
-    $ start-vnc-session-local.sh
+    $ init-icubcontrib.sh
+    $ start-vnc-session.sh
     ```
 1. Open up the browser and connect to **`localhost:6080`** to get to the workspace desktop GUI.
 1. Once done, from the container shell press **CTRL+D**.
