@@ -1,24 +1,4 @@
 # How to set up a VVV{YY} School
-
-## Table of contents
-- [How to set up a VVV{YY} School](#how-to-set-up-a-vvvyy-school)
-  - [Table of contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Set up VVV{YY} School repository](#set-up-vvvyy-school-repository)
-  - [Set up VVV{YY} School courses organizations](#set-up-vvvyy-school-courses-organizations)
-    - [Hands-on](#hands-on)
-      - [Tutorials](#tutorials)
-      - [Assignments](#assignments)
-    - [VVV{YY} School courses repositories](#vvvyy-school-courses-repositories)
-      - [Gear up for automatic grading](#gear-up-for-automatic-grading)
-  - [Automatic grading](#automatic-grading)
-    - [Challenge students](#challenge-students)
-      - [How to assign scores incrementally](#how-to-assign-scores-incrementally)
-    - [Update the gradebook](#update-the-gradebook)
-      - [Prerequisites](#prerequisites)
-      - [Launch the script](#launch-the-script)
-      - [GitHub Webooks](#github-webooks)
-  - [VVV{YY} School wrap-up](#vvvyy-school-wrap-up)
   
 ## Introduction
 1. **YY** is the school year (e.g. **17**, **18**...).
