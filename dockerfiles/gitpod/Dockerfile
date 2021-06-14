@@ -91,7 +91,8 @@ RUN git clone https://github.com/robotology/robot-testing-framework.git --depth 
 RUN git clone https://github.com/robotology/yarp.git --depth 1 && \
     cd yarp && mkdir build && cd build && \
     cmake .. \
-    -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
+    -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+    -DENABLE_yarpmod_fakeMotionControl:BOOL=ON && \
     make install && \
     cd ../.. && rm -Rf yarp
 
