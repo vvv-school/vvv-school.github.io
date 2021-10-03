@@ -37,23 +37,24 @@ date         = ARGV[5]
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
   check_and_wait_until_reset(client)
-  client.org_repos(org,{:type => 'all'})
-  rate_limit = client.rate_limit
-  if rate_limit.remaining > 0 then
+  begin
+    client.org_repos(org,{:type => 'all'})
+  rescue
+  else
     break
   end
 end
 
 repos = []
-
 last_response = client.last_response
-data = last_response.data
-data.each { |x| repos << x.name }
-
-until last_response.rels[:next].nil?
-  last_response = last_response.rels[:next].get
+loop do
   data = last_response.data
   data.each { |x| repos << x.name }
+  if last_response.rels[:next].nil?
+    break
+  else
+    last_response = last_response.rels[:next].get
+  end
 end
 
 repos.each { |repo|

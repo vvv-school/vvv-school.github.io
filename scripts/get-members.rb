@@ -38,54 +38,50 @@ Signal.trap("TERM") {
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
   check_and_wait_until_reset(client)
-  client.org_teams(org)
-  rate_limit = client.rate_limit
-  if rate_limit.remaining > 0 then
+  begin
+    client.org_teams(org)
+  rescue
+  else
     break
   end
 end
 
-last_response = client.last_response
-data = last_response.data
-
 team_id = -1
-data.each { |x|
-if x.name == team then
-  team_id = x.id
-end
-}
-
-if team_id < 0 then
-  until last_response.rels[:next].nil?
-    last_response = last_response.rels[:next].get
-    data = last_response.data
-    data.each { |x|
+last_response = client.last_response
+loop do
+  data = last_response.data
+  data.each { |x|
     if x.name == team then
       team_id = x.id
       break
     end
-    }
+  }
+  if last_response.rels[:next].nil?
+    break
+  else
+    last_response = last_response.rels[:next].get
   end
 end
 
 if team_id >= 0 then
   loop do
     check_and_wait_until_reset(client)
-    client.team_members(team_id)
-    rate_limit = client.rate_limit
-    if rate_limit.remaining > 0 then
+    begin
+      client.team_members(team_id)
+    rescue
+    else
       break
     end
   end
 
   last_response = client.last_response
-  data = last_response.data
-  data.each { |x| puts "#{x.login}" }
-
-  until last_response.rels[:next].nil?
-    last_response = last_response.rels[:next].get
+  loop do
     data = last_response.data
     data.each { |x| puts "#{x.login}" }
+    if last_response.rels[:next].nil?
+      break
+    else
+      last_response = last_response.rels[:next].get
+    end
   end
 end
-
