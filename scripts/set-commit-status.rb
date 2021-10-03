@@ -40,9 +40,10 @@ Signal.trap("TERM") {
 client = Octokit::Client.new :access_token => ENV['GITHUB_TOKEN_VVV_SCHOOL']
 loop do
   check_and_wait_until_reset(client)
-  client.commits(repo)
-  rate_limit = client.rate_limit
-  if rate_limit.remaining > 0 then
+  begin
+    client.commits(repo)
+  rescue
+  else
     break
   end
 end
