@@ -126,7 +126,7 @@ RUN git clone https://github.com/robotology/gazebo-yarp-plugins.git --depth 1 --
     cd ../.. && rm -Rf gazebo-yarp-plugins
 
 # Clone icub-models
-RUN git clone https://github.com/robotology/icub-models.git --depth 1 --branch $BRANCH && \
+RUN git clone https://github.com/robotology/icub-models.git --depth 1 && \
     cd icub-models && mkdir build && cd build && \
     cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
