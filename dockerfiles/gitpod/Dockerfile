@@ -110,6 +110,9 @@ RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "YARP_COLORED_OUTPUT=1" >> ~/.bashrc && \
     echo "source ${ROBOTOLOGY_SUPERBUILD_INSTALL_DIR}/share/robotology-superbuild/setup.sh" >>  ~/.bashrc
 
+# Set the datasets path
+ENV DATASETS_PATH=/workspace/datasets
+
 # Switch back to root
 USER root
 
