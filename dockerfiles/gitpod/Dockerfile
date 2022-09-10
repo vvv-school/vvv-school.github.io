@@ -50,7 +50,7 @@ RUN git clone https://github.com/novnc/noVNC.git /opt/novnc && \
 # Select options
 ARG ROBOTOLOGY_SUPERBUILD_RELEASE
 ARG BUILD_TYPE
-ARG ROBOTOLOGY_SUPERBUILD_INSTALL_DIR=/usr/local
+ARG ROBOTOLOGY_SUPERBUILD_INSTALL_DIR=/robotology-superbuild-install
 
 # Set up git (required by superbuild)
 RUN git config --global user.name "GitHub Actions" && \
@@ -124,7 +124,8 @@ RUN chmod +x "/home/gitpod/Desktop/Visual Studio Code.desktop" && \
     dos2unix "/home/gitpod/Desktop/Visual Studio Code.desktop"
 
 # Make sure specific dirs are owned by gitpod user
-RUN chown -R gitpod.gitpod /home/gitpod/Desktop
+RUN chown -R gitpod.gitpod /home/gitpod/Desktop && \
+    chown -R gitpod.gitpod ${ROBOTOLOGY_SUPERBUILD_INSTALL_DIR}
 
 # Manage ports
 EXPOSE 5901 6080 10000/tcp 10000/udp
