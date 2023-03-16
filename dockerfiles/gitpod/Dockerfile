@@ -130,6 +130,11 @@ RUN chown -R gitpod.gitpod /home/gitpod/Desktop && \
 # Manage ports
 EXPOSE 5901 6080 10000/tcp 10000/udp
 
+# Workaround for mesa-utils (https://launchpad.net/~kisak/+archive/ubuntu/kisak-mesa)
+RUN add-apt-repository -y ppa:kisak/kisak-mesa && \
+    apt update && \
+    apt upgrade -y
+
 # Clean up unnecessary installation products
 RUN rm -Rf /var/lib/apt/lists/*
 
