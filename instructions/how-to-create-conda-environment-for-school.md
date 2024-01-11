@@ -20,4 +20,4 @@ and adding it in the `${CONDA_PREFIX}/etc/conda/activate.d` directory.
 Then, whenever to run a command, remember to run it in the `vvvschool` conda environment.
 
 > [!WARNING]  
-> Not all vvv repos may not be working fine with conda. If you encounter problems, please open an issue in this repo, tagging @traversaro .
+> Not all vvv-school repos may be working fine with conda. If you encounter problems, please open an issue in this repo, tagging @traversaro.
