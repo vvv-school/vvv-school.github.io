@@ -5,17 +5,8 @@ for some tutorial and assignments it is also possible to rely on conda to instal
 
 To do so, create a dedicated conda environment with:
 ~~~
-conda create -c conda-forge -c robotology -n vvvschool cmake ninja pkg-config make compilers yarp icub-contrib-common gazebo icub-models gazebo-yarp-plugins idyntree
+conda create -c conda-forge -c robotology -n vvvschool cmake ninja pkg-config make compilers yarp icub-contrib-common gazebo icub-models gazebo-yarp-plugins idyntree vvv-school-activation
 ~~~
-
-The `vvv-school` tutorials also need some additional environmental variable to be set. 
-In particular, you can ensure that are set automatically in the environment by creating a `vvvschool_activate.sh` script with the following two lines:
-~~~
-export GAZEBO_MODEL_PATH=${CONDA_PREFIX}/share/gazebo/models:${GAZEBO_MODEL_PATH}
-export GAZEBO_RESOURCE_PATH=${CONDA_PREFIX}/share/gazebo/worlds:${GAZEBO_RESOURCE_PATH}
-~~~
-
-and adding it in the `${CONDA_PREFIX}/etc/conda/activate.d` directory.
 
 Then, whenever to run a command, remember to run it in the `vvvschool` conda environment.
 
