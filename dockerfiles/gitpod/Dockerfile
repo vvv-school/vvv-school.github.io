@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:22-04
 LABEL org.opencontainers.image.title="VVV School Gitpod Docker Image"
 LABEL org.opencontainers.image.description="Stack of components required to run VVV School assignments on Gitpod"
 LABEL org.opencontainers.image.source="https://github.com/vvv-school/vvv-school.github.io"
