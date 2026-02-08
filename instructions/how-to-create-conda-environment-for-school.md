@@ -11,4 +11,4 @@ conda create -c conda-forge -c robotology -n vvvschool cmake ninja pkg-config ma
 Then, whenever to run a command, remember to run it in the `vvvschool` conda environment.
 
 > [!WARNING]  
-> Not all vvv-school repos may be working fine with conda. If you encounter problems, please open an issue in this repo, tagging @traversaro.
+> Not all vvv-school repos may be working fine with conda. If you encounter problems, please open an issue in this repo, tagging [@traversaro](https://github.com/traversaro).
